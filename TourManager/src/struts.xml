@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    
+	<!--struts.xml文件系统改变后,系统是否重新加载该文件--> 
+	<constant name="struts.configuration.xml.reload" value="true"></constant>     
+	
+    <!-- package提供了将多个Action组织为一个模块的方式
+         package的名字必须是唯一的 package可以扩展 当一个package扩展自
+	               另一个package时该package会在本身配置的基础上加入扩展的package
+	               的配置 父package必须在子package前配置 
+         name：package名称
+         extends:继承的父package名称
+         abstract:设置package的属性为抽象的 抽象的package不能定义action 值true:false
+         namespace:定义package命名空间 该命名空间影响到url的地址，例如此命名空间为/test那么访问是的地址为http://localhost:8080/struts2/test/XX.action
+     -->
+    <package name="default" namespace="/" extends="struts-default">
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+            <exception-mapping result="error" exception="java.lang.Throwable"></exception-mapping>
+        </global-exception-mappings>
+    </package>
+	
+	<!-- include节点是struts2中组件化的方式 可以将每个功能模块独立到一个xml配置文件中 然后用include节点引用 -->	
+	<!-- 系统模块-->
+    <include file="struts_system.xml"/>
+	
+</struts>

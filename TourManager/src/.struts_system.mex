@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="system" location="1107,165" size="1050,1820" />
+  <webResource name="systemDataDictionaryList.jsp" path="/platform/systemDataDictionaryList.jsp" location="1823,10" size="150,55" />
+  <webResource name="systemDataDictionaryInfo.jsp" path="/platform/systemDataDictionaryInfo.jsp" location="806,255" size="150,55" />
+  <webResource name="systemInformationList.jsp" path="/information/systemInformationList.jsp" location="1823,2040" size="150,55" />
+  <webResource name="systemInformationInfo.jsp" path="/platform/systemInformationInfo.jsp" location="9,535" size="150,55" />
+  <webResource name="systemInformationInfo.jsp" path="/information/systemInformationInfo.jsp" location="2206,535" size="150,55" />
+  <webResource name="systemRoleList.jsp" path="/platform/systemRoleList.jsp" location="1572,2040" size="150,55" />
+  <webResource name="systemRoleInfo.jsp" path="/platform/systemRoleInfo.jsp" location="310,675" size="150,55" />
+  <webResource name="systemUnitsList.jsp" path="/platform/systemUnitsList.jsp" location="871,1725" size="150,55" />
+  <webResource name="systemUnitsInfo.jsp" path="/platform/systemUnitsInfo.jsp" location="554,815" size="150,55" />
+  <webResource name="top.jsp" path="/top.jsp" location="952,1130" size="150,55" />
+  <webResource name="left.jsp" path="/left.jsp" location="952,1305" size="150,55" />
+  <webResource name="systemUsersList.jsp" path="/platform/systemUsersList.jsp" location="869,1480" size="150,55" />
+  <webResource name="systemUsersInfo.jsp" path="/platform/systemUsersInfo.jsp" location="692,990" size="150,55" />
+</Struts2Diagram>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- 应用构建模块-->
+    <package name="system" namespace="/" extends="default">
+
+		<!-- SmUser实体Bean -->
+		<action name="smUser_*" method="{1}" class="aliasSmUserAction">
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="LIST_SUCCESS" type="dispatcher">/platform/smUserList.jsp</result>
+			<result name="VIEW_SUCCESS" type="dispatcher">/platform/smUserInfo.jsp</result>
+			<result name="EDIT_SUCCESS" type="dispatcher">/platform/smUserInfo.jsp</result>
+			<result name="ADD_SUCCESS" type="dispatcher">/platform/smUserInfo.jsp</result>
+		</action> 
+
+    </package>
+</struts>

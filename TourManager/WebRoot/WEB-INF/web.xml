@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<display-name>TourManager</display-name>
+	
+	<!--  
+	<listener>
+	  <listener-class>com.rj.fruit.AppleListener</listener-class>
+	</listener>
+	-->
+	<!-- 权限过滤器
+	<filter>
+		<filter-name>powerFilter</filter-name>
+		<filter-class>com.rj.commons.filter.PowerFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>powerFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>  
+	-->	
+	
+	<!-- Struts支持-->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 	
+
+	<!-- 配置applicationContext.xml路径 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/spring_framework.xml,
+		</param-value>
+	</context-param>
+	
+	<!-- 配置加载Spring容器上下文的监听器 -->	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>		  
+
+
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodeFilter</filter-name>
+		<filter-class>com.tour.commons.filter.EncodeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Log4J -->
+	<servlet>
+		<servlet-name>Log4jServlet</servlet-name>
+		<servlet-class>com.tour.commons.listener.Log4jServlet</servlet-class>
+		<init-param>
+			<param-name>log4j-init-file</param-name>
+			<param-value>/WEB-INF/classes/log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Log4jServlet</servlet-name>
+		<url-pattern>/log4jServlet</url-pattern>
+	</servlet-mapping>
+
+	
+	<!-- 首页 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- 出错页面定义 -->
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/html/error_page.html</location>
+	</error-page>
+		<error-page>
+		<error-code>500</error-code>
+		<location>/html/error_page_500.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/html/error_page_404.html</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/html/error_page_403.html</location>
+	</error-page>
+	
+</web-app>
