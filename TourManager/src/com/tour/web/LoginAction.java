@@ -1,6 +1,7 @@
 package com.tour.web;
 
 import com.tour.commons.base.BaseAction;
+import com.tour.model.SmUser;
 import com.tour.service.ifc.SmUserServiceIFC;
 
 @SuppressWarnings( "serial" )
@@ -25,7 +26,27 @@ public class LoginAction extends BaseAction {
      * @return
      */
     public String login() {
-        System.out.println( username );
+        // 1、验证验证码是否匹配
+        // 2、判断用户名是否存在
+        SmUser smUser = smUserServiceProxy.checkUsername(username);
+        if(smUser == null) {
+            System.out.println("用户名不存在");
+            request.setAttribute("login_msg", "用户名不存在"); // 用户对象
+            return LOGIN_FAILE;
+        }
+        // 3、判断密码是否正确
+        if( !password.equals( smUser.getPassword() )) {
+            System.out.println("密码错误");
+            request.setAttribute("login_msg", "密码错误"); // 用户对象
+            return LOGIN_FAILE;
+        }
+        
+        // 登陆成功，设置用户为在线
+        request.setAttribute("login_msg", "登陆成功");
+        System.out.println("登陆成功");
+        smUser.setStatus( 1 );
+        smUserServiceProxy.saveEditSmUser( smUser );
+        // TODO 验证成功, 获取权限等...
         
         return LOGIN_SUCCESS;
     }

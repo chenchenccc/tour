@@ -23,7 +23,6 @@ public class TmHotelAction extends BaseAction{
 	
 	private JSONArray json = null;
 	
-	
 	/**
 	  * @Description: 获取实体列表 
 	  */

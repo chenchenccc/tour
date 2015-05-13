@@ -57,7 +57,7 @@
       <isNotNull property="orderByClause">
         order by $orderByClause$
       </isNotNull>
-      <isNotNull property="limitEnd" prepend="and">
+      <isNotNull property="limitEnd">
        limit $limitStart$, $limitEnd$
       </isNotNull>
     </isParameterPresent>

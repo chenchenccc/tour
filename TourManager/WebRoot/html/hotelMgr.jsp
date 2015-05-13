@@ -104,7 +104,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/system/sysPolice_saveAddSysPolice.action',
+								url: getPath() + '/tmHotel_saveAddTmHotel.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -130,7 +130,7 @@ $(function(){
 			    });
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
-				$.post(getPath()+"/system/sysPolice_addSysPolice.action",
+				$.post(getPath()+"/tmHotel_addTmHotel.action",
 				    function(result){
 						$("#content").append(result);
 				    });
@@ -150,7 +150,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/system/sysPolice_saveEditSysPolice.action',
+							url: getPath() + '/tmHotel_saveEditTmHotel.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -182,7 +182,7 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/system/sysPolice_editSysPolice.action",
+			$.post(getPath()+"/tmHotel_editTmHotel.action",
 				{"sysPolice.id": row.id},
 			    function(result){  
 					$("#content").append(result);
@@ -199,7 +199,7 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/system/sysPolice_delSysPolice.action',
+							$.post(getPath() + '/tmHotel_delTmHotel.action',
 								{"sysPolice.id" :  row.id,
 								"sysPolice.zt" :  'delete'
 								},
@@ -311,7 +311,7 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/system/sysPolice_viewSysPolice.action",
+	$.post(getPath()+"/tmHotel_viewTmHotel.action",
 		{"sysPolice.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);

@@ -49,9 +49,11 @@ TD{LINE-HEIGHT: 15px;FONT-SIZE: 12px}
                   <DIV align=left><P><INPUT value=登陆 type="button" onclick="login()" name=B1>&nbsp;&nbsp;<INPUT value=取消 type="button" onclick="cancel()" name=B2></P></DIV>
 				</TD>
 			</TR>
+			
 			</FORM>
 		</TBODY>
 	</TABLE>
+	<span>${ login_msg }</span>
 </TD>
 </TR>
 </TBODY>

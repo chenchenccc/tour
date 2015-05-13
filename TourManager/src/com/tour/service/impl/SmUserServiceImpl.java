@@ -87,9 +87,20 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	}
 
 
-    @Override
     public int countByExample( SmUser smUser ) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    public SmUser checkUsername( String username ) {
+        //构造Criteria
+        SmUserExample example = new SmUserExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andLoginNameEqualTo( username );
+        List list = smUserDao.selectByExample( example );
+        if(list != null && list.size() > 0) {
+            return (SmUser) list.get( 0 );
+        }
+        return null;
     }
 }

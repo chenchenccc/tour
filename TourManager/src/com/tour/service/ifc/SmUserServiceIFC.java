@@ -42,4 +42,14 @@ public interface SmUserServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(SmUser smUser);
+
+    /**
+     * 判断用户名是否存在
+     * @author chenrh
+     *
+     * @param username
+     * @return
+     */
+    public SmUser checkUsername( String username );
+
 }
