@@ -2,7 +2,7 @@
 <!DOCTYPE ibatorConfiguration PUBLIC "-//Apache Software Foundation//DTD Apache iBATIS Ibator Configuration 1.0//EN" "http://ibatis.apache.org/dtd/ibator-config_1_0.dtd" >
 <ibatorConfiguration>
 	<classPathEntry
-		location="E:\workspace3\TourManager\WebRoot\WEB-INF\lib\mysql-connector-java-5.1.16-bin.jar" />
+		location="E:\git2\tour\TourManager\WebRoot\WEB-INF\lib\mysql-connector-java-5.1.16-bin.jar" />
 
 	<ibatorContext id="context1">
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -14,8 +14,23 @@
 			targetProject="TourManager/src" />
 		<daoGenerator targetPackage="com.tour.dao"
 			targetProject="TourManager/src" type="SPRING" />
-		<!--<table schema="test" tableName="user"></table>-->
+		<table tableName="sm_autho"></table>
+		<table tableName="sm_role"></table>
 		<table tableName="sm_user"></table>
+		<table tableName="sm_user_role"></table>
+		<table tableName="sm_role_autho"></table>
+		<table tableName="tm_customer"></table>
+		<table tableName="tm_customer_group"></table>
+		<table tableName="tm_department"></table>
+		<table tableName="tm_detail"></table>
+		<table tableName="tm_employee"></table>
+		<table tableName="tm_group"></table>
+		<table tableName="tm_hotel"></table>
+		<table tableName="tm_info"></table>
+		<table tableName="tm_order"></table>
+		<table tableName="tm_schedule"></table>
+		
+		
 	</ibatorContext>
 
 </ibatorConfiguration>

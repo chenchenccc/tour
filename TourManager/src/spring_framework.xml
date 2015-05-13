@@ -8,11 +8,11 @@
      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 	
 	<!-- 数据库配置jndi-->
-	<bean name="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<!--<bean name="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/mysql"></property>
 	</bean>
 	 
-	<!-- 读取ibatis配置文件 -->
+	--><!-- 读取ibatis配置文件 -->
 	<!-- org.springframework.orm.ibatis.SqlMapClientFactoryBean -->
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
@@ -20,6 +20,16 @@
 			<value>classpath:ibatis_framework.xml</value>
 		</property>
 	</bean>
+	
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/tour_manager_db"></property> 
+		<property name="username" value="root"></property> 
+		<property name="password" value="123456"></property> 
+	</bean> 
+	
+	
 	
 	<!-- Spring iBatisTemplate -->
 	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
@@ -48,6 +58,40 @@
 		</property>
 	</bean>
 	
+	<!-- SmAutho实体Bean -->
+	<bean id="smAuthoDao" class="com.tour.dao.impl.SmAuthoDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="smAuthoService" class="com.tour.service.impl.SmAuthoServiceImpl">
+		<property name="smAuthoDao" ref="smAuthoDao"></property>
+	</bean>
+	
+	<bean id="smAuthoServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="smAuthoService"></property>
+	</bean>
+	
+	<bean name="aliasSmAuthoAction" class="com.tour.web.SmAuthoAction" scope="prototype">
+		<property name="smAuthoServiceProxy" ref="smAuthoServiceProxy"></property>
+	</bean>
+	
+	<!-- SmRole实体Bean -->
+	<bean id="smRoleDao" class="com.tour.dao.impl.SmRoleDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="smRoleService" class="com.tour.service.impl.SmRoleServiceImpl">
+		<property name="smRoleDao" ref="smRoleDao"></property>
+	</bean>
+	
+	<bean id="smRoleServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="smRoleService"></property>
+	</bean>
+	
+	<bean name="aliasSmRoleAction" class="com.tour.web.SmRoleAction" scope="prototype">
+		<property name="smRoleServiceProxy" ref="smRoleServiceProxy"></property>
+	</bean>
+	
 	<!-- SmUser实体Bean -->
 	<bean id="smUserDao" class="com.tour.dao.impl.SmUserDAOImpl" >
 		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
@@ -63,6 +107,210 @@
 	
 	<bean name="aliasSmUserAction" class="com.tour.web.SmUserAction" scope="prototype">
 		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
+	</bean>
+	
+	<!-- SmUserRole实体Bean -->
+	<bean id="smUserRoleDao" class="com.tour.dao.impl.SmUserRoleDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="smUserRoleService" class="com.tour.service.impl.SmUserRoleServiceImpl">
+		<property name="smUserRoleDao" ref="smUserRoleDao"></property>
+	</bean>
+	
+	<bean id="smUserRoleServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="smUserRoleService"></property>
+	</bean>
+	
+	<bean name="aliasSmUserRoleAction" class="com.tour.web.SmUserRoleAction" scope="prototype">
+		<property name="smUserRoleServiceProxy" ref="smUserRoleServiceProxy"></property>
+	</bean>
+	
+	<!-- SmRoleAutho实体Bean -->
+	<bean id="smRoleAuthoDao" class="com.tour.dao.impl.SmRoleAuthoDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="smRoleAuthoService" class="com.tour.service.impl.SmRoleAuthoServiceImpl">
+		<property name="smRoleAuthoDao" ref="smRoleAuthoDao"></property>
+	</bean>
+	
+	<bean id="smRoleAuthoServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="smRoleAuthoService"></property>
+	</bean>
+	
+	<bean name="aliasSmRoleAuthoAction" class="com.tour.web.SmRoleAuthoAction" scope="prototype">
+		<property name="smRoleAuthoServiceProxy" ref="smRoleAuthoServiceProxy"></property>
+	</bean>
+	
+	<!-- TmCustomer实体Bean -->
+	<bean id="tmCustomerDao" class="com.tour.dao.impl.TmCustomerDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmCustomerService" class="com.tour.service.impl.TmCustomerServiceImpl">
+		<property name="tmCustomerDao" ref="tmCustomerDao"></property>
+	</bean>
+	
+	<bean id="tmCustomerServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmCustomerService"></property>
+	</bean>
+	
+	<bean name="aliasTmCustomerAction" class="com.tour.web.TmCustomerAction" scope="prototype">
+		<property name="tmCustomerServiceProxy" ref="tmCustomerServiceProxy"></property>
+	</bean>
+	
+	<!-- TmCustomerGroup实体Bean -->
+	<bean id="tmCustomerGroupDao" class="com.tour.dao.impl.TmCustomerGroupDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmCustomerGroupService" class="com.tour.service.impl.TmCustomerGroupServiceImpl">
+		<property name="tmCustomerGroupDao" ref="tmCustomerGroupDao"></property>
+	</bean>
+	
+	<bean id="tmCustomerGroupServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmCustomerGroupService"></property>
+	</bean>
+	
+	<bean name="aliasTmCustomerGroupAction" class="com.tour.web.TmCustomerGroupAction" scope="prototype">
+		<property name="tmCustomerGroupServiceProxy" ref="tmCustomerGroupServiceProxy"></property>
+	</bean>
+	
+	<!-- TmDepartment实体Bean -->
+	<bean id="tmDepartmentDao" class="com.tour.dao.impl.TmDepartmentDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmDepartmentService" class="com.tour.service.impl.TmDepartmentServiceImpl">
+		<property name="tmDepartmentDao" ref="tmDepartmentDao"></property>
+	</bean>
+	
+	<bean id="tmDepartmentServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmDepartmentService"></property>
+	</bean>
+	
+	<bean name="aliasTmDepartmentAction" class="com.tour.web.TmDepartmentAction" scope="prototype">
+		<property name="tmDepartmentServiceProxy" ref="tmDepartmentServiceProxy"></property>
+	</bean>
+	
+	<!-- TmDetail实体Bean -->
+	<bean id="tmDetailDao" class="com.tour.dao.impl.TmDetailDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmDetailService" class="com.tour.service.impl.TmDetailServiceImpl">
+		<property name="tmDetailDao" ref="tmDetailDao"></property>
+	</bean>
+	
+	<bean id="tmDetailServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmDetailService"></property>
+	</bean>
+	
+	<bean name="aliasTmDetailAction" class="com.tour.web.TmDetailAction" scope="prototype">
+		<property name="tmDetailServiceProxy" ref="tmDetailServiceProxy"></property>
+	</bean>
+	
+	<!-- TmEmployee实体Bean -->
+	<bean id="tmEmployeeDao" class="com.tour.dao.impl.TmEmployeeDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmEmployeeService" class="com.tour.service.impl.TmEmployeeServiceImpl">
+		<property name="tmEmployeeDao" ref="tmEmployeeDao"></property>
+	</bean>
+	
+	<bean id="tmEmployeeServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmEmployeeService"></property>
+	</bean>
+	
+	<bean name="aliasTmEmployeeAction" class="com.tour.web.TmEmployeeAction" scope="prototype">
+		<property name="tmEmployeeServiceProxy" ref="tmEmployeeServiceProxy"></property>
+	</bean>
+	
+	<!-- TmGroup实体Bean -->
+	<bean id="tmGroupDao" class="com.tour.dao.impl.TmGroupDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmGroupService" class="com.tour.service.impl.TmGroupServiceImpl">
+		<property name="tmGroupDao" ref="tmGroupDao"></property>
+	</bean>
+	
+	<bean id="tmGroupServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmGroupService"></property>
+	</bean>
+	
+	<bean name="aliasTmGroupAction" class="com.tour.web.TmGroupAction" scope="prototype">
+		<property name="tmGroupServiceProxy" ref="tmGroupServiceProxy"></property>
+	</bean>
+	
+	<!-- TmHotel实体Bean -->
+	<bean id="tmHotelDao" class="com.tour.dao.impl.TmHotelDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmHotelService" class="com.tour.service.impl.TmHotelServiceImpl">
+		<property name="tmHotelDao" ref="tmHotelDao"></property>
+	</bean>
+	
+	<bean id="tmHotelServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmHotelService"></property>
+	</bean>
+	
+	<bean name="aliasTmHotelAction" class="com.tour.web.TmHotelAction" scope="prototype">
+		<property name="tmHotelServiceProxy" ref="tmHotelServiceProxy"></property>
+	</bean>
+	
+	<!-- TmInfo实体Bean -->
+	<bean id="tmInfoDao" class="com.tour.dao.impl.TmInfoDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmInfoService" class="com.tour.service.impl.TmInfoServiceImpl">
+		<property name="tmInfoDao" ref="tmInfoDao"></property>
+	</bean>
+	
+	<bean id="tmInfoServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmInfoService"></property>
+	</bean>
+	
+	<bean name="aliasTmInfoAction" class="com.tour.web.TmInfoAction" scope="prototype">
+		<property name="tmInfoServiceProxy" ref="tmInfoServiceProxy"></property>
+	</bean>
+	
+	<!-- TmOrder实体Bean -->
+	<bean id="tmOrderDao" class="com.tour.dao.impl.TmOrderDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmOrderService" class="com.tour.service.impl.TmOrderServiceImpl">
+		<property name="tmOrderDao" ref="tmOrderDao"></property>
+	</bean>
+	
+	<bean id="tmOrderServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmOrderService"></property>
+	</bean>
+	
+	<bean name="aliasTmOrderAction" class="com.tour.web.TmOrderAction" scope="prototype">
+		<property name="tmOrderServiceProxy" ref="tmOrderServiceProxy"></property>
+	</bean>
+	
+	<!-- TmSchedule实体Bean -->
+	<bean id="tmScheduleDao" class="com.tour.dao.impl.TmScheduleDAOImpl" >
+		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
+	</bean>
+	
+	<bean id="tmScheduleService" class="com.tour.service.impl.TmScheduleServiceImpl">
+		<property name="tmScheduleDao" ref="tmScheduleDao"></property>
+	</bean>
+	
+	<bean id="tmScheduleServiceProxy" parent="baseTransactionProxy">
+		<property name="target" ref="tmScheduleService"></property>
+	</bean>
+	
+	<bean name="aliasTmScheduleAction" class="com.tour.web.TmScheduleAction" scope="prototype">
+		<property name="tmScheduleServiceProxy" ref="tmScheduleServiceProxy"></property>
 	</bean>
 
 </beans>

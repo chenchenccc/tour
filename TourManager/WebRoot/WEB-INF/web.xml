@@ -36,7 +36,7 @@
 	<!-- 配置applicationContext.xml路径 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/spring_framework.xml,
+		<param-value>/WEB-INF/classes/spring_framework.xml
 		</param-value>
 	</context-param>
 	

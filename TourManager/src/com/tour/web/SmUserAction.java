@@ -26,11 +26,7 @@ public class SmUserAction extends BaseAction{
 	public String listSmUser(){
 		List<SmUser> smUserList = smUserServiceProxy.querySmUser4List(request,smUser);
 		request.setAttribute("smUserList", smUserList);
-		if(smUserList == null || smUserList.size() == 0) {
-		    responseJson(false, "暂无结果");
-		}
-		
-		return SUCCESS;
+		return LIST_SUCCESS;
 	}
 	
 	/**
@@ -64,7 +60,7 @@ public class SmUserAction extends BaseAction{
 			responseJson(false, "修改失败!");
 			RJLog.error(e);
 		}
-		return SUCCESS;
+	return SUCCESS;
 	}
 	
 	/**

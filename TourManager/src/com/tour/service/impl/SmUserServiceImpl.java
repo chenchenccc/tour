@@ -1,8 +1,10 @@
 package com.tour.service.impl;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmUserDAO;
 import com.tour.model.SmUser;
 import com.tour.model.SmUserExample;
