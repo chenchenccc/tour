@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>后台管理</title>
+	<title>旅游管理系统</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/html/css/default.css">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css">
@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </noscript>
 <!-- 头部标题 -->
 <div data-options="region:'north',border:false" style="height:60px; padding:5px; background:#F3F3F3"> 
-	<a href="http://www.baidu.com/"><span class="northTitle">后台管理系统</span></a>
+	<span class="northTitle">旅游管理系统</span>
     <span class="loginInfo">欢迎 <font color="red">${loginPolice.xm}</font> , 角色:
     <c:forEach items="${loginRole}" var="loginRole">
 	    ${loginRole.jsmc },
@@ -131,7 +131,24 @@ var setting = {
 
 var zNodes;
 $(function() {
-	zNodes = ${loginModuleList };
+	//zNodes = ${loginModuleList };
+	zNodes =[
+		{ id:1, pId:0, name:"系统管理", open:true},
+		{ id:11, pId:1, name:"员工管理", file:"user/user.html"},
+		{ id:12, pId:1, name:"部门管理", file:"backup.html"},
+		{ id:13, pId:1, name:"角色管理", file:"authority.html"},
+		{ id:14, pId:1, name:"权限管理", file:"role.html"},
+		{ id:2, pId:0, name:"旅游管理", open:true},
+		{ id:21, pId:2, name:"酒店管理", file:""},
+		{ id:22, pId:2, name:"导游管理", file:""},
+		{ id:23, pId:2, name:"客户管理", file:""},
+		{ id:24, pId:2, name:"日程管理", file:""},
+		{ id:25, pId:2, name:"订单管理", file:""},
+		{ id:26, pId:2, name:"旅游团管理", file:""},
+		{ id:3, pId:0, name:"系统消息", open:true},
+		{ id:31, pId:3, name:"发布消息", file:""},
+		{ id:32, pId:3, name:"查看消息", file:""},
+	];
 	if(zNodes != ''){
 	   	InitLeftMenu();
 	} else {

@@ -7,6 +7,15 @@
 
 	<!-- 应用构建模块-->
     <package name="system" namespace="/" extends="default">
+		<!-- 登陆 -->
+		<action name="login" method="login" class="loginAction">
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="LOGIN_SUCCESS">/html/index.jsp</result>
+		    <result name="LOGIN_FAILE" type="dispatcher">/login.jsp</result>
+		</action> 
 
 		<!-- SmAutho实体Bean -->
 		<action name="smAutho_*" method="{1}" class="aliasSmAuthoAction">

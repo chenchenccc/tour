@@ -58,6 +58,10 @@
 		</property>
 	</bean>
 	
+	<bean name="loginAction" class="com.tour.web.LoginAction" scope="prototype">
+		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
+	</bean>
+	
 	<!-- SmAutho实体Bean -->
 	<bean id="smAuthoDao" class="com.tour.dao.impl.SmAuthoDAOImpl" >
 		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"></property>
