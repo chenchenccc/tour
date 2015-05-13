@@ -7,5 +7,19 @@ PUBLIC "-//ibatis.apache.org//DTD sql Map Config 2.0//EN"
 	<settings useStatementNamespaces="true"/>
 	
 	<!-- 系统管理 -->
+	<sqlMap resource="com/tour/sqlmap/sm_autho_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/sm_role_SqlMap.xml" />
 	<sqlMap resource="com/tour/sqlmap/sm_user_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/sm_user_role_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/sm_role_autho_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_customer_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_customer_group_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_department_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_detail_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_employee_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_group_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_hotel_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_info_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_order_SqlMap.xml" />
+	<sqlMap resource="com/tour/sqlmap/tm_schedule_SqlMap.xml" />
 </sqlMapConfig> 
