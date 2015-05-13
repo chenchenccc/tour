@@ -24,7 +24,20 @@ public class TmHotelServiceImpl implements TmHotelServiceIFC {
 		//构造Criteria
 		TmHotelExample example = new TmHotelExample();
 		Criteria criteria = example.createCriteria();
-	
+
+        try {
+            if(null != request.getParameter("rows") && null != request.getParameter("page")) {
+                int limit = Integer.parseInt(request.getParameter("rows"));
+                int start = (Integer.parseInt(request.getParameter("page")) - 1) * limit;
+                example.setLimitStart(start);
+                example.setLimitEnd(limit);
+            }
+            
+            criteria = criteria.andIsDelEqualTo( "1" );
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return tmHotelDao.selectByExample(example);
 	}
 	

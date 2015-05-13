@@ -24,7 +24,20 @@ public class TmGroupServiceImpl implements TmGroupServiceIFC {
 		//构造Criteria
 		TmGroupExample example = new TmGroupExample();
 		Criteria criteria = example.createCriteria();
-	
+
+        try {
+            if(null != request.getParameter("rows") && null != request.getParameter("page")) {
+                int limit = Integer.parseInt(request.getParameter("rows"));
+                int start = (Integer.parseInt(request.getParameter("page")) - 1) * limit;
+                example.setLimitStart(start);
+                example.setLimitEnd(limit);
+            }
+            
+            criteria = criteria.andIsDelEqualTo( "1" );
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return tmGroupDao.selectByExample(example);
 	}
 	

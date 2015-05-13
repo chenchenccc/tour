@@ -24,7 +24,20 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 		//构造Criteria
 		TmEmployeeExample example = new TmEmployeeExample();
 		Criteria criteria = example.createCriteria();
-	
+
+        try {
+            if(null != request.getParameter("rows") && null != request.getParameter("page")) {
+                int limit = Integer.parseInt(request.getParameter("rows"));
+                int start = (Integer.parseInt(request.getParameter("page")) - 1) * limit;
+                example.setLimitStart(start);
+                example.setLimitEnd(limit);
+            }
+            
+            criteria = criteria.andIsDelEqualTo( "1" );
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return tmEmployeeDao.selectByExample(example);
 	}
 	

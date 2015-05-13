@@ -24,7 +24,20 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 		//构造Criteria
 		SmUserExample example = new SmUserExample();
 		Criteria criteria = example.createCriteria();
-	
+
+        try {
+            if(null != request.getParameter("rows") && null != request.getParameter("page")) {
+                int limit = Integer.parseInt(request.getParameter("rows"));
+                int start = (Integer.parseInt(request.getParameter("page")) - 1) * limit;
+                example.setLimitStart(start);
+                example.setLimitEnd(limit);
+            }
+            
+            criteria = criteria.andIsDelEqualTo( "1" );
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return smUserDao.selectByExample(example);
 	}
 	
