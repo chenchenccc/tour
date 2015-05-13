@@ -80,6 +80,19 @@ public class SmAuthoServiceImpl implements SmAuthoServiceIFC {
 		smAuthoDao.updateByPrimaryKeySelective(smAutho);
 	}
 	
+	/**
+     *  @Description: 实体列表总数
+     */
+    public int countByExample(SmAutho smAutho) {
+        //构造Criteria
+        SmAuthoExample example = new SmAuthoExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return smAuthoDao.countByExample(example);
+    }
+	
 	public SmAuthoDAO getSmAuthoDao() {
 		return smAuthoDao;
 	}

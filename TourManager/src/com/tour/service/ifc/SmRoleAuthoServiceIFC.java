@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.tour.model.SmRoleAutho;
+import com.tour.model.TmHotel;
 
 public interface SmRoleAuthoServiceIFC {
 	
@@ -37,4 +38,8 @@ public interface SmRoleAuthoServiceIFC {
 	  */
 	void delSmRoleAutho(SmRoleAutho smRoleAutho);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(SmRoleAutho smRoleAutho);
 }

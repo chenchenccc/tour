@@ -86,4 +86,11 @@ public class TmCustomerGroupServiceImpl implements TmCustomerGroupServiceIFC {
 	public void setTmCustomerGroupDao(TmCustomerGroupDAO tmCustomerGroupDao) {
 		this.tmCustomerGroupDao = tmCustomerGroupDao;
 	}
+
+
+    @Override
+    public int countByExample( TmCustomerGroup tmCustomerGroup ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

@@ -37,4 +37,8 @@ public interface SmRoleServiceIFC {
 	  */
 	void delSmRole(SmRole smRole);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(SmRole smRole);
 }

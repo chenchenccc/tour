@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.TmHotel;
 import com.tour.model.TmSchedule;
 
 public interface TmScheduleServiceIFC {
@@ -37,4 +38,8 @@ public interface TmScheduleServiceIFC {
 	  */
 	void delTmSchedule(TmSchedule tmSchedule);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(TmSchedule tmSchedule);
 }

@@ -86,4 +86,11 @@ public class TmDepartmentServiceImpl implements TmDepartmentServiceIFC {
 	public void setTmDepartmentDao(TmDepartmentDAO tmDepartmentDao) {
 		this.tmDepartmentDao = tmDepartmentDao;
 	}
+
+
+    @Override
+    public int countByExample( TmDepartment tmDepartment ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

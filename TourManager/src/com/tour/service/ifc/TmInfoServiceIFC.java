@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.TmHotel;
 import com.tour.model.TmInfo;
 
 public interface TmInfoServiceIFC {
@@ -37,4 +38,8 @@ public interface TmInfoServiceIFC {
 	  */
 	void delTmInfo(TmInfo tmInfo);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(TmInfo tmInfo);
 }

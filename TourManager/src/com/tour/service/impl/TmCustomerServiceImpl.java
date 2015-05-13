@@ -86,4 +86,11 @@ public class TmCustomerServiceImpl implements TmCustomerServiceIFC {
 	public void setTmCustomerDao(TmCustomerDAO tmCustomerDao) {
 		this.tmCustomerDao = tmCustomerDao;
 	}
+
+
+    @Override
+    public int countByExample( TmCustomer tmCustomer ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

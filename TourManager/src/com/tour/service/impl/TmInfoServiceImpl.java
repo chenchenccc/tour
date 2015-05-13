@@ -86,4 +86,11 @@ public class TmInfoServiceImpl implements TmInfoServiceIFC {
 	public void setTmInfoDao(TmInfoDAO tmInfoDao) {
 		this.tmInfoDao = tmInfoDao;
 	}
+
+
+    @Override
+    public int countByExample( TmInfo tmInfo ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

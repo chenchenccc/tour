@@ -86,4 +86,11 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 	public void setTmEmployeeDao(TmEmployeeDAO tmEmployeeDao) {
 		this.tmEmployeeDao = tmEmployeeDao;
 	}
+
+
+    @Override
+    public int countByExample( TmEmployee tmEmployee ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

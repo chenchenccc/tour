@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmHotelDAO;
+import com.tour.model.SmAutho;
+import com.tour.model.SmAuthoExample;
 import com.tour.model.TmHotel;
 import com.tour.model.TmHotelExample;
 import com.tour.model.TmHotelExample.Criteria;
@@ -79,6 +81,19 @@ public class TmHotelServiceImpl implements TmHotelServiceIFC {
 	public void delTmHotel(TmHotel tmHotel) {
 		tmHotelDao.updateByPrimaryKeySelective(tmHotel);
 	}
+	
+	/**
+     *  @Description: 实体列表总数
+     */
+    public int countByExample(TmHotel tmHotel) {
+        //构造Criteria
+        TmHotelExample example = new TmHotelExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmHotelDao.countByExample(example);
+    }
 	
 	public TmHotelDAO getTmHotelDao() {
 		return tmHotelDao;

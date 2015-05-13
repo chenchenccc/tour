@@ -2,6 +2,8 @@ package com.tour.web;
 
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.TmHotel;
@@ -19,6 +21,8 @@ public class TmHotelAction extends BaseAction{
 	  */
 	private TmHotel tmHotel;
 	
+	private JSONArray json = null;
+	
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -26,7 +30,12 @@ public class TmHotelAction extends BaseAction{
 	public String listTmHotel(){
 		List<TmHotel> tmHotelList = tmHotelServiceProxy.queryTmHotel4List(request,tmHotel);
 		request.setAttribute("tmHotelList", tmHotelList);
-		return LIST_SUCCESS;
+		json = new JSONArray();
+		
+        JSONArray ret = json.fromObject(tmHotelList);
+        
+        responseJson(tmHotelServiceProxy.countByExample(tmHotel), ret);
+		return SUCCESS;
 	}
 	
 	/**

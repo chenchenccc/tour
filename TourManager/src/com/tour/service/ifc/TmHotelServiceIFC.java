@@ -37,4 +37,8 @@ public interface TmHotelServiceIFC {
 	  */
 	void delTmHotel(TmHotel tmHotel);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(TmHotel tmHotel);
 }

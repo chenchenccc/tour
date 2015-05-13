@@ -86,4 +86,11 @@ public class TmScheduleServiceImpl implements TmScheduleServiceIFC {
 	public void setTmScheduleDao(TmScheduleDAO tmScheduleDao) {
 		this.tmScheduleDao = tmScheduleDao;
 	}
+
+
+    @Override
+    public int countByExample( TmSchedule tmSchedule ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

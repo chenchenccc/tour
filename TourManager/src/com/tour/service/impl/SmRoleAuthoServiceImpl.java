@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmRoleAuthoDAO;
 import com.tour.model.SmRoleAutho;
 import com.tour.model.SmRoleAuthoExample;
@@ -79,6 +78,19 @@ public class SmRoleAuthoServiceImpl implements SmRoleAuthoServiceIFC {
 	public void delSmRoleAutho(SmRoleAutho smRoleAutho) {
 		smRoleAuthoDao.updateByPrimaryKeySelective(smRoleAutho);
 	}
+	
+	/**
+     *  @Description: 实体列表总数
+     */
+    public int countByExample(SmRoleAutho smRoleAutho) {
+        //构造Criteria
+        SmRoleAuthoExample example = new SmRoleAuthoExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return smRoleAuthoDao.countByExample(example);
+    }
 	
 	public SmRoleAuthoDAO getSmRoleAuthoDao() {
 		return smRoleAuthoDao;

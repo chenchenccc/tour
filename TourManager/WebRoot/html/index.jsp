@@ -139,7 +139,7 @@ $(function() {
 		{ id:13, pId:1, name:"角色管理", file:"authority.html"},
 		{ id:14, pId:1, name:"权限管理", file:"role.html"},
 		{ id:2, pId:0, name:"旅游管理", open:true},
-		{ id:21, pId:2, name:"酒店管理", file:""},
+		{ id:21, pId:2, name:"酒店管理", file:"/html/hotelMgr.jsp"},
 		{ id:22, pId:2, name:"导游管理", file:""},
 		{ id:23, pId:2, name:"客户管理", file:""},
 		{ id:24, pId:2, name:"日程管理", file:""},

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.tour.model.SmAutho;
+import com.tour.model.TmHotel;
 
 public interface SmAuthoServiceIFC {
 	
@@ -36,4 +37,8 @@ public interface SmAuthoServiceIFC {
 	  */
 	void delSmAutho(SmAutho smAutho);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(SmAutho smAutho);
 }

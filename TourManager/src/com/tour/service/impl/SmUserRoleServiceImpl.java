@@ -86,4 +86,11 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
 	public void setSmUserRoleDao(SmUserRoleDAO smUserRoleDao) {
 		this.smUserRoleDao = smUserRoleDao;
 	}
+
+
+    @Override
+    public int countByExample( SmUserRole smUserRole ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

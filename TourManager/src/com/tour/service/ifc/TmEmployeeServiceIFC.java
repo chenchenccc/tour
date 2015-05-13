@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.tour.model.TmEmployee;
+import com.tour.model.TmHotel;
 
 public interface TmEmployeeServiceIFC {
 	
@@ -37,4 +38,8 @@ public interface TmEmployeeServiceIFC {
 	  */
 	void delTmEmployee(TmEmployee tmEmployee);
 	
+	/**
+     * @Description: 实体列表总数
+     */
+    public int countByExample(TmEmployee tmEmployee);
 }

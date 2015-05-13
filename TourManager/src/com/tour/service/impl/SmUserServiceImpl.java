@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmUserDAO;
 import com.tour.model.SmUser;
 import com.tour.model.SmUserExample;
@@ -86,4 +85,11 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	public void setSmUserDao(SmUserDAO smUserDao) {
 		this.smUserDao = smUserDao;
 	}
+
+
+    @Override
+    public int countByExample( SmUser smUser ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

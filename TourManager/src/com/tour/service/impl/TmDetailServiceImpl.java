@@ -86,4 +86,11 @@ public class TmDetailServiceImpl implements TmDetailServiceIFC {
 	public void setTmDetailDao(TmDetailDAO tmDetailDao) {
 		this.tmDetailDao = tmDetailDao;
 	}
+
+
+    @Override
+    public int countByExample( TmDetail tmDetail ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

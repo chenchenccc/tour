@@ -86,4 +86,11 @@ public class TmOrderServiceImpl implements TmOrderServiceIFC {
 	public void setTmOrderDao(TmOrderDAO tmOrderDao) {
 		this.tmOrderDao = tmOrderDao;
 	}
+
+
+    @Override
+    public int countByExample( TmOrder tmOrder ) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }
