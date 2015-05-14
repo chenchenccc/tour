@@ -4,11 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmRoleDAO;
 import com.tour.model.SmRole;
 import com.tour.model.SmRoleExample;
-import com.tour.model.TmHotelExample;
 import com.tour.model.SmRoleExample.Criteria;
 import com.tour.service.ifc.SmRoleServiceIFC;
 
