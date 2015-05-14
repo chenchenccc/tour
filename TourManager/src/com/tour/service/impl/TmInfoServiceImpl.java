@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmInfoDAO;
+import com.tour.model.TmHotelExample;
 import com.tour.model.TmInfo;
 import com.tour.model.TmInfoExample;
 import com.tour.model.TmInfoExample.Criteria;
@@ -90,7 +91,12 @@ public class TmInfoServiceImpl implements TmInfoServiceIFC {
 
     @Override
     public int countByExample( TmInfo tmInfo ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmInfoExample example = new TmInfoExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmInfoDao.countByExample(example);
     }
 }

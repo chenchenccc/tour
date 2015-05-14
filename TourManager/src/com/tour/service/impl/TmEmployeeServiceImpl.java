@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmEmployeeDAO;
 import com.tour.model.TmEmployee;
 import com.tour.model.TmEmployeeExample;
@@ -87,10 +86,13 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 		this.tmEmployeeDao = tmEmployeeDao;
 	}
 
-
-    @Override
     public int countByExample( TmEmployee tmEmployee ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmEmployeeExample example = new TmEmployeeExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmEmployeeDao.countByExample(example);
     }
 }

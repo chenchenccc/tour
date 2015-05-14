@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmDetailDAO;
 import com.tour.model.TmDetail;
 import com.tour.model.TmDetailExample;
@@ -90,7 +89,12 @@ public class TmDetailServiceImpl implements TmDetailServiceIFC {
 
     @Override
     public int countByExample( TmDetail tmDetail ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmDetailExample example = new TmDetailExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmDetailDao.countByExample(example);
     }
 }

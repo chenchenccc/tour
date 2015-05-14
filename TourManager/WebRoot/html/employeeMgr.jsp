@@ -75,16 +75,19 @@ $(function(){
 		fitColumns:true,
 		rownumbers:true,
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
-		url: getPath() + "/smEmployee_listSmEmployee.action",  
+		url: getPath() + "/tmEmployee_listTmEmployee.action",  
 		columns:[[
-			{field:'name',title:'酒店名称',width:60,halign:"center", align:"center"},
-			{field:'regionId',title:'区域ID',width:60,halign:"center", align:"center"},
-			{field:'star',title:'星级',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
-				if(value == '1') return"<font color='black'>一星级</font>";
-				else if(value == '2') return"<font color='pink'>二星级</font>";
-				else if(value == '3') return"<font color='green'>三星级</font>";
-				else if(value == '4') return"<font color='grey'>四星级</font>";
-				else if(value == '5') return"<font color='red'>五星级</font>";
+			{field:'head',title:'头像',width:50, halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				return"<img src='images/banner2.jpg' width='35' height='35' />";
+			}},
+			{field:'employeeNum',title:'员工号',width:60,halign:"center", align:"center"},
+			{field:'realName',title:'姓名',width:60,halign:"center", align:"center"},
+			{field:'tel',title:'联系电话',width:60,halign:"center", align:"center"},
+			{field:'deptId',title:'部门ID',width:60,halign:"center", align:"center"},
+			{field:'sex',title:'性别',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '0') return"<font color='black'>未知</font>";
+				else if(value == '1') return"<font color='pink'>男</font>";
+				else if(value == '2') return"<font color='green'>女</font>";
 			}}
 		]],
 		showPageList:[10,20,30,40,50],

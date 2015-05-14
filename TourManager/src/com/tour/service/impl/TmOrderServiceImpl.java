@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmOrderDAO;
+import com.tour.model.TmHotelExample;
 import com.tour.model.TmOrder;
 import com.tour.model.TmOrderExample;
 import com.tour.model.TmOrderExample.Criteria;
@@ -90,7 +91,12 @@ public class TmOrderServiceImpl implements TmOrderServiceIFC {
 
     @Override
     public int countByExample( TmOrder tmOrder ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmOrderExample example = new TmOrderExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmOrderDao.countByExample(example);
     }
 }

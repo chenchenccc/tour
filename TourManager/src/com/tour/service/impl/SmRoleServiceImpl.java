@@ -8,6 +8,7 @@ import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmRoleDAO;
 import com.tour.model.SmRole;
 import com.tour.model.SmRoleExample;
+import com.tour.model.TmHotelExample;
 import com.tour.model.SmRoleExample.Criteria;
 import com.tour.service.ifc.SmRoleServiceIFC;
 
@@ -90,7 +91,12 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
 
     @Override
     public int countByExample( SmRole smRole ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        SmRoleExample example = new SmRoleExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return smRoleDao.countByExample(example);
     }
 }

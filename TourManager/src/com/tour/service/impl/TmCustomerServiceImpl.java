@@ -8,6 +8,7 @@ import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmCustomerDAO;
 import com.tour.model.TmCustomer;
 import com.tour.model.TmCustomerExample;
+import com.tour.model.TmHotelExample;
 import com.tour.model.TmCustomerExample.Criteria;
 import com.tour.service.ifc.TmCustomerServiceIFC;
 
@@ -90,7 +91,12 @@ public class TmCustomerServiceImpl implements TmCustomerServiceIFC {
 
     @Override
     public int countByExample( TmCustomer tmCustomer ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmCustomerExample example = new TmCustomerExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmCustomerDao.countByExample(example);
     }
 }

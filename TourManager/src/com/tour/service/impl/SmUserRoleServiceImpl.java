@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.SmUserRoleDAO;
 import com.tour.model.SmUserRole;
 import com.tour.model.SmUserRoleExample;
@@ -90,7 +89,12 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
 
     @Override
     public int countByExample( SmUserRole smUserRole ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        SmUserRoleExample example = new SmUserRoleExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return smUserRoleDao.countByExample(example);
     }
 }

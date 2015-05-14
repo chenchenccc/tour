@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmScheduleDAO;
+import com.tour.model.TmHotelExample;
 import com.tour.model.TmSchedule;
 import com.tour.model.TmScheduleExample;
 import com.tour.model.TmScheduleExample.Criteria;
@@ -88,9 +89,13 @@ public class TmScheduleServiceImpl implements TmScheduleServiceIFC {
 	}
 
 
-    @Override
     public int countByExample( TmSchedule tmSchedule ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmScheduleExample example = new TmScheduleExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmScheduleDao.countByExample(example);
     }
 }

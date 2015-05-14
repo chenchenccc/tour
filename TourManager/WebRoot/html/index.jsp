@@ -134,20 +134,20 @@ $(function() {
 	//zNodes = ${loginModuleList };
 	zNodes =[
 		{ id:1, pId:0, name:"系统管理", open:true},
-		{ id:11, pId:1, name:"员工管理", file:"user/user.html"},
-		{ id:12, pId:1, name:"部门管理", file:"backup.html"},
-		{ id:13, pId:1, name:"角色管理", file:"authority.html"},
-		{ id:14, pId:1, name:"权限管理", file:"role.html"},
+		{ id:11, pId:1, name:"员工管理", file:"/html/employeeMgr.jsp"},
+		{ id:12, pId:1, name:"部门管理", file:"/html/departmentMgr.jsp"},
+		{ id:13, pId:1, name:"角色管理", file:"/html/roleMgr.jsp"},
+		{ id:14, pId:1, name:"权限管理", file:"/html/authoMgr.jsp"},
 		{ id:2, pId:0, name:"旅游管理", open:true},
 		{ id:21, pId:2, name:"酒店管理", file:"/html/hotelMgr.jsp"},
-		{ id:22, pId:2, name:"导游管理", file:""},
-		{ id:23, pId:2, name:"客户管理", file:""},
-		{ id:24, pId:2, name:"日程管理", file:""},
-		{ id:25, pId:2, name:"订单管理", file:""},
-		{ id:26, pId:2, name:"旅游团管理", file:""},
+		{ id:22, pId:2, name:"导游管理", file:"/html/guiderMgr.jsp"},
+		{ id:23, pId:2, name:"客户管理", file:"/html/customerMgr.jsp"},
+		{ id:24, pId:2, name:"日程管理", file:"/html/scheduleMgr.jsp"},
+		{ id:25, pId:2, name:"订单管理", file:"/html/orderMgr.jsp"},
+		{ id:26, pId:2, name:"旅游团管理", file:"/html/groupMgr.jsp"},
 		{ id:3, pId:0, name:"系统消息", open:true},
-		{ id:31, pId:3, name:"发布消息", file:""},
-		{ id:32, pId:3, name:"查看消息", file:""},
+		{ id:31, pId:3, name:"发布消息", file:"/html/publishInfoMgr.jsp"},
+		{ id:32, pId:3, name:"查看消息", file:"/html/queryInfoMgr.jsp"},
 	];
 	if(zNodes != ''){
 	   	InitLeftMenu();

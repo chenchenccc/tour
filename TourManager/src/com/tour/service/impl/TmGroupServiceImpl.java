@@ -8,6 +8,7 @@ import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmGroupDAO;
 import com.tour.model.TmGroup;
 import com.tour.model.TmGroupExample;
+import com.tour.model.TmHotelExample;
 import com.tour.model.TmGroupExample.Criteria;
 import com.tour.service.ifc.TmGroupServiceIFC;
 
@@ -90,7 +91,12 @@ public class TmGroupServiceImpl implements TmGroupServiceIFC {
 
     @Override
     public int countByExample( TmGroup tmGroup ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmGroupExample example = new TmGroupExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmGroupDao.countByExample(example);
     }
 }

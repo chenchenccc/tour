@@ -88,8 +88,13 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 
 
     public int countByExample( SmUser smUser ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        SmUserExample example = new SmUserExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return smUserDao.countByExample(example);
     }
 
     public SmUser checkUsername( String username ) {

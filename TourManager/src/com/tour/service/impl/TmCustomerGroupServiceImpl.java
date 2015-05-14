@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmCustomerGroupDAO;
 import com.tour.model.TmCustomerGroup;
 import com.tour.model.TmCustomerGroupExample;
@@ -90,7 +89,12 @@ public class TmCustomerGroupServiceImpl implements TmCustomerGroupServiceIFC {
 
     @Override
     public int countByExample( TmCustomerGroup tmCustomerGroup ) {
-        // TODO Auto-generated method stub
-        return 0;
+        //构造Criteria
+        TmCustomerGroupExample example = new TmCustomerGroupExample();
+        Criteria criteria = example.createCriteria();
+        
+        criteria.andIsDelEqualTo( "1" );
+        
+        return tmCustomerGroupDao.countByExample(example);
     }
 }

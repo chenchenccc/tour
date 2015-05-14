@@ -14,7 +14,9 @@
 			targetProject="TourManager/src" />
 		<daoGenerator targetPackage="com.tour.dao"
 			targetProject="TourManager/src" type="SPRING" />
-		<table tableName="sm_autho"></table>
+			
+		<table tableName="tm_employee"></table>
+		<!--<table tableName="sm_autho"></table>
 		<table tableName="sm_role"></table>
 		<table tableName="sm_user"></table>
 		<table tableName="sm_user_role"></table>
@@ -31,6 +33,6 @@
 		<table tableName="tm_schedule"></table>
 		
 		
-	</ibatorContext>
+	--></ibatorContext>
 
 </ibatorConfiguration>
