@@ -1,8 +1,13 @@
 package com.tour.web;
 
+import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+
 import com.tour.commons.base.BaseAction;
+import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.TmInfo;
 import com.tour.service.ifc.TmInfoServiceIFC;
@@ -18,7 +23,8 @@ public class TmInfoAction extends BaseAction{
 	  * @Description:  实体对象
 	  */
 	private TmInfo tmInfo;
-	
+	private JSONArray jsonArr = null;
+    private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -26,7 +32,12 @@ public class TmInfoAction extends BaseAction{
 	public String listTmInfo(){
 		List<TmInfo> tmInfoList = tmInfoServiceProxy.queryTmInfo4List(request,tmInfo);
 		request.setAttribute("tmInfoList", tmInfoList);
-		return LIST_SUCCESS;
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+        
+        jsonArr= JSONArray.fromObject( tmInfoList, jsonConfig );
+        
+        responseJson(tmInfoServiceProxy.countByExample(tmInfo), jsonArr);
+        return SUCCESS;
 	}
 	
 	/**

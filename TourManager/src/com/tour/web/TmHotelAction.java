@@ -1,10 +1,13 @@
 package com.tour.web;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
+import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.TmHotel;
 import com.tour.service.ifc.TmHotelServiceIFC;
@@ -21,7 +24,8 @@ public class TmHotelAction extends BaseAction{
 	  */
 	private TmHotel tmHotel;
 	
-	private JSONArray json = null;
+	private JSONArray jsonArr = null;
+	private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -29,11 +33,11 @@ public class TmHotelAction extends BaseAction{
 	public String listTmHotel(){
 		List<TmHotel> tmHotelList = tmHotelServiceProxy.queryTmHotel4List(request,tmHotel);
 		request.setAttribute("tmHotelList", tmHotelList);
-		json = new JSONArray();
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
 		
-        JSONArray ret = json.fromObject(tmHotelList);
+		jsonArr= JSONArray.fromObject( tmHotelList, jsonConfig );
         
-        responseJson(tmHotelServiceProxy.countByExample(tmHotel), ret);
+        responseJson(tmHotelServiceProxy.countByExample(tmHotel), jsonArr);
 		return SUCCESS;
 	}
 	

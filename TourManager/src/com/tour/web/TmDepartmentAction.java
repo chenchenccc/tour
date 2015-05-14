@@ -1,8 +1,13 @@
 package com.tour.web;
 
+import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+
 import com.tour.commons.base.BaseAction;
+import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.TmDepartment;
 import com.tour.service.ifc.TmDepartmentServiceIFC;
@@ -18,7 +23,8 @@ public class TmDepartmentAction extends BaseAction{
 	  * @Description:  实体对象
 	  */
 	private TmDepartment tmDepartment;
-	
+	private JSONArray jsonArr = null;
+    private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -26,7 +32,12 @@ public class TmDepartmentAction extends BaseAction{
 	public String listTmDepartment(){
 		List<TmDepartment> tmDepartmentList = tmDepartmentServiceProxy.queryTmDepartment4List(request,tmDepartment);
 		request.setAttribute("tmDepartmentList", tmDepartmentList);
-		return LIST_SUCCESS;
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+        
+        jsonArr= JSONArray.fromObject( tmDepartmentList, jsonConfig );
+        
+        responseJson(tmDepartmentServiceProxy.countByExample(tmDepartment), jsonArr);
+        return SUCCESS;
 	}
 	
 	/**

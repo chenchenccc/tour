@@ -1,8 +1,13 @@
 package com.tour.web;
 
+import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
+
 import com.tour.commons.base.BaseAction;
+import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmRole;
 import com.tour.service.ifc.SmRoleServiceIFC;
@@ -18,7 +23,8 @@ public class SmRoleAction extends BaseAction{
 	  * @Description:  实体对象
 	  */
 	private SmRole smRole;
-	
+	private JSONArray jsonArr = null;
+    private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -26,7 +32,12 @@ public class SmRoleAction extends BaseAction{
 	public String listSmRole(){
 		List<SmRole> smRoleList = smRoleServiceProxy.querySmRole4List(request,smRole);
 		request.setAttribute("smRoleList", smRoleList);
-		return LIST_SUCCESS;
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+        
+        jsonArr= JSONArray.fromObject( smRoleList, jsonConfig );
+        
+        responseJson(smRoleServiceProxy.countByExample(smRole), jsonArr);
+        return SUCCESS;
 	}
 	
 	/**
