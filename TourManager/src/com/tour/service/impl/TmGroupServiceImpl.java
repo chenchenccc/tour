@@ -62,6 +62,7 @@ public class TmGroupServiceImpl implements TmGroupServiceIFC {
 	  * @Description: 保存添加实体对象 
 	  */
 	public void saveAddTmGroup(TmGroup tmGroup) {
+		tmGroup.setIsDel("1");
 		tmGroupDao.insert(tmGroup);
 	}
 	
