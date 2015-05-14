@@ -63,6 +63,7 @@ public class TmHotelServiceImpl implements TmHotelServiceIFC {
 	  * @Description: 保存添加实体对象 
 	  */
 	public void saveAddTmHotel(TmHotel tmHotel) {
+		tmHotel.setIsDel("1");
 		tmHotelDao.insert(tmHotel);
 	}
 	
