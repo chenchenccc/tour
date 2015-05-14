@@ -1,12 +1,18 @@
 package com.tour.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.dao.ifc.SmRoleDAO;
 import com.tour.dao.ifc.SmUserDAO;
+import com.tour.dao.ifc.SmUserRoleDAO;
+import com.tour.model.SmRole;
 import com.tour.model.SmUser;
 import com.tour.model.SmUserExample;
+import com.tour.model.SmUserRole;
+import com.tour.model.SmUserRoleExample;
 import com.tour.model.SmUserExample.Criteria;
 import com.tour.service.ifc.SmUserServiceIFC;
 
@@ -16,10 +22,14 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	  */
 	private SmUserDAO smUserDao;
 	
+	private SmUserRoleDAO smUserRoleDao;
+	
+	private SmRoleDAO SmRoleDao;
+	
 	/**
 	  * @Description: 获取实体列表 
 	  */
-	public List<SmUser> querySmUser4List(HttpServletRequest request, SmUser smUser) {
+	public List<SmUser> querySmUser4List(HttpServletRequest request, SmUser smUser) throws Exception {
 		//构造Criteria
 		SmUserExample example = new SmUserExample();
 		Criteria criteria = example.createCriteria();
@@ -44,7 +54,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	/**
 	  * @Description: 查看实体对象 
 	  */
-	public SmUser querySmUser4Bean(SmUser smUser) {
+	public SmUser querySmUser4Bean(SmUser smUser) throws Exception {
 		SmUser _smUser = null;
 		//构造Criteria
 		SmUserExample example = new SmUserExample();
@@ -59,7 +69,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	/**
 	  * @Description: 保存添加实体对象 
 	  */
-	public void saveAddSmUser(SmUser smUser) {
+	public void saveAddSmUser(SmUser smUser) throws Exception {
 		smUserDao.insert(smUser);
 	}
 	
@@ -67,7 +77,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	/**
 	  * @Description: 保存编辑实体对象 
 	  */
-	public void saveEditSmUser(SmUser smUser) {
+	public void saveEditSmUser(SmUser smUser) throws Exception {
 		smUserDao.updateByPrimaryKey(smUser);
 	}
 	
@@ -75,7 +85,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	/**
 	  * @Description: 删除实体对象 
 	  */
-	public void delSmUser(SmUser smUser) {
+	public void delSmUser(SmUser smUser) throws Exception {
 		smUserDao.updateByPrimaryKeySelective(smUser);
 	}
 	
@@ -85,9 +95,24 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 	public void setSmUserDao(SmUserDAO smUserDao) {
 		this.smUserDao = smUserDao;
 	}
+	
+    public SmUserRoleDAO getSmUserRoleDao() {
+        return smUserRoleDao;
+    }
 
+    public void setSmUserRoleDao( SmUserRoleDAO smUserRoleDao ) {
+        this.smUserRoleDao = smUserRoleDao;
+    }
 
-    public int countByExample( SmUser smUser ) {
+    public SmRoleDAO getSmRoleDao() {
+        return SmRoleDao;
+    }
+
+    public void setSmRoleDao( SmRoleDAO smRoleDao ) {
+        SmRoleDao = smRoleDao;
+    }
+
+    public int countByExample( SmUser smUser ) throws Exception {
         //构造Criteria
         SmUserExample example = new SmUserExample();
         Criteria criteria = example.createCriteria();
@@ -97,7 +122,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
         return smUserDao.countByExample(example);
     }
 
-    public SmUser checkUsername( String username ) {
+    public SmUser checkUsername( String username ) throws Exception {
         //构造Criteria
         SmUserExample example = new SmUserExample();
         Criteria criteria = example.createCriteria();
@@ -107,5 +132,26 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
             return (SmUser) list.get( 0 );
         }
         return null;
+    }
+
+    public List<SmRole> getRoleList( Integer userId ) throws Exception {
+        List<SmRole> ret = new ArrayList<SmRole>(); 
+        try {
+            SmUserRoleExample example = new SmUserRoleExample();
+            com.tour.model.SmUserRoleExample.Criteria criteria = example.createCriteria();
+            criteria.andUserIdEqualTo( userId );
+            List<SmUserRole> userRoleList = smUserRoleDao.selectByExample( example  );
+            
+            if( userRoleList != null && userRoleList.size() > 0 ) {
+                for (SmUserRole ur : userRoleList) {
+                    SmRole i = SmRoleDao.selectByPrimaryKey( ur.getRoleId() );
+                    ret.add( i );
+                } 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return ret;
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.SmAutho;
 import com.tour.model.SmRole;
 
 public interface SmRoleServiceIFC {
@@ -41,4 +42,14 @@ public interface SmRoleServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(SmRole smRole);
+
+
+    /**
+     * 获取权限列表
+     * @author chenrh
+     *
+     * @param roleIds
+     * @return
+     */
+    public List<SmAutho> getAuthoList( List<Integer> roleIds );
 }

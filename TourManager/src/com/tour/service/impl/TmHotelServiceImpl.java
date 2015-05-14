@@ -4,10 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmHotelDAO;
-import com.tour.model.SmAutho;
-import com.tour.model.SmAuthoExample;
 import com.tour.model.TmHotel;
 import com.tour.model.TmHotelExample;
 import com.tour.model.TmHotelExample.Criteria;

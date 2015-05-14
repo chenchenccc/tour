@@ -27,9 +27,10 @@ public class SmUserAction extends BaseAction{
     private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
-	  * @Description: 获取实体列表 
+	  * @throws Exception 
+	 * @Description: 获取实体列表 
 	  */
-	public String listSmUser(){
+	public String listSmUser() throws Exception{
 		List<SmUser> smUserList = smUserServiceProxy.querySmUser4List(request,smUser);
 		request.setAttribute("smUserList", smUserList);
 jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
@@ -41,9 +42,10 @@ jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 	}
 	
 	/**
-	  * @Description: 查看实体对象 
+	  * @throws Exception 
+	 * @Description: 查看实体对象 
 	  */
-	public String viewSmUser(){
+	public String viewSmUser() throws Exception{
 		SmUser _smUser = smUserServiceProxy.querySmUser4Bean(smUser);
 		request.setAttribute("operate", "view");
 		request.setAttribute("smUser", _smUser);
@@ -51,9 +53,10 @@ jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 	}
 	
 	/**
-	  * @Description: 编辑实体对象 
+	  * @throws Exception 
+	 * @Description: 编辑实体对象 
 	  */
-	public String editSmUser(){
+	public String editSmUser() throws Exception{
 		SmUser _smUser = smUserServiceProxy.querySmUser4Bean(smUser);
 		request.setAttribute("operate", "edit");
 		request.setAttribute("smUser", _smUser);

@@ -1,11 +1,17 @@
 package com.tour.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.dao.ifc.SmAuthoDAO;
+import com.tour.dao.ifc.SmRoleAuthoDAO;
 import com.tour.dao.ifc.SmRoleDAO;
+import com.tour.model.SmAutho;
 import com.tour.model.SmRole;
+import com.tour.model.SmRoleAutho;
+import com.tour.model.SmRoleAuthoExample;
 import com.tour.model.SmRoleExample;
 import com.tour.model.SmRoleExample.Criteria;
 import com.tour.service.ifc.SmRoleServiceIFC;
@@ -15,6 +21,8 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
 	  * @Description: DAO对象 
 	  */
 	private SmRoleDAO smRoleDao;
+	private SmRoleAuthoDAO smRoleAuthoDao;
+	private SmAuthoDAO smAuthoDao;
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -85,7 +93,22 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
 	public void setSmRoleDao(SmRoleDAO smRoleDao) {
 		this.smRoleDao = smRoleDao;
 	}
+    
+    public SmRoleAuthoDAO getSmRoleAuthoDao() {
+        return smRoleAuthoDao;
+    }
 
+    public void setSmRoleAuthoDao( SmRoleAuthoDAO smRoleAuthoDao ) {
+        this.smRoleAuthoDao = smRoleAuthoDao;
+    }
+    
+    public SmAuthoDAO getSmAuthoDao() {
+        return smAuthoDao;
+    }
+    
+    public void setSmAuthoDao( SmAuthoDAO smAuthoDao ) {
+        this.smAuthoDao = smAuthoDao;
+    }
 
     @Override
     public int countByExample( SmRole smRole ) {
@@ -96,5 +119,23 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
         criteria.andIsDelEqualTo( "1" );
         
         return smRoleDao.countByExample(example);
+    }
+
+
+    public List<SmAutho> getAuthoList( List<Integer> roleIds ) {
+        if(roleIds == null || roleIds.size() == 0) {
+            return null;
+        }
+        SmRoleAuthoExample example = new SmRoleAuthoExample();
+        com.tour.model.SmRoleAuthoExample.Criteria criteria = example.createCriteria();
+        criteria.andRoleIdIn( roleIds );
+        
+        List<SmRoleAutho> list = smRoleAuthoDao.selectByExample( example  );
+        
+        List<SmAutho> ret = new ArrayList<SmAutho>();
+        for (SmRoleAutho ra : list) {
+            ret.add( smAuthoDao.selectByPrimaryKey( ra.getAuthoId() ) );
+        }
+        return ret;
     }
 }

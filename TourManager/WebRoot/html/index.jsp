@@ -25,9 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 头部标题 -->
 <div data-options="region:'north',border:false" style="height:60px; padding:5px; background:#F3F3F3"> 
 	<span class="northTitle">旅游管理系统</span>
-    <span class="loginInfo">欢迎 <font color="red">${loginPolice.xm}</font> , 角色:
+    <span class="loginInfo">欢迎 <font color="red">${loginUser.realName}</font> , 角色:
     <c:forEach items="${loginRole}" var="loginRole">
-	    ${loginRole.jsmc },
+	    ${loginRoleName },
     </c:forEach>
     <a href="#" id="editpass"><font color="blue">修改密码</font></a> <a href="#" id="loginOut"><font color="blue">安全退出</font></a>
     </span>
@@ -131,8 +131,8 @@ var setting = {
 
 var zNodes;
 $(function() {
-	//zNodes = ${loginModuleList };
-	zNodes =[
+	zNodes = ${ loginAuthoList };
+	/*zNodes =[
 		{ id:1, pId:0, name:"系统管理", open:true},
 		{ id:11, pId:1, name:"员工管理", file:"/html/employeeMgr.jsp"},
 		{ id:12, pId:1, name:"部门管理", file:"/html/departmentMgr.jsp"},
@@ -148,7 +148,7 @@ $(function() {
 		{ id:3, pId:0, name:"系统消息", open:true},
 		{ id:31, pId:3, name:"发布消息", file:"/html/publishInfoMgr.jsp"},
 		{ id:32, pId:3, name:"查看消息", file:"/html/queryInfoMgr.jsp"},
-	];
+	];*/
 	if(zNodes != ''){
 	   	InitLeftMenu();
 	} else {
