@@ -60,6 +60,7 @@
 	
 	<bean name="loginAction" class="com.tour.web.LoginAction" scope="prototype">
 		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
+		<property name="smRoleServiceProxy" ref="smRoleServiceProxy"></property>
 	</bean>
 	
 	<!-- SmAutho实体Bean -->
@@ -86,6 +87,8 @@
 	
 	<bean id="smRoleService" class="com.tour.service.impl.SmRoleServiceImpl">
 		<property name="smRoleDao" ref="smRoleDao"></property>
+		<property name="smRoleAuthoDao" ref="smRoleAuthoDao"></property>
+		<property name="smAuthoDao" ref="smAuthoDao"></property>
 	</bean>
 	
 	<bean id="smRoleServiceProxy" parent="baseTransactionProxy">
@@ -103,6 +106,8 @@
 	
 	<bean id="smUserService" class="com.tour.service.impl.SmUserServiceImpl">
 		<property name="smUserDao" ref="smUserDao"></property>
+		<property name="smUserRoleDao" ref="smUserRoleDao"></property>
+		<property name="smRoleDao" ref="smRoleDao"></property>
 	</bean>
 	
 	<bean id="smUserServiceProxy" parent="baseTransactionProxy">
