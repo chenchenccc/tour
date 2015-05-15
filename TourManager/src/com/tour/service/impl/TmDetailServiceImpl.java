@@ -54,8 +54,20 @@ public class TmDetailServiceImpl implements TmDetailServiceIFC {
 		if(list != null && list.size() >= 0){
 			_tmDetail = list.get(0);
 		}
-	return _tmDetail;
+		return _tmDetail;
 	}
+	
+	/**
+	 * 根据ID查询对象
+	 * @author chenrh
+	 *
+	 * @param id
+	 * @return
+	 */
+	public TmDetail queryTmDetailById(Integer id) {
+        return tmDetailDao.selectByPrimaryKey( id );
+    }
+	
 	/**
 	  * @Description: 保存添加实体对象 
 	  */

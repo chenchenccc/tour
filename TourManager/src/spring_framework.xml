@@ -321,6 +321,7 @@
 	
 	<bean name="aliasTmScheduleAction" class="com.tour.web.TmScheduleAction" scope="prototype">
 		<property name="tmScheduleServiceProxy" ref="tmScheduleServiceProxy"></property>
+		<property name="tmDetailServiceProxy" ref="tmDetailServiceProxy"></property>
 	</bean>
 
 </beans>

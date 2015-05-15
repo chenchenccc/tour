@@ -26,9 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div data-options="region:'north',border:false" style="height:60px; padding:5px; background:#F3F3F3"> 
 	<span class="northTitle">旅游管理系统</span>
     <span class="loginInfo">欢迎 <font color="red">${loginUser.realName}</font> , 角色:
-    <c:forEach items="${loginRole}" var="loginRole">
-	    ${loginRoleName },
-    </c:forEach>
+    ${loginRoleName}
     <a href="#" id="editpass"><font color="blue">修改密码</font></a> <a href="#" id="loginOut"><font color="blue">安全退出</font></a>
     </span>
 </div>

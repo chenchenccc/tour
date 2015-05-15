@@ -193,7 +193,7 @@
 		<result name="LIST_SUCCESS" type="dispatcher">/platform/tmScheduleList.jsp</result>
 		<result name="VIEW_SUCCESS" type="dispatcher">/platform/tmScheduleInfo.jsp</result>
 		<result name="EDIT_SUCCESS" type="dispatcher">/platform/tmScheduleInfo.jsp</result>
-		<result name="ADD_SUCCESS" type="dispatcher">/platform/tmScheduleInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/addSchedule.jsp</result>
 		</action> 
 
     </package>

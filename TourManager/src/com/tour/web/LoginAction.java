@@ -88,7 +88,7 @@ public class LoginAction extends BaseAction {
             loginRoleName.append( r.getRoleName() ).append( "," );
             roleIds.add( r.getId() );
         }
-        request.setAttribute("loginRoleName", loginRoleName);
+        request.setAttribute("loginRoleName", loginRoleName.toString());
 
         // 设置权限
         List<SmAutho> authoList = smRoleServiceProxy.getAuthoList( roleIds );

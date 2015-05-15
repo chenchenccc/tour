@@ -1,5 +1,6 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import net.sf.json.JsonConfig;
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.TmDetail;
 import com.tour.model.TmSchedule;
+import com.tour.service.ifc.TmDetailServiceIFC;
 import com.tour.service.ifc.TmScheduleServiceIFC;
 
 @SuppressWarnings("serial")
@@ -18,11 +21,13 @@ public class TmScheduleAction extends BaseAction{
 	  * @Description: 业务代理对象 
 	  */
 	private TmScheduleServiceIFC tmScheduleServiceProxy;
+	private TmDetailServiceIFC tmDetailServiceProxy;
 	
 	/**
 	  * @Description:  实体对象
 	  */
 	private TmSchedule tmSchedule;
+	private TmDetail tmDetail;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
 	
@@ -110,6 +115,37 @@ public class TmScheduleAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 查询日程详细信息
+	 * @author chenrh
+	 *
+	 * @return
+	 */
+	public String queryDetailInfo() {
+	    Integer id = tmSchedule.getId();
+	    if(id == null || id.equals( 0 )) {
+	        return ERROR;
+	    }
+	    // 获取日程
+	    tmSchedule = tmScheduleServiceProxy.queryTmSchedule4Bean( tmSchedule );
+	    
+	    // 获取详细
+	    List<TmDetail> ret = new ArrayList<TmDetail>();
+	    if( tmSchedule == null || tmSchedule.getDetailId() == null ) {
+	        return SUCCESS;
+	    }
+	    String detailIds = tmSchedule.getDetailId();
+	    String[] list = detailIds.split( "," );
+	    for (String d : list) {
+            int i = Integer.parseInt( d );
+            TmDetail detail = tmDetailServiceProxy.queryTmDetailById( i );
+            ret.add( detail );
+        }
+	    jsonArr = JSONArray.fromObject( ret );
+	    responseJson( ret.size(), jsonArr );
+	    return SUCCESS;
+	}
+	
 	public TmScheduleServiceIFC getTmScheduleServiceProxy() {
 		return tmScheduleServiceProxy;
 	}
@@ -122,4 +158,25 @@ public class TmScheduleAction extends BaseAction{
 	public void setTmSchedule(TmSchedule tmSchedule) {
 		this.tmSchedule = tmSchedule;
 	}
+
+    
+    public TmDetailServiceIFC getTmDetailServiceProxy() {
+        return tmDetailServiceProxy;
+    }
+
+    
+    public void setTmDetailServiceProxy( TmDetailServiceIFC tmDetailServiceProxy ) {
+        this.tmDetailServiceProxy = tmDetailServiceProxy;
+    }
+
+    
+    public TmDetail getTmDetail() {
+        return tmDetail;
+    }
+
+    
+    public void setTmDetail( TmDetail tmDetail ) {
+        this.tmDetail = tmDetail;
+    }
+	
 }

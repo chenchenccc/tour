@@ -41,5 +41,10 @@ public interface TmDetailServiceIFC {
 	/**
      * @Description: 实体列表总数
      */
-    public int countByExample(TmDetail tmDetail);
+    int countByExample(TmDetail tmDetail);
+    
+    /**
+     * @Description: 根据ID查询对象
+     */
+    TmDetail queryTmDetailById(Integer id);
 }
