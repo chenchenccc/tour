@@ -15,7 +15,7 @@
 		<daoGenerator targetPackage="com.tour.dao"
 			targetProject="TourManager/src" type="SPRING" />
 			
-		<table tableName="tm_employee"></table>
+		<table tableName="sm_autho"></table>
 		<!--<table tableName="sm_autho"></table>
 		<table tableName="sm_role"></table>
 		<table tableName="sm_user"></table>

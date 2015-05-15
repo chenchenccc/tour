@@ -1,10 +1,13 @@
 package com.tour.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.dao.ifc.TmDepartmentDAO;
 import com.tour.dao.ifc.TmEmployeeDAO;
+import com.tour.model.TmDepartment;
 import com.tour.model.TmEmployee;
 import com.tour.model.TmEmployeeExample;
 import com.tour.model.TmEmployeeExample.Criteria;
@@ -15,6 +18,7 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 	  * @Description: DAO对象 
 	  */
 	private TmEmployeeDAO tmEmployeeDao;
+	private TmDepartmentDAO tmDepartmentDao;
 	
 	/**
 	  * @Description: 获取实体列表 
@@ -23,7 +27,7 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 		//构造Criteria
 		TmEmployeeExample example = new TmEmployeeExample();
 		Criteria criteria = example.createCriteria();
-
+		List<TmEmployee> ret = new ArrayList<TmEmployee>();
         try {
             if(null != request.getParameter("rows") && null != request.getParameter("page")) {
                 int limit = Integer.parseInt(request.getParameter("rows"));
@@ -34,10 +38,25 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
             
             criteria = criteria.andIsDelEqualTo( "1" );
             
+            // 获取关联部门
+            List<TmEmployee> list = tmEmployeeDao.selectByExample(example);
+            
+            for (TmEmployee e : list) {
+                if(e == null || e.getDeptId() == null) {
+                    ret.add( e );
+                    break;
+                }
+                TmDepartment d = tmDepartmentDao.selectByPrimaryKey( e.getDeptId() );
+                e.setDeptName( d.getDeptName() );
+                ret.add( e );
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return tmEmployeeDao.selectByExample(example);
+     
+        
+		return ret;
 	}
 	
 	
@@ -94,5 +113,15 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
         criteria.andIsDelEqualTo( "1" );
         
         return tmEmployeeDao.countByExample(example);
+    }
+
+
+    
+    public TmDepartmentDAO getTmDepartmentDao() {
+        return tmDepartmentDao;
+    }
+
+    public void setTmDepartmentDao( TmDepartmentDAO tmDepartmentDao ) {
+        this.tmDepartmentDao = tmDepartmentDao;
     }
 }

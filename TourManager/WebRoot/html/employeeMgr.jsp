@@ -83,7 +83,7 @@ $(function(){
 			{field:'employeeNum',title:'员工号',width:60,halign:"center", align:"center"},
 			{field:'realName',title:'姓名',width:60,halign:"center", align:"center"},
 			{field:'tel',title:'联系电话',width:60,halign:"center", align:"center"},
-			{field:'deptId',title:'部门ID',width:60,halign:"center", align:"center"},
+			{field:'deptName',title:'所属部门',width:60,halign:"center", align:"center"},
 			{field:'sex',title:'性别',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '0') return"<font color='black'>未知</font>";
 				else if(value == '1') return"<font color='pink'>男</font>";

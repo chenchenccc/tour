@@ -227,6 +227,7 @@
 	
 	<bean id="tmEmployeeService" class="com.tour.service.impl.TmEmployeeServiceImpl">
 		<property name="tmEmployeeDao" ref="tmEmployeeDao"></property>
+		<property name="tmDepartmentDao" ref="tmDepartmentDao"></property>
 	</bean>
 	
 	<bean id="tmEmployeeServiceProxy" parent="baseTransactionProxy">

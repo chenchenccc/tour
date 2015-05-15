@@ -1,14 +1,19 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
+import com.tour.commons.utils.PropertyGridBean;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmUser;
 import com.tour.model.TmEmployee;
 import com.tour.service.ifc.TmEmployeeServiceIFC;
 
@@ -34,7 +39,7 @@ public class TmEmployeeAction extends BaseAction{
 		request.setAttribute("tmEmployeeList", tmEmployeeList);
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
         
-        jsonArr= JSONArray.fromObject( tmEmployeeList, jsonConfig );
+        jsonArr = JSONArray.fromObject( tmEmployeeList, jsonConfig );
         
         responseJson(tmEmployeeServiceProxy.countByExample(tmEmployee), jsonArr);
         return SUCCESS;
@@ -110,6 +115,68 @@ public class TmEmployeeAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 获取个人信息
+	 * @author chenrh
+	 *
+	 * @return
+	 */
+	public String getPersonalInfo() {
+	    tmEmployee = new TmEmployee();
+	    // 获取session中的smUser
+	    HttpSession session = request.getSession();
+	    SmUser smUser = (SmUser) session.getAttribute( "loginUser" );
+	    if(smUser == null ) {
+	        // 用户未登录
+	        responseJson(0, null);
+	        return null;
+	    }
+	    Integer userId = smUser.getId();
+	    tmEmployee.setUserId( userId );
+	    TmEmployee e = tmEmployeeServiceProxy.queryTmEmployee4Bean( tmEmployee );
+	    List<PropertyGridBean> list = new ArrayList<PropertyGridBean>();
+	    {
+	        PropertyGridBean<String> p = new PropertyGridBean<String>();
+	        p.setName( "登陆名" );
+	        p.setValue( smUser.getLoginName() );
+	        p.setGroup( "基本信息" );
+	        p.setEditor( "text" );
+	        list.add( p );
+	    }
+	    {
+            PropertyGridBean<String> p = new PropertyGridBean<String>();
+            p.setName( "姓名" );
+            p.setValue( e.getRealName() );
+            p.setGroup( "基本信息" );
+            p.setEditor( "text" );
+            list.add( p );
+        }
+	    {
+            PropertyGridBean<String> p = new PropertyGridBean<String>();
+            p.setName( "年龄" );
+            p.setValue( smUser.getAge().toString() );
+            p.setGroup( "基本信息" );
+            p.setEditor( "numberbox" );
+            list.add( p );
+        }
+	    {
+            PropertyGridBean<String> p = new PropertyGridBean<String>();
+            p.setName( "联系电话" );
+            p.setValue( smUser.getTel() );
+            p.setGroup( "基本信息" );
+            p.setEditor( "numberbox" );
+            list.add( p );
+        }
+	    jsonArr = JSONArray.fromObject( list );
+	    responseJson(6, jsonArr);
+        return SUCCESS;
+	}
+	
+	public String savePersonalInfo() {
+	    responseJson(0, null);
+	    return SUCCESS;
+	}
+	
 	public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
 		return tmEmployeeServiceProxy;
 	}
@@ -122,4 +189,6 @@ public class TmEmployeeAction extends BaseAction{
 	public void setTmEmployee(TmEmployee tmEmployee) {
 		this.tmEmployee = tmEmployee;
 	}
+    
+	
 }

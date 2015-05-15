@@ -33,7 +33,7 @@ public class SmUserAction extends BaseAction{
 	public String listSmUser() throws Exception{
 		List<SmUser> smUserList = smUserServiceProxy.querySmUser4List(request,smUser);
 		request.setAttribute("smUserList", smUserList);
-jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
         
         jsonArr= JSONArray.fromObject( smUserList, jsonConfig );
         

@@ -3,6 +3,8 @@ package com.tour.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 
 import com.tour.commons.base.BaseAction;
@@ -67,9 +69,12 @@ public class LoginAction extends BaseAction {
         // TODO 验证成功, 获取权限等...
         // 设置密码为空
         smUser.setPassword( "" );
-        // 设置用户session
+        // 设置用户
         request.setAttribute("loginUser", smUser);
-        // 设置角色session
+        // 存入session
+        HttpSession session = request.getSession();
+        session.setAttribute( "loginUser", smUser );
+        // 设置角色
         Integer userId = smUser.getId();
         List<SmRole> list = smUserServiceProxy.getRoleList(userId);
         StringBuffer loginRoleName = new StringBuffer();
@@ -85,7 +90,7 @@ public class LoginAction extends BaseAction {
         }
         request.setAttribute("loginRoleName", loginRoleName);
 
-        // 设置权限session
+        // 设置权限
         List<SmAutho> authoList = smRoleServiceProxy.getAuthoList( roleIds );
         
         ZTreeBean ztree = null;
