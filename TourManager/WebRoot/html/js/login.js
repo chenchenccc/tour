@@ -6,9 +6,9 @@ function getPath() {
 }
 
 function login() {
-	if ($("#login").form('validate') == false) {
+	/*if ($("#login").form('validate') == false) {
 		return;
-	}
+	}*/
 	$('#login').submit();
 
 };
