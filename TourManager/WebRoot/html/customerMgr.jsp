@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>日程管理</title>
+	<title>客户管理</title>
 	<link rel="stylesheet" type="text/css" href="css/default.css">
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/icon.css" />
@@ -21,8 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table border="0">
         <tr>
          <form id="ff" method="post">
-          <td>名称</td>
-          <td><input name="tmSchedule.name" id="name" /></td>
+          <td>酒店名称</td>
+          <td><input name="tmHotel.name" id="name" /></td>
+          <td>所属区域</td>
+          <td><input name="tmHotel.region" id="region" /></td>
+          <td>酒店星级</td>
+          <td><input name="tmHotel.star" id="star" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
@@ -49,7 +53,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </body>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
-  <script type="text/javascript" src="../js/jquery-easyui-1.3.5/datagrid-detailview.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
@@ -63,7 +66,6 @@ function getPath() {
 $(function(){
 	
 	$("#tt").datagrid({
-		view: detailview,
 		height:$("#body").height()-$('#search_area').height()-5,
 		width:$("#body").width(),
 //		idField:'id',
@@ -73,47 +75,19 @@ $(function(){
 		fitColumns:true,
 		rownumbers:true,
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
-		url: getPath() + "/tmSchedule_listTmSchedule.action",  
+		url: getPath() + "/tmCustomer_listTmCustomer.action",  
 		columns:[[
-			{field:'groupId',title:'团号',width:60,halign:"center", align:"center"},
-			{field:'lineCode',title:'线路编号',width:60,halign:"center", align:"center"},
-			{field:'name',title:'名称',width:60,halign:"center", align:"center"},
-			{field:'totalPeople',title:'总人数',width:60,halign:"center", align:"center"},
-			{field:'totalDay',title:'总天数',width:60,halign:"center", align:"center"},
-			{field:'guiderIds',title:'负责导游',width:60,halign:"center", align:"center"},
-			{field:'departure',title:'出发地',width:60,halign:"center", align:"center"},
-			{field:'destination',title:'目的地',width:60,halign:"center", align:"center"},
-			{field:'startTime',title:'开始时间',width:60,halign:"center", align:"center"},
-			
-			{field:'endTime',title:'结束时间',width:60,halign:"center", align:"center"},
-			{field:'type',title:'路线类型',width:60,halign:"center", align:"center"},
-			{field:'grade',title:'团类型',width:60,halign:"center", align:"center"},
+			{field:'userId',title:'客户ID',width:60,halign:"center", align:"center"},
+			{field:'age',title:'年龄',width:60,halign:"center", align:"center"},
+			{field:'sex',title:'性别',width:60,halign:"center", align:"center"},
+			{field:'type',title:'游客类型',width:60,halign:"center", align:"center"},
+			{field:'tel',title:'联系方式',width:60,halign:"center", align:"center"},
+			{field:'identityNum',title:'身份证号',width:60,halign:"center", align:"center"},
+			{field:'classify',title:'游客类别',width:60,halign:"center", align:"center"},
+			{field:'isKey',title:'是否负责人',width:60,halign:"center", align:"center"},
+			{field:'superId',title:'所属负责人',width:60,halign:"center", align:"center"}
 			
 		]],
-		detailFormatter:function(index,row){
-           	return '<div class="ddv" style="padding:5px 0"></div>';
-       	},
-       	onExpandRow: function(index,row){
-		    var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
-		    $.ajax({
-				type: "POST",
-				url: getPath() +　'/tmSchedule_queryDetailInfo.action',
-				processData: true,
-				data: {'tmSchedule.id' : row.id},
-				success: function(data){
-					var json = eval('(' + data + ')');
-					ddv.html('');
-					for(var i in json.rows) {
-						var obj = json.rows[i];
-						ddv.append('<h4>第'+(++i)+'天    游：'+obj.tour + '</h4>');
-						ddv.append(obj.description);
-					}
-       				$('#dg').datagrid('fixDetailRowHeight',index);
-				}
-       		});
-		    
-		   
-		},
 		showPageList:[10,20,30,40,50],
 		pageNumber: 1, // 初始页数
 		pageSize: 10,  // 初始
@@ -131,7 +105,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
+								url: getPath() + '/tmCustomer_saveAddTmCustomer.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -157,7 +131,7 @@ $(function(){
 			    });
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
-				$.post(getPath()+"/tmSchedule_addTmSchedule.action",
+				$.post(getPath()+"/tmCustomer_addTmCustomer.action",
 				    function(result){
 						$("#content").append(result);
 				    });
@@ -177,7 +151,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/tmHotel_saveEditTmHotel.action',
+							url: getPath() + '/tmCustomer_saveEditTmCustomer.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -209,7 +183,7 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/tmHotel_editTmHotel.action",
+			$.post(getPath()+"/tmCustomer_editTmCustomer.action",
 				{"sysPolice.id": row.id},
 			    function(result){  
 					$("#content").append(result);
@@ -226,7 +200,7 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmHotel_delTmHotel.action',
+							$.post(getPath() + '/tmEmployee_delTmEmployee.action',
 								{"sysPolice.id" :  row.id,
 								"sysPolice.zt" :  'delete'
 								},
@@ -338,7 +312,7 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmHotel_viewTmHotel.action",
+	$.post(getPath()+"/tmEmployee_viewTmEmployee.action",
 		{"sysPolice.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);

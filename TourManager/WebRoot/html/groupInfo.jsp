@@ -55,6 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<option value="3">已经结束</option>
 				
 			</select>
+			</td>
 		</tr>
 	</table>
 </form>
@@ -72,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td><label><span class="x">*</span>状态</label></td>
 			<td>
-			<!-- TODO 星级选中状态 -->
+			<!-- TODO 状态选中状态 -->
 			<select name="tmGroup.status">
 				<option value="1" >未开始</option>
 				<option value="2" >正在路上</option>
