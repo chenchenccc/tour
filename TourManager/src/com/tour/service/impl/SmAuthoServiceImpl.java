@@ -99,4 +99,10 @@ public class SmAuthoServiceImpl implements SmAuthoServiceIFC {
 	public void setSmAuthoDao(SmAuthoDAO smAuthoDao) {
 		this.smAuthoDao = smAuthoDao;
 	}
+
+
+    @Override
+    public SmAutho queryById( Integer id ) {
+        return smAuthoDao.selectByPrimaryKey( id );
+    }
 }

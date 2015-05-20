@@ -38,6 +38,13 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
             
             criteria = criteria.andIsDelEqualTo( "1" );
             
+            if(tmEmployee != null && tmEmployee.getRealName() != null) {
+                criteria.andRealNameLike( "%" + tmEmployee.getRealName() + "%" );
+            }
+            if(tmEmployee != null && tmEmployee.getEmployeeNum() != null) {
+                criteria.andEmployeeNumLike( "%" + tmEmployee.getEmployeeNum() + "%" );
+            }
+            
             // 获取关联部门
             List<TmEmployee> list = tmEmployeeDao.selectByExample(example);
             

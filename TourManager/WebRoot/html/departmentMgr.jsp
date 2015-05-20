@@ -27,14 +27,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
          </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
-          </td>
-         </form>
         </tr>
       </table>
     </div>
@@ -77,7 +69,7 @@ $(function(){
 				return"<img src='images/banner2.jpg' width='35' height='35' />";
 			}},
 			{field:'deptName',title:'部门名称',width:60,halign:"center", align:"center"},
-			{field:'superId',title:'上级部门',width:60,halign:"center", align:"center"}
+			{field:'description',title:'部门描述',width:60,halign:"center", align:"center"}
 		]],
 		showPageList:[10,20,30,40,50],
 		pageNumber: 1, // 初始页数
@@ -96,7 +88,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
+								url: getPath() + '/tmDepartment_saveAddTmDepartment.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -122,7 +114,7 @@ $(function(){
 			    });
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
-				$.post(getPath()+"/tmHotel_addTmHotel.action",
+				$.post(getPath()+"/tmDepartment_addTmDepartment.action",
 				    function(result){
 						$("#content").append(result);
 				    });
@@ -142,7 +134,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/tmHotel_saveEditTmHotel.action',
+							url: getPath() + '/tmDepartment_saveEditTmDepartment.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -174,8 +166,8 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/tmHotel_editTmHotel.action",
-				{"sysPolice.id": row.id},
+			$.post(getPath()+"/tmDepartment_editTmDepartment.action",
+				{"tmDepartment.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -191,10 +183,8 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmHotel_delTmHotel.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
-								},
+							$.post(getPath() + '/tmDepartment_delTmDepartment.action',
+								{"tmDepartment.id" :  row.id},
 								function(json) {
 									var result = eval(json);
 									if (result && result.success) {
@@ -303,8 +293,8 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmHotel_viewTmHotel.action",
-		{"sysPolice.id" : row.id },
+	$.post(getPath()+"/tmDepartment_viewTmDepartment.action",
+		{"tmDepartment.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });

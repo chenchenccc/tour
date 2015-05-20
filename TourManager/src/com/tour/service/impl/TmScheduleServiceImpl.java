@@ -98,4 +98,10 @@ public class TmScheduleServiceImpl implements TmScheduleServiceIFC {
         
         return tmScheduleDao.countByExample(example);
     }
+
+
+    @Override
+    public TmSchedule queryById( Integer id ) throws Exception {
+        return tmScheduleDao.selectByPrimaryKey( id );
+    }
 }

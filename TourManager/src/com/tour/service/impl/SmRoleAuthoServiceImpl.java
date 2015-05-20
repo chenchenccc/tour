@@ -98,4 +98,10 @@ public class SmRoleAuthoServiceImpl implements SmRoleAuthoServiceIFC {
 	public void setSmRoleAuthoDao(SmRoleAuthoDAO smRoleAuthoDao) {
 		this.smRoleAuthoDao = smRoleAuthoDao;
 	}
+
+
+    @Override
+    public SmRoleAutho queryById( Integer id ) {
+        return smRoleAuthoDao.selectByPrimaryKey( id );
+    }
 }

@@ -97,4 +97,10 @@ public class TmCustomerGroupServiceImpl implements TmCustomerGroupServiceIFC {
         
         return tmCustomerGroupDao.countByExample(example);
     }
+
+
+    @Override
+    public TmCustomerGroup queryById( Integer id ) throws Exception {
+        return tmCustomerGroupDao.selectByPrimaryKey( id );
+    }
 }

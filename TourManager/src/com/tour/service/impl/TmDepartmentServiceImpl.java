@@ -34,6 +34,10 @@ public class TmDepartmentServiceImpl implements TmDepartmentServiceIFC {
             
             criteria = criteria.andIsDelEqualTo( "1" );
             
+            if(tmDepartment != null && tmDepartment.getDeptName() != null) {
+                criteria.andDeptNameLike( "%" + tmDepartment.getDeptName() + "%" );
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,5 +100,11 @@ public class TmDepartmentServiceImpl implements TmDepartmentServiceIFC {
         criteria.andIsDelEqualTo( "1" );
         
         return tmDepartmentDao.countByExample(example);
+    }
+
+
+    @Override
+    public TmDepartment queryById( Integer id ) throws Exception {
+        return tmDepartmentDao.selectByPrimaryKey( id );
     }
 }

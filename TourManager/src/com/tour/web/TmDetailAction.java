@@ -54,7 +54,7 @@ jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 	  * @Description: 编辑实体对象 
 	  */
 	public String editTmDetail(){
-		TmDetail _tmDetail = tmDetailServiceProxy.queryTmDetail4Bean(tmDetail);
+		TmDetail _tmDetail = tmDetailServiceProxy.queryTmDetailById(tmDetail.getId());
 		request.setAttribute("operate", "edit");
 		request.setAttribute("tmDetail", _tmDetail);
 		return EDIT_SUCCESS;
@@ -87,6 +87,7 @@ jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 	  */
 	public String saveAddTmDetail(){
 		try {
+		    tmDetail.setIsDel( "1" );
 			tmDetailServiceProxy.saveAddTmDetail(tmDetail);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
@@ -101,6 +102,7 @@ jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 	  */
 	public String delTmDetail(){
 		try {
+		    tmDetail.setIsDel( "2" );
 			tmDetailServiceProxy.delTmDetail(tmDetail);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {

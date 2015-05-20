@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.commons.global.PageBean;
 import com.tour.dao.ifc.TmGroupDAO;
+import com.tour.model.TmCustomer;
 import com.tour.model.TmGroup;
 import com.tour.model.TmGroupExample;
 import com.tour.model.TmHotelExample;
@@ -99,5 +100,11 @@ public class TmGroupServiceImpl implements TmGroupServiceIFC {
         criteria.andIsDelEqualTo( "1" );
         
         return tmGroupDao.countByExample(example);
+    }
+
+
+    @Override
+    public TmGroup queryById( Integer id ) throws Exception {
+        return tmGroupDao.selectByPrimaryKey( id );
     }
 }

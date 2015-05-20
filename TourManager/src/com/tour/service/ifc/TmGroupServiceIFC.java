@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.TmCustomer;
 import com.tour.model.TmGroup;
 import com.tour.model.TmHotel;
 
@@ -42,4 +43,14 @@ public interface TmGroupServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(TmGroup tmGroup);
+    
+    /**
+     * 根据ID获取对象
+     * @author chenrh
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public TmGroup queryById( Integer id ) throws Exception;
 }

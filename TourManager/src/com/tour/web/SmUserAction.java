@@ -157,7 +157,7 @@ public class SmUserAction extends BaseAction{
         }
         
         Integer id = loginUser.getId();
-        SmUser u = smUserServiceProxy.getById( id );
+        SmUser u = smUserServiceProxy.queryById( id );
         if( oldpass == null || !oldpass.equals( u.getPassword() )) {
             responseJson( false, "旧密码错误" );
             return SUCCESS;

@@ -97,4 +97,10 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
         
         return smUserRoleDao.countByExample(example);
     }
+
+
+    @Override
+    public SmUserRole queryById( Integer id ) {
+        return smUserRoleDao.selectByPrimaryKey( id );
+    }
 }

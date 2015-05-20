@@ -138,4 +138,10 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
         }
         return ret;
     }
+
+
+    @Override
+    public SmAutho queryById( Integer id ) {
+        return smAuthoDao.selectByPrimaryKey( id );
+    }
 }

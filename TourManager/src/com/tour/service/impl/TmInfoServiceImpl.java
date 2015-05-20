@@ -99,4 +99,10 @@ public class TmInfoServiceImpl implements TmInfoServiceIFC {
         
         return tmInfoDao.countByExample(example);
     }
+
+
+    @Override
+    public TmInfo queryById( Integer id ) throws Exception {
+        return tmInfoDao.selectByPrimaryKey( id );
+    }
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tour.model.SmAutho;
 import com.tour.model.SmRole;
+import com.tour.model.SmRoleAutho;
 
 public interface SmRoleServiceIFC {
 	
@@ -52,4 +53,9 @@ public interface SmRoleServiceIFC {
      * @return
      */
     public List<SmAutho> getAuthoList( List<Integer> roleIds );
+    
+    /**
+     * @Description: 根据ID获取对象
+     */
+    public SmAutho queryById(Integer id);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.TmCustomer;
 import com.tour.model.TmHotel;
 import com.tour.model.TmOrder;
 
@@ -42,4 +43,14 @@ public interface TmOrderServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(TmOrder tmOrder);
+    
+    /**
+     * 根据ID获取对象
+     * @author chenrh
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public TmOrder queryById( Integer id ) throws Exception;
 }

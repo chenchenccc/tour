@@ -99,4 +99,10 @@ public class TmHotelServiceImpl implements TmHotelServiceIFC {
 	public void setTmHotelDao(TmHotelDAO tmHotelDao) {
 		this.tmHotelDao = tmHotelDao;
 	}
+
+
+    @Override
+    public TmHotel queryById( Integer id ) throws Exception {
+        return tmHotelDao.selectByPrimaryKey( id );
+    }
 }

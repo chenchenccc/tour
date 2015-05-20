@@ -99,4 +99,10 @@ public class TmOrderServiceImpl implements TmOrderServiceIFC {
         
         return tmOrderDao.countByExample(example);
     }
+
+
+    @Override
+    public TmOrder queryById( Integer id ) throws Exception {
+        return tmOrderDao.selectByPrimaryKey( id );
+    }
 }

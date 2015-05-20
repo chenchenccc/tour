@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tour.model.SmRoleAutho;
 import com.tour.model.SmUserRole;
 import com.tour.model.TmHotel;
 
@@ -42,4 +43,9 @@ public interface SmUserRoleServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(SmUserRole smUserRole);
+    
+    /**
+     * @Description: 根据ID获取对象
+     */
+    public SmUserRole queryById(Integer id);
 }

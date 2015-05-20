@@ -68,7 +68,7 @@ public interface SmUserServiceIFC {
      * @param id
      * @return
      */
-    public SmUser getById( Integer id ) throws Exception;
+    public SmUser queryById( Integer id ) throws Exception;
 
 
     /**

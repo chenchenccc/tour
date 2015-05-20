@@ -51,10 +51,11 @@ public class TmGroupAction extends BaseAction{
 	}
 	
 	/**
-	  * @Description: 编辑实体对象 
+	  * @throws Exception 
+	 * @Description: 编辑实体对象 
 	  */
-	public String editTmGroup(){
-		TmGroup _tmGroup = tmGroupServiceProxy.queryTmGroup4Bean(tmGroup);
+	public String editTmGroup() throws Exception{
+		TmGroup _tmGroup = tmGroupServiceProxy.queryById( tmGroup.getId() );
 		request.setAttribute("operate", "edit");
 		request.setAttribute("tmGroup", _tmGroup);
 		return EDIT_SUCCESS;
@@ -87,6 +88,7 @@ public class TmGroupAction extends BaseAction{
 	  */
 	public String saveAddTmGroup(){
 		try {
+		    tmGroup.setIsDel( "1" );
 			tmGroupServiceProxy.saveAddTmGroup(tmGroup);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

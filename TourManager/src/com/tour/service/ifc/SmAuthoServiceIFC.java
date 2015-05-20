@@ -41,4 +41,9 @@ public interface SmAuthoServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(SmAutho smAutho);
+    
+    /**
+     * @Description: 根据ID获取对象
+     */
+    public SmAutho queryById(Integer id);
 }

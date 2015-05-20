@@ -99,4 +99,10 @@ public class TmCustomerServiceImpl implements TmCustomerServiceIFC {
         
         return tmCustomerDao.countByExample(example);
     }
+
+
+    @Override
+    public TmCustomer queryById( Integer id ) throws Exception {
+        return tmCustomerDao.selectByPrimaryKey( id );
+    }
 }

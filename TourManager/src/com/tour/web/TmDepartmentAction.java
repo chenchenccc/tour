@@ -51,10 +51,11 @@ public class TmDepartmentAction extends BaseAction{
 	}
 	
 	/**
-	  * @Description: 编辑实体对象 
+	  * @throws Exception 
+	 * @Description: 编辑实体对象 
 	  */
-	public String editTmDepartment(){
-		TmDepartment _tmDepartment = tmDepartmentServiceProxy.queryTmDepartment4Bean(tmDepartment);
+	public String editTmDepartment() throws Exception{
+		TmDepartment _tmDepartment = tmDepartmentServiceProxy.queryById(tmDepartment.getId());
 		request.setAttribute("operate", "edit");
 		request.setAttribute("tmDepartment", _tmDepartment);
 		return EDIT_SUCCESS;
@@ -87,6 +88,7 @@ public class TmDepartmentAction extends BaseAction{
 	  */
 	public String saveAddTmDepartment(){
 		try {
+		    tmDepartment.setIsDel( "1" );
 			tmDepartmentServiceProxy.saveAddTmDepartment(tmDepartment);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
@@ -101,6 +103,7 @@ public class TmDepartmentAction extends BaseAction{
 	  */
 	public String delTmDepartment(){
 		try {
+		    tmDepartment.setIsDel( "2" );
 			tmDepartmentServiceProxy.delTmDepartment(tmDepartment);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {
