@@ -57,5 +57,5 @@ public interface SmRoleServiceIFC {
     /**
      * @Description: 根据ID获取对象
      */
-    public SmAutho queryById(Integer id);
+    public SmRole queryById(Integer id);
 }

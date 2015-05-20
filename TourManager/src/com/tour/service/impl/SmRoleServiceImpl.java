@@ -42,6 +42,10 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
             
             criteria = criteria.andIsDelEqualTo( "1" );
             
+            if(smRole != null && smRole.getRoleName() != null) {
+                criteria.andRoleNameLike( "%" + smRole.getRoleName() + "%" );
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,7 +145,7 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
 
 
     @Override
-    public SmAutho queryById( Integer id ) {
-        return smAuthoDao.selectByPrimaryKey( id );
+    public SmRole queryById( Integer id ) {
+        return smRoleDao.selectByPrimaryKey( id );
     }
 }

@@ -54,7 +54,7 @@ public class SmRoleAction extends BaseAction{
 	  * @Description: 编辑实体对象 
 	  */
 	public String editSmRole(){
-		SmRole _smRole = smRoleServiceProxy.querySmRole4Bean(smRole);
+		SmRole _smRole = smRoleServiceProxy.queryById( smRole.getId() );
 		request.setAttribute("operate", "edit");
 		request.setAttribute("smRole", _smRole);
 		return EDIT_SUCCESS;
@@ -65,6 +65,7 @@ public class SmRoleAction extends BaseAction{
 	  */
 	public String saveEditSmRole(){
 		try {
+		    smRole.setIsDel( "1" );
 			smRoleServiceProxy.saveEditSmRole(smRole);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -87,6 +88,7 @@ public class SmRoleAction extends BaseAction{
 	  */
 	public String saveAddSmRole(){
 		try {
+		    smRole.setIsDel( "1" );
 			smRoleServiceProxy.saveAddSmRole(smRole);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
@@ -101,6 +103,7 @@ public class SmRoleAction extends BaseAction{
 	  */
 	public String delSmRole(){
 		try {
+		    smRole.setIsDel( "2" );
 			smRoleServiceProxy.delSmRole(smRole);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {
