@@ -44,7 +44,7 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
             for (TmEmployee e : list) {
                 if(e == null || e.getDeptId() == null) {
                     ret.add( e );
-                    break;
+                    continue;
                 }
                 TmDepartment d = tmDepartmentDao.selectByPrimaryKey( e.getDeptId() );
                 e.setDeptName( d.getDeptName() );
@@ -123,5 +123,9 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
 
     public void setTmDepartmentDao( TmDepartmentDAO tmDepartmentDao ) {
         this.tmDepartmentDao = tmDepartmentDao;
+    }
+
+    public TmEmployee queryById( Integer id ) {
+        return tmEmployeeDao.selectByPrimaryKey( id );
     }
 }

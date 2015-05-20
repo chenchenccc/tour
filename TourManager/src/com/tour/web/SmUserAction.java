@@ -3,6 +3,8 @@ package com.tour.web;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
@@ -23,6 +25,8 @@ public class SmUserAction extends BaseAction{
 	  * @Description:  实体对象
 	  */
 	private SmUser smUser;
+	private String oldpass;
+	private String newpass;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
 	
@@ -124,5 +128,43 @@ public class SmUserAction extends BaseAction{
 	}
 	public void setSmUser(SmUser smUser) {
 		this.smUser = smUser;
+	}
+	
+    public String getOldpass() {
+        return oldpass;
+    }
+    
+    public void setOldpass( String oldpass ) {
+        this.oldpass = oldpass;
+    }
+    
+    public String getNewpass() {
+        return newpass;
+    }
+
+    
+    public void setNewpass( String newpass ) {
+        this.newpass = newpass;
+    }
+
+    public String updatePassword() throws Exception {
+        // 获取session
+        HttpSession session = request.getSession();
+        SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+        if(loginUser == null || loginUser.getId() == null) {
+            responseJson( false, "用户未登录" );
+            return SUCCESS;
+        }
+        
+        Integer id = loginUser.getId();
+        SmUser u = smUserServiceProxy.getById( id );
+        if( oldpass == null || !oldpass.equals( u.getPassword() )) {
+            responseJson( false, "旧密码错误" );
+            return SUCCESS;
+        }
+        u.setPassword( newpass );
+        smUserServiceProxy.updataPassword(u);
+        responseJson( true, "密码修改成功" );
+	    return SUCCESS;
 	}
 }

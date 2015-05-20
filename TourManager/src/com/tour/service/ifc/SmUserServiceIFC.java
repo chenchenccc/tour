@@ -60,5 +60,24 @@ public interface SmUserServiceIFC {
      * @return
      */
     public List<SmRole> getRoleList( Integer userId ) throws Exception;
+    
+    /**
+     * 根据ID获取对象
+     * @author chenrh
+     *
+     * @param id
+     * @return
+     */
+    public SmUser getById( Integer id ) throws Exception;
+
+
+    /**
+     * 更新密码
+     * @author chenrh
+     *
+     * @param smUser
+     */
+    void updataPassword( SmUser smUser );
+    
 
 }

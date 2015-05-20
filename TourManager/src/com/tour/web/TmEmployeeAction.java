@@ -15,6 +15,7 @@ import com.tour.commons.utils.PropertyGridBean;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmUser;
 import com.tour.model.TmEmployee;
+import com.tour.service.ifc.SmUserServiceIFC;
 import com.tour.service.ifc.TmEmployeeServiceIFC;
 
 @SuppressWarnings("serial")
@@ -23,11 +24,14 @@ public class TmEmployeeAction extends BaseAction{
 	  * @Description: 业务代理对象 
 	  */
 	private TmEmployeeServiceIFC tmEmployeeServiceProxy;
+	private SmUserServiceIFC smUserServiceProxy;
+	
 	
 	/**
 	  * @Description:  实体对象
 	  */
 	private TmEmployee tmEmployee;
+	private SmUser smUser;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
 	
@@ -59,7 +63,7 @@ public class TmEmployeeAction extends BaseAction{
 	  * @Description: 编辑实体对象 
 	  */
 	public String editTmEmployee(){
-		TmEmployee _tmEmployee = tmEmployeeServiceProxy.queryTmEmployee4Bean(tmEmployee);
+		TmEmployee _tmEmployee = tmEmployeeServiceProxy.queryById( tmEmployee.getId() );
 		request.setAttribute("operate", "edit");
 		request.setAttribute("tmEmployee", _tmEmployee);
 		return EDIT_SUCCESS;
@@ -92,6 +96,23 @@ public class TmEmployeeAction extends BaseAction{
 	  */
 	public String saveAddTmEmployee(){
 		try {
+		    // 判断loginName是否存在
+		    SmUser i = smUserServiceProxy.checkUsername( smUser.getLoginName() );
+		    if( i != null) {
+		        responseJson( false, "登陆名已经存在" );
+		        return SUCCESS;
+		    }
+		    smUser.setIsAdmin( 1 );
+		    smUser.setIsDel( "1" );
+		    smUser.setRealName( tmEmployee.getRealName() );
+            // 添加user
+		    smUserServiceProxy.saveAddSmUser( smUser );
+		    
+		    // 查询
+		    SmUser u = smUserServiceProxy.checkUsername( smUser.getLoginName() );
+		    Integer uid = u.getId();
+		    tmEmployee.setUserId( uid );
+		    tmEmployee.setIsDel( "1" );
 			tmEmployeeServiceProxy.saveAddTmEmployee(tmEmployee);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
@@ -189,6 +210,25 @@ public class TmEmployeeAction extends BaseAction{
 	public void setTmEmployee(TmEmployee tmEmployee) {
 		this.tmEmployee = tmEmployee;
 	}
+
     
+    public SmUserServiceIFC getSmUserServiceProxy() {
+        return smUserServiceProxy;
+    }
+
+    
+    public void setSmUserServiceProxy( SmUserServiceIFC smUserServiceProxy ) {
+        this.smUserServiceProxy = smUserServiceProxy;
+    }
+
+    
+    public SmUser getSmUser() {
+        return smUser;
+    }
+
+    
+    public void setSmUser( SmUser smUser ) {
+        this.smUser = smUser;
+    }
 	
 }

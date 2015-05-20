@@ -7,13 +7,14 @@
 
 	<!-- 应用构建模块-->
     <package name="system" namespace="/" extends="default">
+    
+    	<!-- 验证码 -->
     	<action name="createImageAction" class="createImageAction">
 			<result name="success" type="stream">
 			    <param name="contentType">image/jpeg</param>
 			    <param name="inputName">inputStream</param>
 			</result>
     	</action>
-		
 		<!-- 登陆 -->
 		<action name="login" method="login" class="loginAction">
 			<result name="success" type="stream">
@@ -63,9 +64,9 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-		<result name="VIEW_SUCCESS" type="dispatcher">/html/userRoleInfo.jsp</result>
-		<result name="EDIT_SUCCESS" type="dispatcher">/html/userRoleInfo.jsp</result>
-		<result name="ADD_SUCCESS" type="dispatcher">/html/userRoleInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/smUserRoleInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/smUserRoleInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/smUserRoleInfo.jsp</result>
 		</action> 
 		
 		<!-- SmRoleAutho实体Bean -->
@@ -74,9 +75,9 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/smRoleAuthoInfo.jsp</result>
 		</action> 
 		
 		<!-- TmCustomer实体Bean -->
@@ -85,9 +86,9 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/customerInfo.jsp</result>
 		</action> 
 		
 		<!-- TmCustomerGroup实体Bean -->
@@ -96,53 +97,53 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/tmCustomerGroupInfo.jsp</result>
 		</action> 
 		
-		<!-- deparent实体Bean -->
-		<action name="deparent_*" method="{1}" class="aliasdeparentAction">
+		<!-- TmDepartment实体Bean -->
+		<action name="tmDepartment_*" method="{1}" class="aliasTmDepartmentAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/departmentInfo.jsp</result>
 		</action> 
 		
-		<!-- detail实体Bean -->
-		<action name="detail_*" method="{1}" class="aliasdetailAction">
+		<!-- TmDetail实体Bean -->
+		<action name="tmDetail_*" method="{1}" class="aliasTmDetailAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/detailInfo.jsp</result>
 		</action> 
 		
-		<!-- employee实体Bean -->
-		<action name="employee_*" method="{1}" class="aliasemployeeAction">
+		<!-- TmEmployee实体Bean -->
+		<action name="tmEmployee_*" method="{1}" class="aliasTmEmployeeAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/employeeInfo.jsp</result>
 		</action> 
 		
-		<!-- group实体Bean -->
-		<action name="group_*" method="{1}" class="aliasgroupAction">
+		<!-- TmGroup实体Bean -->
+		<action name="tmGroup_*" method="{1}" class="aliasTmGroupAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/groupInfo.jsp</result>
 		</action> 
 		
 		<!-- TmHotel实体Bean -->
@@ -151,42 +152,42 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/hotelInfo.jsp</result>
 		</action> 
 		
-		<!-- info实体Bean -->
-		<action name="info_*" method="{1}" class="aliasinfoAction">
+		<!-- TmInfo实体Bean -->
+		<action name="tmInfo_*" method="{1}" class="aliasTmInfoAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
 		<result name="VIEW_SUCCESS" type="dispatcher">/html/tmInfoInfo.jsp</result>
 		<result name="EDIT_SUCCESS" type="dispatcher">/html/tmInfoInfo.jsp</result>
-		<result name="ADD_SUCCESS" type="dispatcher">/html/addInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/tmInfoInfo.jsp</result>
 		</action> 
 		
-		<!-- order实体Bean -->
-		<action name="order_*" method="{1}" class="aliasorderAction">
+		<!-- TmOrder实体Bean -->
+		<action name="tmOrder_*" method="{1}" class="aliasTmOrderAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/orderInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/orderInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/addOrder.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/orderInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/orderInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/addOrder.jsp</result>
 		</action> 
 		
-		<!-- schedule实体Bean -->
-		<action name="schedule_*" method="{1}" class="aliasscheduleAction">
+		<!-- TmSchedule实体Bean -->
+		<action name="tmSchedule_*" method="{1}" class="aliasTmScheduleAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
-			<result name="VIEW_SUCCESS" type="dispatcher">/html/scheduleInfo.jsp</result>
-			<result name="EDIT_SUCCESS" type="dispatcher">/html/scheduleInfo.jsp</result>
-			<result name="ADD_SUCCESS" type="dispatcher">/html/addSchedule.jsp</result>
+		<result name="VIEW_SUCCESS" type="dispatcher">/html/scheduleInfo.jsp</result>
+		<result name="EDIT_SUCCESS" type="dispatcher">/html/scheduleInfo.jsp</result>
+		<result name="ADD_SUCCESS" type="dispatcher">/html/addSchedule.jsp</result>
 		</action> 
 
     </package>

@@ -42,4 +42,14 @@ public interface TmEmployeeServiceIFC {
      * @Description: 实体列表总数
      */
     public int countByExample(TmEmployee tmEmployee);
+
+
+    /**
+     * 根据id获取对象
+     * @author chenrh
+     *
+     * @param id
+     * @return
+     */
+    TmEmployee queryById( Integer id );
 }

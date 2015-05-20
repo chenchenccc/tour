@@ -154,4 +154,16 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
         
         return ret;
     }
+
+
+    @Override
+    public SmUser getById( Integer id ) throws Exception {
+        return smUserDao.selectByPrimaryKey( id );
+    }
+
+
+    @Override
+    public void updataPassword( SmUser smUser ) {
+        smUserDao.updateByPrimaryKey( smUser );
+    }
 }

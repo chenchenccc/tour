@@ -41,6 +41,13 @@ public class LoginAction extends BaseAction {
      */
     public String login() throws Exception {
         // 1、验证验证码是否匹配
+        HttpSession session = request.getSession();
+        String v = (String) session.getAttribute( "validcode" );
+        if( !validcode.equals( v )) {
+            System.out.println("验证码错误");
+            request.setAttribute("login_msg", "验证码错误"); // 用户对象
+            return LOGIN_FAILE;
+        }
         // 2、判断用户名是否存在
         SmUser smUser = smUserServiceProxy.checkUsername(username);
         if(smUser == null) {
@@ -72,7 +79,6 @@ public class LoginAction extends BaseAction {
         // 设置用户
         request.setAttribute("loginUser", smUser);
         // 存入session
-        HttpSession session = request.getSession();
         session.setAttribute( "loginUser", smUser );
         // 设置角色
         Integer userId = smUser.getId();
@@ -81,6 +87,8 @@ public class LoginAction extends BaseAction {
         List<Integer> roleIds = new ArrayList<Integer>();
         if(list == null || list.size() == 0) {
             System.out.println("该用户没有角色");
+            request.setAttribute( "loginRoleName", "暂无角色" );
+            request.setAttribute( "loginAuthoList", "[]" );
             return LOGIN_SUCCESS;
         }
         
