@@ -27,15 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
          </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
-          </td>
-         </form>
-        </tr>
+          </tr>
       </table>
     </div>
     <span id="openOrClose">0</span> 
@@ -95,7 +87,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
+								url: getPath() + '/smAutho_saveAddSmAutho.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -121,7 +113,7 @@ $(function(){
 			    });
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
-				$.post(getPath()+"/tmHotel_addTmHotel.action",
+				$.post(getPath()+"/smAutho_addSmAutho.action",
 				    function(result){
 						$("#content").append(result);
 				    });
@@ -141,7 +133,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/tmHotel_saveEditTmHotel.action',
+							url: getPath() + '/smAutho_saveEditSmAutho.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -173,8 +165,8 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/tmHotel_editTmHotel.action",
-				{"sysPolice.id": row.id},
+			$.post(getPath()+"/smAutho_editSmAutho.action",
+				{"smAutho.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -190,10 +182,8 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmHotel_delTmHotel.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
-								},
+							$.post(getPath() + '/smAutho_delSmAutho.action',
+								{"smAutho.id" :  row.id},
 								function(json) {
 									var result = eval(json);
 									if (result && result.success) {
@@ -207,58 +197,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',
@@ -302,8 +240,8 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmHotel_viewTmHotel.action",
-		{"sysPolice.id" : row.id },
+	$.post(getPath()+"/smAutho_viewSmAutho.action",
+		{"smAutho.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });

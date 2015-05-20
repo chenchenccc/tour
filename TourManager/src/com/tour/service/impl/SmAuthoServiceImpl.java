@@ -34,6 +34,10 @@ public class SmAuthoServiceImpl implements SmAuthoServiceIFC {
             
             criteria = criteria.andIsDelEqualTo( "1" );
             
+            if(smAutho != null && smAutho.getAuthoName() != null) {
+                criteria.andAuthoNameLike( "%" + smAutho.getAuthoName() + "%" );
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

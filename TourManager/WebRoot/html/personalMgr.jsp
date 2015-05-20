@@ -14,8 +14,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/icon.css" />
 </head>
 <body class="easyui-layout" >
-<table id="pg" style="width:800px"></table>
-<button onclick="savePersonInfo()">保存</button>
+<table id="pg" fit="true">
+<a id="btn" href="savePersonInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="margin:2px">保存</a>
+</table>
+
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/locale/easyui-lang-zh_CN.js"></script>

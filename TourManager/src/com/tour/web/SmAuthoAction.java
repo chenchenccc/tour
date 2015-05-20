@@ -54,7 +54,8 @@ public class SmAuthoAction extends BaseAction{
 	  * @Description: 编辑实体对象 
 	  */
 	public String editSmAutho(){
-		SmAutho _smAutho = smAuthoServiceProxy.querySmAutho4Bean(smAutho);
+	    
+		SmAutho _smAutho = smAuthoServiceProxy.queryById( smAutho.getId() );
 		request.setAttribute("operate", "edit");
 		request.setAttribute("smAutho", _smAutho);
 		return EDIT_SUCCESS;
@@ -65,6 +66,7 @@ public class SmAuthoAction extends BaseAction{
 	  */
 	public String saveEditSmAutho(){
 		try {
+		    smAutho.setIsDel( "1" );
 			smAuthoServiceProxy.saveEditSmAutho(smAutho);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -87,6 +89,7 @@ public class SmAuthoAction extends BaseAction{
 	  */
 	public String saveAddSmAutho(){
 		try {
+		    smAutho.setIsDel( "1" );
 			smAuthoServiceProxy.saveAddSmAutho(smAutho);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
@@ -101,6 +104,7 @@ public class SmAuthoAction extends BaseAction{
 	  */
 	public String delSmAutho(){
 		try {
+		    smAutho.setIsDel( "2" );
 			smAuthoServiceProxy.delSmAutho(smAutho);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {
