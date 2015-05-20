@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>旅游管理系统</title>
+	<title>旅行社信息管理系统 - 首页</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/html/css/default.css">
 	<link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css">
@@ -23,8 +23,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 </noscript>
 <!-- 头部标题 -->
-<div data-options="region:'north',border:false" style="height:60px; padding:5px; background:#F3F3F3"> 
-	<span class="northTitle">旅游管理系统</span>
+<div data-options="region:'north',border:false" style="height:60px; padding:5px; background:url('html/images/banner.png')"> 
+	<span class="northTitle">旅行社信息管理系统</span>
     <span class="loginInfo">欢迎 <font color="red">${loginUser.realName}</font> , 角色:
     ${loginRoleName}
     <a href="#" id="editpass"><font color="blue">修改密码</font></a> <a href="#" id="loginOut"><font color="blue">安全退出</font></a>
@@ -55,9 +55,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="easyui-layout" fit="true">
 		<div region="center" border="false" style="padding: 10px;  border: 1px solid #ccc;">
 			<table cellpadding='2'>
-				<tr><td>旧密码：</td><td><input id="txtOldPass" type="password" /></td></tr>
-				<tr><td>新密码：</td><td><input id="txtNewPass" type="password" /></td></tr>
-				<tr><td>确认密码：</td><td><input id="txtRePass" type="password" /></td></tr>
+				<tr><td>旧密码：</td><td><input id="oldpassword" type="password" /></td></tr>
+				<tr><td>新密码：</td><td><input id="newpassword" type="password" /></td></tr>
+				<tr><td>确认密码：</td><td><input id="confirmpassword" type="password" /></td></tr>
 			</table>
 		</div>
 	</div>
@@ -320,8 +320,7 @@ function openPwd() {
             text:'保存',
             iconCls:'icon-ok',
             handler:function(){
-        		serverLogin();
-                $("#w").dialog('close');
+            	serverLogin();
             }
         },{
             text:'取消',
@@ -339,9 +338,9 @@ function close() {
 
 //修改密码
 function serverLogin() {
-	var oldpass = $('#txtOldPass');
-	var newpass = $('#txtNewPass');
-	var rePass = $('#txtRePass');
+	var oldpass = $('#oldpassword');
+	var newpass = $('#newpassword');
+	var rePass = $('#confirmpassword');
 
 	if (oldpass.val() === '') {
 		showMsg('系统提示', '请输入旧密码！', 'warning');
@@ -360,16 +359,14 @@ function serverLogin() {
 		showMsg('系统提示', '两次密码不一至！请重新输入', 'warning');
 		return false;
 	}
-
-	showMsg('系统提示', '恭喜，密码修改成功！<br>您的新密码为：'+newpass.val(), 'info');
-	close();
 	
-/*	$.post('/ajax/editpassword.ashx?newpass=' + newpass.val(), function(msg) {
-		msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
+	$.post(getPath() + '/smUser_updatePassword.action',{'oldpass':oldpass.val(),'newpass':newpass.val()}, function(result) {
+		var json = eval('('+result+')');
+		showMsg('系统提示', json.msg, 'info');
 		newpass.val('');
 		rePass.val('');
 		close();
-	})*/
+	})
 
 }
 

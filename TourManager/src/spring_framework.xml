@@ -58,6 +58,9 @@
 		</property>
 	</bean>
 	
+	
+	<bean name="createImageAction" class="com.tour.web.CreateImageAction" scope="prototype"></bean>
+	
 	<bean name="loginAction" class="com.tour.web.LoginAction" scope="prototype">
 		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
 		<property name="smRoleServiceProxy" ref="smRoleServiceProxy"></property>
@@ -167,6 +170,7 @@
 	
 	<bean name="aliasTmCustomerAction" class="com.tour.web.TmCustomerAction" scope="prototype">
 		<property name="tmCustomerServiceProxy" ref="tmCustomerServiceProxy"></property>
+		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
 	</bean>
 	
 	<!-- TmCustomerGroup实体Bean -->
@@ -236,6 +240,8 @@
 	
 	<bean name="aliasTmEmployeeAction" class="com.tour.web.TmEmployeeAction" scope="prototype">
 		<property name="tmEmployeeServiceProxy" ref="tmEmployeeServiceProxy"></property>
+		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
+		
 	</bean>
 	
 	<!-- TmGroup实体Bean -->

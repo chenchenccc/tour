@@ -121,6 +121,7 @@ a:hover {
 	overflow:hidden;
 }
 .northTitle {
+	margin-left:150px;
 	font-family:'微软雅黑';
 	font-size:24px;
 	font-weight:bold;
@@ -132,7 +133,7 @@ a:hover {
 	display:block;
 	position:absolute;
 	bottom:5px;
-	right:10px;
+	right:55px;
 }
 
 #conditon{

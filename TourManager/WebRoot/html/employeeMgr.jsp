@@ -21,22 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table border="0">
         <tr>
          <form id="ff" method="post">
-          <td>员工号</td>
-          <td><input name="smEmployee.employeeNum" id="employeeNum" /></td>
-          <td>姓名</td>
-          <td><input name="smEmployee.realName" id="realName" /></td>
-          <td>部门</td>
-          <td><input name="smEmployee.deptId" id="deptId" /></td>
+          <td>员工号：</td>
+          <td><input name="tmEmployee.employeeNum" id="employeeNum" /></td>
+          <td>姓名：</td>
+          <td><input name="tmEmployee.realName" id="realName" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
-          </td>
-         </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
           </td>
          </form>
         </tr>
@@ -47,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!-- 数据表格区域 -->
   <table id="tt" style="table-layout:fixed;"></table>
   <!-- Dialog -->
-  <div id="dd"><div id="content" region="center" border="false" style="padding: 10px;  border: 1px solid #ccc;"></div>
+  <div id="dd"><div id="content" region="center" border="false" style="padding: 10px;  border: 1px solid #ccc; z-index: 1"></div>
  
   </div>
  </body>
@@ -107,7 +97,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
+								url: getPath() + '/tmEmployee_saveAddTmEmployee.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -133,7 +123,7 @@ $(function(){
 			    });
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
-				$.post(getPath()+"/tmHotel_addTmHotel.action",
+				$.post(getPath()+"/tmEmployee_addTmEmployee.action",
 				    function(result){
 						$("#content").append(result);
 				    });
@@ -153,7 +143,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/tmHotel_saveEditTmHotel.action',
+							url: getPath() + '/tmEmployee_saveEditTmEmployee.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -185,8 +175,8 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/tmHotel_editTmHotel.action",
-				{"sysPolice.id": row.id},
+			$.post(getPath()+"/tmEmployee_editTmEmployee.action",
+				{"tmEmployee.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -202,16 +192,17 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmHotel_delTmHotel.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
+							$.post(getPath() + '/tmEmployee_delTmEmployee.action',
+								{"tmEmployee.id" :  row.id,
+								"tmEmployee.isDel" :  '2'
 								},
 								function(json) {
 									var result = eval(json);
 									if (result && result.success) {
+										$.messager.show({title : '提示', msg : '删除成功'});
 										$('#tt').datagrid('reload'); 
 									} else {
-										$.messager.show({title : 'Error',msg : result.msg});
+										$.messager.show({title : '错误',msg : result.msg});
 									}
 								},'json');
 						}
@@ -219,58 +210,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',
@@ -308,14 +247,14 @@ function viewDetail(data){
             handler:function(){
                 $("#dd").dialog('close');
             }
-        }]
+        }],collapsible:true,resizable:true
     });
 	////
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmHotel_viewTmHotel.action",
-		{"sysPolice.id" : row.id },
+	$.post(getPath()+"/tmEmployee_viewTmEmployee.action",
+		{"tmEmployee.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });

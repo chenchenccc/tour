@@ -6,9 +6,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
-	<meta content="text/html; charset=gb2312" http-equiv=Content-Type>
+	<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
         <meta charset="utf-8">
-        <title>旅游信息管理系统 - 登陆</title>
+        <title>旅行社信息管理系统</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -28,10 +28,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <body onkeydown="keyLogin();">
 
         <div class="page-container">
-            <h1>旅游管理系统</h1>
+            <h1>旅行社信息管理系统</h1>
             <form method="post" id="login" action="login.action">
-                <input type="text" name="username" class="username" placeholder="用户名">
-                <input type="password" name="password" class="password" placeholder="密码">
+                <input type="text" name="username" class="username" placeholder="请输入用户名">
+                <input type="password" name="password" class="password" placeholder="请输入密码">
+                <input type="text" name="validcode" class="validcode" placeholder="请输入验证码">
+                <div><img class="validcode-img" src="createImageAction.action" onclick="this.src='createImageAction.action?'+ Math.random()" title="点击图片刷新验证码"/></div>
                 <div id="loginMsg">${ login_msg }</div>
                 <input class="button" type="button" value="登陆" onclick="login()" />
                 

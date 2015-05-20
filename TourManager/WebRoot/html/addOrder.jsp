@@ -19,32 +19,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<form id="ff" method="post">
 	    <table cellpadding="5">
 	        <tr>
-	            <td>Name:</td>
-	            <td><input class="easyui-textbox" type="text" name="name" data-options="required:true"></input></td>
+	            <td>预订客户:</td>
+	            <td><select class="easyui-combogrid" style="width:250px" data-options="
+			            panelWidth: 500,
+			            idField: 'id',
+			            textField: 'realName',
+			            url: getPath()+'/tmCustomer_listTmCustomer.action',
+			            method: 'post',
+			            columns: [[
+			                {field:'realName',title:'用户姓名',width:80,align:'center'},
+			                {field:'identityNum',title:'身份证号',width:120,align:'center'},
+			                {field:'tel',title:'电话号码',width:80,align:'center'},
+			                {field:'sex',title:'性别',width:80,align:'center',formatter:function(value,rowData,rowIndex){
+								if(value == '0') return'<font color=black>未知</font>';
+								else if(value == '1') return'<font color=pink>男</font>';
+								else if(value == '2') return'<font color=green>女</font>';
+								
+							}}
+			            ]],
+			            fitColumns: true
+			        ">
+			    </select></td>
 	        </tr>
 	        <tr>
-	            <td>Email:</td>
-	            <td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input></td>
+	            <td>人数</td>
+	            <td><input class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Subject:</td>
-	            <td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
+	            <td>所选日程:</td>
+	            <td><select class="easyui-combogrid" style="width:250px" data-options="
+			            panelWidth: 500,
+			            idField: 'id',
+			            textField: 'name',
+			            url: getPath()+'/tmSchedule_listTmSchedule.action',
+			            method: 'post',
+			            columns: [[
+			                {field:'name',title:'日程名称',width:80,align:'center'},
+			                {field:'totalDay',title:'总天数',width:120,align:'center'},
+			                {field:'totalPeople',title:'总人数',width:80,align:'center'},
+			                {field:'price',title:'价格',width:80,align:'center'},
+			                {field:'type',title:'类型',width:80,align:'center',formatter:function(value,rowData,rowIndex){
+								if(value == '1') return'<font color=black>短线</font>';
+								else if(value == '2') return'<font color=pink>长线</font>';
+							}},
+							{field:'gride',title:'等级',width:80,align:'center',formatter:function(value,rowData,rowIndex){
+								if(value == '1') return'<font color=black>标准团</font>';
+								else if(value == '2') return'<font color=pink>定制团</font>';
+							}},
+			                {field:'departure',title:'出发地',width:80,align:'center'},
+			                {field:'destination',title:'目的地',width:80,align:'center'},
+			                {field:'startTime',title:'开始时间',width:80,align:'center'},
+			                {field:'endTime',title:'结束时间',width:80,align:'center'},
+			                {field:'grider_ids',title:'导游',width:80,align:'center'}
+			            ]],
+			            fitColumns: true
+			        ">
+			    </select></td>
 	        </tr>
 	        <tr>
-	            <td>Message:</td>
-	            <td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px"></input></td>
+	            <td>订单描述:</td>
+	            <td><input class="easyui-textbox" name="orderDesc" data-options="multiline:true" style="height:60px"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Language:</td>
+	            <td>订单类型:</td>
 	            <td>
-	                <select class="easyui-combobox" name="language"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select>
+	                <select class="easyui-combobox" name="orderType"><option value="1">散客订单</option><option value="2">包团订单</option></select>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>总价格:</td>
+	            <td>
+	                <input class="easyui-textbox" type="text" name="price" data-options="readonly:true"></input>
 	            </td>
 	        </tr>
 	    </table>
 	</form>
 	<div style="text-align:center;padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">预订</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
 	    </div>
 	    </div>
 	</div>
