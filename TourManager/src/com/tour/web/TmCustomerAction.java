@@ -3,12 +3,15 @@ package com.tour.web;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmUser;
 import com.tour.model.TmCustomer;
 import com.tour.service.ifc.TmCustomerServiceIFC;
 
@@ -65,6 +68,12 @@ public class TmCustomerAction extends BaseAction{
 	  */
 	public String saveEditTmCustomer(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmCustomer.setUpdateUserId( loginUser.getId() );
+            }
+            tmCustomer.setUpdateTime( new Date() );
 			tmCustomerServiceProxy.saveEditTmCustomer(tmCustomer);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -87,6 +96,13 @@ public class TmCustomerAction extends BaseAction{
 	  */
 	public String saveAddTmCustomer(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmCustomer.setCreateUserId( loginUser.getId() );
+            }
+            tmCustomer.setCreateTime( new Date() );
+            tmCustomer.setIsDel( "1" );
 			tmCustomerServiceProxy.saveAddTmCustomer(tmCustomer);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

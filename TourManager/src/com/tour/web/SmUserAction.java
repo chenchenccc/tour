@@ -72,6 +72,12 @@ public class SmUserAction extends BaseAction{
 	  */
 	public String saveEditSmUser(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                smUser.setUpdateUserId( loginUser.getId() );
+            }
+            smUser.setUpdateTime( new Date() );
 			smUserServiceProxy.saveEditSmUser(smUser);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -94,6 +100,13 @@ public class SmUserAction extends BaseAction{
 	  */
 	public String saveAddSmUser(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                smUser.setCreateUserId( loginUser.getId() );
+            }
+            smUser.setCreateTime( new Date() );
+            smUser.setIsDel( "1" );
 			smUserServiceProxy.saveAddSmUser(smUser);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

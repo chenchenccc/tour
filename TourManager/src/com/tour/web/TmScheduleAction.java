@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmUser;
 import com.tour.model.TmDetail;
 import com.tour.model.TmSchedule;
 import com.tour.service.ifc.TmDetailServiceIFC;
@@ -70,6 +73,12 @@ public class TmScheduleAction extends BaseAction{
 	  */
 	public String saveEditTmSchedule(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmSchedule.setUpdateUserId( loginUser.getId().longValue() );
+            }
+            tmSchedule.setUpdateTime( new Date() );
 			tmScheduleServiceProxy.saveEditTmSchedule(tmSchedule);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -92,6 +101,12 @@ public class TmScheduleAction extends BaseAction{
 	  */
 	public String saveAddTmSchedule(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmSchedule.setCreateUserId( loginUser.getId() );
+            }
+            tmSchedule.setCreateTime( new Date() );
 			tmScheduleServiceProxy.saveAddTmSchedule(tmSchedule);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

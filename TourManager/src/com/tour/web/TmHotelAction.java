@@ -3,12 +3,15 @@ package com.tour.web;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmUser;
 import com.tour.model.TmHotel;
 import com.tour.service.ifc.TmHotelServiceIFC;
 
@@ -66,6 +69,12 @@ public class TmHotelAction extends BaseAction{
 	  */
 	public String saveEditTmHotel(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmHotel.setUpdateUserId( loginUser.getId() );
+            }
+            tmHotel.setUpdateTime( new Date() );
 			tmHotelServiceProxy.saveEditTmHotel(tmHotel);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -88,6 +97,13 @@ public class TmHotelAction extends BaseAction{
 	  */
 	public String saveAddTmHotel(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmHotel.setCreateUserId( loginUser.getId() );
+            }
+            tmHotel.setCreateTime( new Date() );
+            responseJson(true, "添加成功!");
 			tmHotelServiceProxy.saveAddTmHotel(tmHotel);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

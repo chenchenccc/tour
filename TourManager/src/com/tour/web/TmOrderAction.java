@@ -3,12 +3,15 @@ package com.tour.web;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmUser;
 import com.tour.model.TmOrder;
 import com.tour.service.ifc.TmOrderServiceIFC;
 
@@ -65,6 +68,12 @@ public class TmOrderAction extends BaseAction{
 	  */
 	public String saveEditTmOrder(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmOrder.setUpdateUserId( loginUser.getId().longValue() );
+            }
+            tmOrder.setUpdateTime( new Date() );
 			tmOrderServiceProxy.saveEditTmOrder(tmOrder);
 			responseJson(true, "修改成功!");
 		} catch (Exception e) {
@@ -87,6 +96,13 @@ public class TmOrderAction extends BaseAction{
 	  */
 	public String saveAddTmOrder(){
 		try {
+		    HttpSession session = request.getSession();
+            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
+            if(loginUser != null) {
+                tmOrder.setCreateUserId( loginUser.getId() );
+            }
+            tmOrder.setCreateTime( new Date() );
+            responseJson(true, "添加成功!");
 			tmOrderServiceProxy.saveAddTmOrder(tmOrder);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {

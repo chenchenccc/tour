@@ -31,15 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
          </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
-          </td>
-         </form>
-        </tr>
+          </tr>
       </table>
     </div>
     <span id="openOrClose">0</span> 
@@ -183,7 +175,7 @@ $(function(){
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
 			$.post(getPath()+"/tmHotel_editTmHotel.action",
-				{"sysPolice.id": row.id},
+				{"tmHotel.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -200,8 +192,8 @@ $(function(){
 						if (r) {
 							// 删除对象
 							$.post(getPath() + '/tmHotel_delTmHotel.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
+								{"tmHotel.id" :  row.id,
+								"tmHotel.zt" :  'delete'
 								},
 								function(json) {
 									var result = eval(json);
@@ -312,7 +304,7 @@ function viewDetail(data){
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
 	$.post(getPath()+"/tmHotel_viewTmHotel.action",
-		{"sysPolice.id" : row.id },
+		{"tmHotel.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });
