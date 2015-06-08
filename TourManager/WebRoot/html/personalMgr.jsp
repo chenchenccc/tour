@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body class="easyui-layout" >
 <table id="pg" fit="true">
-<a id="btn" href="savePersonInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="margin:2px">保存</a>
+<a id="btn" href="javascript:;" onclick="savePersonInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="margin:2px">保存</a>
 </table>
 
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery-1.10.2.min.js"></script>
@@ -46,8 +46,8 @@ function savePersonInfo() {
 		alert('没有修改任何数据');
 	}
 	// 保存修改数据
-	
-	/*$.ajax({
+	console.log(rows);
+	$.ajax({
 		type: "POST",
 		url: getPath() + '/tmEmployee_savePersonalInfo.action',
 		processData: true,
@@ -61,7 +61,7 @@ function savePersonInfo() {
 			}
 		   			
 		}
-	});*/
+	});
 }
 
 </script>

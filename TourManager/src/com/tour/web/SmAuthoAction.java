@@ -1,5 +1,6 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,14 +34,31 @@ public class SmAuthoAction extends BaseAction{
 	  * @Description: 获取实体列表 
 	  */
 	public String listSmAutho(){
-		List<SmAutho> smAuthoList = smAuthoServiceProxy.querySmAutho4List(request,smAutho);
-		request.setAttribute("smAuthoList", smAuthoList);
-		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
-        
-        jsonArr= JSONArray.fromObject( smAuthoList, jsonConfig );
-        
-        responseJson(smAuthoServiceProxy.countByExample(smAutho), jsonArr);
+	    try {
+	        List<SmAutho> smAuthoList = smAuthoServiceProxy.querySmAutho4List(request,smAutho);
+	        List<SmAutho> retList = new ArrayList<SmAutho>();
+	        // 循环list，并设置superAuthoName，保存retList
+	        for (SmAutho a : smAuthoList) {
+	            // 根据superId获取superAutho对象
+	            SmAutho superAutho = smAuthoServiceProxy.queryById( a.getSuperId() );
+	            if(superAutho == null) {
+	                a.setSuperAuthoName( "无" );
+	            } else {
+	                a.setSuperAuthoName( superAutho.getAuthoName() );
+	            }
+	            retList.add( a );
+	        }
+	        request.setAttribute("smAuthoList", retList);
+	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+	        
+	        jsonArr= JSONArray.fromObject( retList, jsonConfig );
+	        
+	        responseJson(smAuthoServiceProxy.countByExample(smAutho), jsonArr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return SUCCESS;
+		
 	}
 	
 	/**

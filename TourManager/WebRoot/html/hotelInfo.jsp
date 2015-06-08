@@ -12,12 +12,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="police">
 <c:if test="${operate eq 'view'}">
 <form id="saveform" method="post">
-	<table>
+	<table cellpadding="5">
 		<tr>
 			<td><label>酒店名称</label></td>
 			<td><label>${tmHotel.name}</label></td>
+		</tr>
+		<tr>
 			<td><label>酒店区域:</label></td>
-			<td><label>${tmHotel.regionId}</label></td>
+			<td><label>${tmHotel.regionName}</label></td>
 		</tr>
 		<tr>
 			<td><label>酒店星级:</label></td>
@@ -39,17 +41,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</c:if>
 			</label></td>
 		</tr>
+		<tr>
+			<td><label>地址:</label></td>
+			<td><label>${tmHotel.address}</label></td>
+		</tr>
 	</table>
 </form>
 </c:if>
 <c:if test="${operate eq 'add'}">
-<form id="saveform" method="post" action="<%=path %>/system/sysPolice_saveAddSysPolice.action">
+<form id="saveform" method="post" action="<%=path %>/tmHotel_saveAddTmHotel.action">
 	<table border="0">
 		<tr>
 			<td><label><span class="x">*</span>酒店名称</label></td>
 			<td><input name="tmHotel.name" id="name"></td>
+		</tr>
+		<tr>
 			<td><label><span class="x">*</span>酒店区域</label></td>
-			<td><input name="tmHotel.regionId" id="regionId"></td>
+			<td><input name="tmHotel.regionName" id="regionName"></td>
+		</tr>
+		<tr>
+			<td><label><span class="x">*</span>地址</label></td>
+			<td><input name="tmHotel.address" id="address"></td>
 		</tr>
 		<tr>
 			<td><label><span class="x">*</span>酒店星级</label></td>
@@ -66,14 +78,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </form>
 </c:if>
 <c:if test="${operate eq 'edit'}">
-<form id="saveform" method="post" action="<%=path %>/system/sysPolice_saveEditSysPolice.action">
+<form id="saveform" method="post" action="<%=path %>/system/tmHotel_saveEditTmHotel.action">
 
 	<table border="0">
 		<tr><input type="hidden" name="tmHotel.id" value="${tmHotel.id }"/>
 			<td><label><span class="x">*</span>酒店名称</label></td>
 			<td><input name="tmHotel.name" id="name" value="${tmHotel.name}"></td>
+		</tr>
+		<tr>
 			<td><label><span class="x">*</span>酒店区域</label></td>
-			<td><input name="tmHotel.regionId" id="regionId" value="${tmHotel.regionId}"></td>
+			<td><input name="tmHotel.regionName" id="regionName" value="${tmHotel.regionName}"></td>
+		</tr>
+		<tr>
+			<td><label><span class="x">*</span>地址</label></td>
+			<td><input name="tmHotel.address" id="address" value="${tmHotel.address}"></td>
 		</tr>
 		<tr>
 			<td><label><span class="x">*</span>酒店星级</label></td>

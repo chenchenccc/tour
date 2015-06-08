@@ -14,8 +14,10 @@ import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.PropertyGridBean;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmUser;
+import com.tour.model.TmDepartment;
 import com.tour.model.TmEmployee;
 import com.tour.service.ifc.SmUserServiceIFC;
+import com.tour.service.ifc.TmDepartmentServiceIFC;
 import com.tour.service.ifc.TmEmployeeServiceIFC;
 
 @SuppressWarnings("serial")
@@ -25,6 +27,7 @@ public class TmEmployeeAction extends BaseAction{
 	  */
 	private TmEmployeeServiceIFC tmEmployeeServiceProxy;
 	private SmUserServiceIFC smUserServiceProxy;
+	private TmDepartmentServiceIFC tmDepartmentServiceIFC;
 	
 	
 	/**
@@ -50,10 +53,15 @@ public class TmEmployeeAction extends BaseAction{
 	}
 	
 	/**
-	  * @Description: 查看实体对象 
+	  * @throws Exception 
+	 * @Description: 查看实体对象 
 	  */
-	public String viewTmEmployee(){
+	public String viewTmEmployee() throws Exception{
 		TmEmployee _tmEmployee = tmEmployeeServiceProxy.queryTmEmployee4Bean(tmEmployee);
+		if(_tmEmployee != null && _tmEmployee.getDeptId() != null ) {
+		    TmDepartment d = tmDepartmentServiceIFC.queryById( _tmEmployee.getDeptId() );
+		    _tmEmployee.setDeptName( d.getDeptName() );
+		}
 		request.setAttribute("operate", "view");
 		request.setAttribute("tmEmployee", _tmEmployee);
 		return VIEW_SUCCESS;
@@ -141,8 +149,9 @@ public class TmEmployeeAction extends BaseAction{
 	 * @author chenrh
 	 *
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPersonalInfo() {
+	public String getPersonalInfo() throws Exception {
 	    tmEmployee = new TmEmployee();
 	    // 获取session中的smUser
 	    HttpSession session = request.getSession();
@@ -154,7 +163,8 @@ public class TmEmployeeAction extends BaseAction{
 	    }
 	    Integer userId = smUser.getId();
 	    tmEmployee.setUserId( userId );
-	    TmEmployee e = tmEmployeeServiceProxy.queryTmEmployee4Bean( tmEmployee );
+//	    TmEmployee e = tmEmployeeServiceProxy.queryTmEmployee4Bean( tmEmployee );
+	    SmUser user = smUserServiceProxy.queryById( userId );
 	    List<PropertyGridBean> list = new ArrayList<PropertyGridBean>();
 	    {
 	        PropertyGridBean<String> p = new PropertyGridBean<String>();
@@ -167,7 +177,7 @@ public class TmEmployeeAction extends BaseAction{
 	    {
             PropertyGridBean<String> p = new PropertyGridBean<String>();
             p.setName( "姓名" );
-            p.setValue( e.getRealName() );
+            p.setValue( user.getRealName() );
             p.setGroup( "基本信息" );
             p.setEditor( "text" );
             list.add( p );
@@ -194,11 +204,23 @@ public class TmEmployeeAction extends BaseAction{
 	}
 	
 	public String savePersonalInfo() {
-	    responseJson(0, null);
-	    return SUCCESS;
+//	    responseJson(0, null);
+	    System.out.println(rows.length);
+	    responseJson( true, "haha" );
+        return SUCCESS;
 	}
+	private PropertyGridBean[] rows;
 	
-	public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
+    public PropertyGridBean[] getRows() {
+        return rows;
+    }
+
+    
+    public void setRows( PropertyGridBean[] rows ) {
+        this.rows = rows;
+    }
+
+    public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
 		return tmEmployeeServiceProxy;
 	}
 	public void setTmEmployeeServiceProxy(TmEmployeeServiceIFC tmEmployeeServiceProxy) {

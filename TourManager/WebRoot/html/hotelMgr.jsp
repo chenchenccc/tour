@@ -24,9 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <td>酒店名称</td>
           <td><input name="tmHotel.name" id="name" /></td>
           <td>所属区域</td>
-          <td><input name="tmHotel.region" id="region" /></td>
-          <td>酒店星级</td>
-          <td><input name="tmHotel.star" id="star" /></td>
+          <td><input name="tmHotel.regionName" id="regionName" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
@@ -70,7 +68,8 @@ $(function(){
 		url: getPath() + "/tmHotel_listTmHotel.action",  
 		columns:[[
 			{field:'name',title:'酒店名称',width:60,halign:"center", align:"center"},
-			{field:'regionId',title:'区域ID',width:60,halign:"center", align:"center"},
+			{field:'regionName',title:'区域名称',width:60,halign:"center", align:"center"},
+			{field:'address',title:'地址',width:60,halign:"center", align:"center"},
 			{field:'star',title:'星级',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='black'>一星级</font>";
 				else if(value == '2') return"<font color='pink'>二星级</font>";
@@ -208,58 +207,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',

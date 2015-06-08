@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmDepartment.deptName" value="${tmDepartment.deptName }" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
-	      	<td><span class="x">*</span>姓名</td>
+	      	<td><span class="x">*</span>描述</td>
 	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmDepartment.description" value="${tmDepartment.description }" data-options="required:true"></input></td>
 	  	</tr>
 	</table>

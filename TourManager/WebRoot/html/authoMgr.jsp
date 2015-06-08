@@ -65,8 +65,8 @@ $(function(){
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
 		url: getPath() + "/smAutho_listSmAutho.action",  
 		columns:[[
-			{field:'authoIcon',title:'权限图标',width:60,halign:"center", align:"center"},
 			{field:'authoName',title:'权限名称',width:60,halign:"center", align:"center"},
+			{field:'superAuthoName',title:'父权限',width:60,halign:"center", align:"center"},
 			{field:'description',title:'权限描述',width:60,halign:"center", align:"center"},
 			{field:'url',title:'权限URL',width:60,halign:"center", align:"center"}
 		]],

@@ -49,12 +49,14 @@ public class TmHotelServiceImpl implements TmHotelServiceIFC {
 		//构造Criteria
 		TmHotelExample example = new TmHotelExample();
 		Criteria criteria = example.createCriteria();
-	
+		
+		criteria.andIdEqualTo( tmHotel.getId() );
+		
 		List<TmHotel> list= tmHotelDao.selectByExample(example);
 		if(list != null && list.size() >= 0){
 			_tmHotel = list.get(0);
 		}
-	return _tmHotel;
+		return _tmHotel;
 	}
 	/**
 	  * @Description: 保存添加实体对象 

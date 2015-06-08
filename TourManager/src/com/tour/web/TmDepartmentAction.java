@@ -74,6 +74,7 @@ public class TmDepartmentAction extends BaseAction{
             if(loginUser != null) {
                 tmDepartment.setUpdateUserId( loginUser.getId() );
             }
+            tmDepartment.setIsDel( "1" );
             tmDepartment.setUpdateTime( new Date() );
 			tmDepartmentServiceProxy.saveEditTmDepartment(tmDepartment);
 			responseJson(true, "修改成功!");

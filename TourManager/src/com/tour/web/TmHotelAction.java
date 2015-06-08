@@ -74,6 +74,7 @@ public class TmHotelAction extends BaseAction{
             if(loginUser != null) {
                 tmHotel.setUpdateUserId( loginUser.getId() );
             }
+            tmHotel.setIsDel( "1" );
             tmHotel.setUpdateTime( new Date() );
 			tmHotelServiceProxy.saveEditTmHotel(tmHotel);
 			responseJson(true, "修改成功!");
@@ -118,6 +119,7 @@ public class TmHotelAction extends BaseAction{
 	  */
 	public String delTmHotel(){
 		try {
+		    tmHotel.setIsDel( "2" );
 			tmHotelServiceProxy.delTmHotel(tmHotel);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {

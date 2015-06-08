@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>所属部门</td>
-	      	<td><select class="easyui-combogrid" style="width:250px; z-index:100" data-options="
+	      	<td><select name="tmEmployee.deptId" class="easyui-combogrid" style="width:250px; z-index:100" data-options="
 		            panelWidth: 500,
 		            idField: 'id',
 		            textField: 'deptName',
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>所属部门</td>
-	      	<td><select class="easyui-combogrid" style="width:250px" data-options="
+	      	<td><select name="tmEmployee.deptId" class="easyui-combogrid" style="width:250px" data-options="
 		            panelWidth: 500,
 		            idField: 'id',
 		            textField: 'deptName',
@@ -104,7 +104,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                {field:'superId',title:'上级部门ID',width:120,align:'center'},
 		                {field:'description',title:'描述',width:80,align:'center'}
 		            ]],
-		            fitColumns: true
 		        ">
 		    </select></td>
 	  	</tr>

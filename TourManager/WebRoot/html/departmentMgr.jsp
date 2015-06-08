@@ -65,10 +65,8 @@ $(function(){
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
 		url: getPath() + "/tmDepartment_listTmDepartment.action",  
 		columns:[[
-			{field:'head',title:'部门图标',width:50, halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
-				return"<img src='images/banner2.jpg' width='35' height='35' />";
-			}},
 			{field:'deptName',title:'部门名称',width:60,halign:"center", align:"center"},
+			{field:'createTime',title:'创建时间',width:60,halign:"center", align:"center"},
 			{field:'description',title:'部门描述',width:60,halign:"center", align:"center"}
 		]],
 		showPageList:[10,20,30,40,50],
@@ -141,7 +139,7 @@ $(function(){
 								var result = eval("("+data+")");
 								if (result && result.success) {
 									$('#tt').datagrid('reload');
-									$.messager.show({title : '信息',msg : result.msg});
+									$.messager.show({title : '提示', msg : '修改成功'});
 								} else {
 									$.messager.show({title : '错误',msg : result.msg});
 								}
@@ -189,6 +187,7 @@ $(function(){
 									var result = eval(json);
 									if (result && result.success) {
 										$('#tt').datagrid('reload'); 
+										$.messager.show({title : '提示', msg : '删除成功'});
 									} else {
 										$.messager.show({title : 'Error',msg : result.msg});
 									}
@@ -198,58 +197,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',

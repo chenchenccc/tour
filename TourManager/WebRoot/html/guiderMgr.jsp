@@ -180,7 +180,7 @@ $(function(){
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
 			$.post(getPath()+"/tmEmployee_editTmEmployee.action",
-				{"sysPolice.id": row.id},
+				{"emEmployee.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -213,58 +213,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',
@@ -309,7 +257,7 @@ function viewDetail(data){
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
 	$.post(getPath()+"/tmEmployee_viewTmEmployee.action",
-		{"sysPolice.id" : row.id },
+		{"tmEmployee.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });
