@@ -9,182 +9,131 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style>
 #police table,#police td,#police th{border:1px solid #ccc;border-collapse:collapse;}
 </style>
-<div id="police">
+<div id="customer">
 <c:if test="${operate eq 'view'}">
 <form id="saveform" method="post">
-	<table>
+	<table cellpadding="5">
 		<tr>
-			<td><label>客户Id</label></td>
-			<td><label>${tmCustomer.userId}</label></td>
-			<td><label>年龄</label></td>
+			<td><label>姓名：</label></td>
+			<td><label>${tmCustomer.realName}</label></td>
+		</tr>
+		<tr>
+			<td><label>年龄:</label></td>
 			<td><label>${tmCustomer.age}</label></td>
 		</tr>
 		<tr>
-			<td><label>性别：</label></td>
-			<td><label>
-			<c:if test="${tmCustomer.sex eq '0'}">
-			未知
-			</c:if>
-			<c:if test="${tmCustomer.sex eq '1'}">
-			男
-			</c:if>
-			<c:if test="${tmCustomer.sex eq '2'}">
-			女
-			</c:if>
-			</label></td>
-			<td><label>旅客类型:</label></td>
-			<td><label>
-			<c:if test="${tmCustomer.sex eq '1'}">
-			成人
-			</c:if>
-			<c:if test="${tmCustomer.sex eq '2'}">
-			小孩
-			</c:if>
-			<c:if test="${tmCustomer.sex eq '3'}">
-			学生
-			</c:if>
-			</label></td>
+			<td><label>性别:</label></td>
+			<td><label>${tmCustomer.sex}</label></td>
 		</tr>
 		<tr>
-			<td><label>联系方式</label></td>
+			<td><label>游客类型:</label></td>
+			<td><label>${tmCustomer.type}</label></td>
+		</tr>
+		<tr>
+			<td><label>联系方式:</label></td>
 			<td><label>${tmCustomer.tel}</label></td>
-			<td><label>身份证号</label></td>
+		</tr>
+		<tr>
+			<td><label>身份证号:</label></td>
 			<td><label>${tmCustomer.identityNum}</label></td>
 		</tr>
 		<tr>
-			<td><label>游客类别</label></td>
-			<td><label>
-			<c:if test="${tmCustomer.classify eq '1'}">
-			散客
-			</c:if>
-			<c:if test="${tmCustomer.classify eq '2'}">
-			组团
-			</c:if>
-			</label></td>
-			<td><label>是否负责人</label></td>
-			<td><label>
-			<c:if test="${tmCustomer.isKey eq '1'}">
-			是
-			</c:if>
-			<c:if test="${tmCustomer.isKey eq '2'}">
-			否
-			</c:if>
-			</label></td>
+			<td><label>游客类型:</label></td>
+			<td><label>${tmCustomer.classify}</label></td>
 		</tr>
 		<tr>
-			<td><label>所属负责人</label></td>
-			<td><label>${tmCustomer.superId}</label></td>
+			<td><label>是否负责人:</label></td>
+			<td><label>${tmCustomer.isKey}</label></td>
+		</tr>
+		<tr>
+			<td><label>所属负责人:</label></td>
+			<td><label>${tmCustomer.superName}</label></td>
 		</tr>
 	</table>
 </form>
 </c:if>
 <c:if test="${operate eq 'add'}">
-<form id="saveform" method="post" action="<%=path %>/system/sysPolice_saveAddSysPolice.action">
-	<table border="0">
-		<tr>
-			<td><label><span class="x">*</span>客户Id</label></td>
-			<td><input name="tmCustomer.userId." id="userId"></td>
-			<td><label><span class="x">*</span>年龄</label></td>
-			<td><input name="tmCustomer.age." id="age">
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>性别：</label></td>
-			<td>
-			<select name="tmCustomer.sex">
-				<option value="0">未知</option>
-				<option value="1">男</option>
-				<option value="2">女</option>
-			</select>
-			</td>
-			<td><label><span class="x">*</span>旅客类型:</label></td>
-			<td>
-			<select name="tmCustomer.type">
-				<option value="1">成人</option>
-				<option value="2">小孩</option>
-				<option value="3">学生</option>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>联系方式</label></td>
-			<td><input name="tmCustomer.tel." id="tel"></td>
-			<td><label><span class="x">*</span>身份证号</label></td>
-			<td><input name="tmCustomer.identityNum." id="identityNum"></td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>游客类别</label></td>
-			<td>
-			<select name="tmCustomer.classify">
-				<option value="1">散客</option>
-				<option value="2">组团</option>
-			</select>
-			</td>
-			<td><label><span class="x">*</span>是否负责人</label></td>
-			<td><select name="tmCustomer.isKey">
-				<option value="1">是</option>
-				<option value="2">否</option>
-			</select></td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>所属负责人</label></td>
-			<td><input name="tmCustomer.superId." id="superId"></td>
-		</tr>
+<form id="saveform" method="post" action="<%=path %>/tmCustomer_saveAddTmCustomer.action">
+		<table cellpadding="5">
+	 	<tr>
+	      	<td><span class="x">*</span>姓名</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.realName" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>年龄</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.age data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>性别</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.sex" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>游客类型</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.type" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>联系方式</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.tel" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>身份证号</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>游客类别</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.classify" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>是否负责人</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.isKey" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>所属负责人</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.superName" data-options="required:true"></input></td>
+	  	</tr>
 	</table>
 </form>
 </c:if>
 <c:if test="${operate eq 'edit'}">
-<form id="saveform" method="post" action="<%=path %>/system/sysPolice_saveEditSysPolice.action">
-
-	<table border="0">
-		<tr>
-			<td><label><span class="x">*</span>客户Id</label></td>
-			<td><input name="tmCustomer.userId." id="userId"></td>
-			<td><label><span class="x">*</span>年龄</label></td>
-			<td><input name="tmCustomer.age." id="age">
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>性别：</label></td>
-			<td>
-			<select name="tmCustomer.sex">
-				<option value="0">未知</option>
-				<option value="1">男</option>
-				<option value="2">女</option>
-			</select>
-			</td>
-			<td><label><span class="x">*</span>旅客类型:</label></td>
-			<td>
-			<select name="tmCustomer.type">
-				<option value="1">成人</option>
-				<option value="2">小孩</option>
-				<option value="3">学生</option>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>联系方式</label></td>
-			<td><input name="tmCustomer.tel." id="tel"></td>
-			<td><label><span class="x">*</span>身份证号</label></td>
-			<td><input name="tmCustomer.identityNum." id="identityNum"></td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>游客类别</label></td>
-			<td>
-			<select name="tmCustomer.classify">
-				<option value="1">散客</option>
-				<option value="2">组团</option>
-			</select>
-			</td>
-			<td><label><span class="x">*</span>是否负责人</label></td>
-			<td><select name="tmCustomer.isKey">
-				<option value="1">是</option>
-				<option value="2">否</option>
-			</select></td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>所属负责人</label></td>
-			<td><input name="tmCustomer.superId." id="superId"></td>
-		</tr>
-		
+<form id="saveform" method="post" action="<%=path %>/tmCustomer_saveEditTmCustomer.action">
+<input type="hidden" name="tmCustomer.id" value="${tmCustomer.id }"/>
+	<table cellpadding="5">
+	 	<tr>
+	      	<td><span class="x">*</span>姓名</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.realName" value="${tmCustomer.realName }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>年龄</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.age" value="${tmCustomer.age }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>性别</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.sex" value="${tmCustomer.sex }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>游客类型</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.type" value="${tmCustomer.type }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>联系方式</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.tel" value="${tmCustomer.tel }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>身份证号</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" value="${tmCustomer.identityNum }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>游客类别</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.classify" value="${tmCustomer.classify }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>是否负责人</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.isKey" value="${tmCustomer.isKey }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>所属负责人</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.superName" value="${tmCustomer.superName }" data-options="required:true"></input></td>
+	  	</tr>
 	</table>
 </form>
 </c:if>

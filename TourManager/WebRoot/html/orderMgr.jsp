@@ -107,7 +107,7 @@ $(function(){
 			        		var formData=$("#saveform").serialize();
 			        		$.ajax({
 								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
+								url: getPath() + '/tmOrder_saveAddTmOrder.action',
 								processData: true,
 								data: formData,
 								success: function(data){
@@ -153,7 +153,7 @@ $(function(){
 						// 保存编辑对象		        		
 		        		$.ajax({
 							type: "POST",
-							url: getPath() + '/tmHotel_saveEditTmHotel.action',
+							url: getPath() + '/tmOrder_saveEditTmOrder.action',
 							processData:true,
 							data:formData,
 							success: function(data){
@@ -185,8 +185,8 @@ $(function(){
 			}
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
-			$.post(getPath()+"/tmHotel_editTmHotel.action",
-				{"sysPolice.id": row.id},
+			$.post(getPath()+"/tmOrder_editTmOrder.action",
+				{"tmOrder.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -202,10 +202,8 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmHotel_delTmHotel.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
-								},
+							$.post(getPath() + '/tmOrder_delTmOrder.action',
+								{"tmOrder.id" :  row.id},
 								function(json) {
 									var result = eval(json);
 									if (result && result.success) {
@@ -219,58 +217,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',
@@ -314,8 +260,8 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmHotel_viewTmHotel.action",
-		{"sysPolice.id" : row.id },
+	$.post(getPath()+"/tmOrder_viewTmOrder.action",
+		{"tmOrder.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });

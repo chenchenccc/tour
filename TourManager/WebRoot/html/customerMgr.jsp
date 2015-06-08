@@ -21,22 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table border="0">
         <tr>
          <form id="ff" method="post">
-          <td>酒店名称</td>
-          <td><input name="tmHotel.name" id="name" /></td>
-          <td>所属区域</td>
-          <td><input name="tmHotel.region" id="region" /></td>
-          <td>酒店星级</td>
-          <td><input name="tmHotel.star" id="star" /></td>
+          <td>姓名</td>
+          <td><input name="tmCustomer.realName" id="realName" /></td>
+          <td>身份证号后六位</td>
+          <td><input name="tmCustomer.identityNum" id="identityNum" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
-          </td>
-         </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
           </td>
          </form>
         </tr>
@@ -77,15 +67,29 @@ $(function(){
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
 		url: getPath() + "/tmCustomer_listTmCustomer.action",  
 		columns:[[
-			{field:'userId',title:'客户ID',width:60,halign:"center", align:"center"},
+			{field:'realName',title:'姓名',width:60,halign:"center", align:"center"},
 			{field:'age',title:'年龄',width:60,halign:"center", align:"center"},
-			{field:'sex',title:'性别',width:60,halign:"center", align:"center"},
-			{field:'type',title:'游客类型',width:60,halign:"center", align:"center"},
+			{field:'sex',title:'性别',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '0') return"未知";
+				else if(value == '1') return"男";
+				else if(value == '2') return"女";
+			}},
+			{field:'type',title:'游客类型',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '1') return"散客";
+				else if(value == '2') return"组团";
+			}},
 			{field:'tel',title:'联系方式',width:60,halign:"center", align:"center"},
 			{field:'identityNum',title:'身份证号',width:60,halign:"center", align:"center"},
-			{field:'classify',title:'游客类别',width:60,halign:"center", align:"center"},
-			{field:'isKey',title:'是否负责人',width:60,halign:"center", align:"center"},
-			{field:'superId',title:'所属负责人',width:60,halign:"center", align:"center"}
+			{field:'classify',title:'游客类别',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '1') return"成人";
+				else if(value == '2') return"小孩";
+				else if(value == '3') return"学生";
+			}},
+			{field:'isKey',title:'是否负责人',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '1') return"是";
+				else if(value == '2') return"否";
+			}},
+			{field:'superName',title:'所属负责人',width:60,halign:"center", align:"center"}
 			
 		]],
 		showPageList:[10,20,30,40,50],
@@ -184,7 +188,7 @@ $(function(){
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
 			$.post(getPath()+"/tmCustomer_editTmCustomer.action",
-				{"sysPolice.id": row.id},
+				{"tmCustomer.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });
@@ -200,10 +204,8 @@ $(function(){
 					function(r) {
 						if (r) {
 							// 删除对象
-							$.post(getPath() + '/tmEmployee_delTmEmployee.action',
-								{"sysPolice.id" :  row.id,
-								"sysPolice.zt" :  'delete'
-								},
+							$.post(getPath() + '/tmCustomer_delTmCustomer.action',
+								{"tmCustomer.id" :  row.id},
 								function(json) {
 									var result = eval(json);
 									if (result && result.success) {
@@ -217,58 +219,6 @@ $(function(){
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
-			}
-		},'-',{
-			text: '设备绑定',
-			iconCls: 'icon-save',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'绑定',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/device/devEquip_saveAddDevEquip.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				var row = $('#tt').datagrid('getSelected');
-				if(row == null) {
-					showMsg('警告','请选择一条记录','alert');
-					return;
-				}
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/device/devEquip_bindDevEquip.action",
-					{'devEquip.jyid': row.id},
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '绑定');
-			    $('#form').form('clear');
 			}
 		},'-',{
 			text: '帮助',
@@ -312,8 +262,8 @@ function viewDetail(data){
 	var row = $('#tt').datagrid('getSelected');
 	$("#content").html(''); // 先将content的内容清空
 	// 查看对象
-	$.post(getPath()+"/tmEmployee_viewTmEmployee.action",
-		{"sysPolice.id" : row.id },
+	$.post(getPath()+"/tmCustomer_viewTmCustomer.action",
+		{"tmCustomer.id" : row.id },
 	    function(result){ 
 			$("#content").append(result);
 	    });

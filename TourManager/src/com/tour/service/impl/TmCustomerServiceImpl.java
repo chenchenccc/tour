@@ -52,6 +52,8 @@ public class TmCustomerServiceImpl implements TmCustomerServiceIFC {
 		TmCustomerExample example = new TmCustomerExample();
 		Criteria criteria = example.createCriteria();
 	
+		criteria.andIdEqualTo( tmCustomer.getId() );
+		
 		List<TmCustomer> list= tmCustomerDao.selectByExample(example);
 		if(list != null && list.size() >= 0){
 			_tmCustomer = list.get(0);
