@@ -67,9 +67,6 @@ $(function(){
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
 		url: getPath() + "/tmEmployee_listTmEmployee.action",  
 		columns:[[
-			{field:'head',title:'头像',width:50, halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
-				return"<img src='images/banner2.jpg' width='35' height='35' />";
-			}},
 			{field:'employeeNum',title:'员工号',width:60,halign:"center", align:"center"},
 			{field:'realName',title:'姓名',width:60,halign:"center", align:"center"},
 			{field:'tel',title:'联系电话',width:60,halign:"center", align:"center"},
