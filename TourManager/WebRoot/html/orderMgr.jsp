@@ -22,17 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <tr>
          <form id="ff" method="post">
           <td>客户姓名</td>
-          <td><input name="smAutho.authoName" id="authoName" /></td>
+          <td><input name="smAutho.customName" id="authoName" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
-          </td>
-         </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
           </td>
          </form>
         </tr>
@@ -73,9 +65,9 @@ $(function(){
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
 		url: getPath() + "/tmOrder_listTmOrder.action",  
 		columns:[[
-			{field:'customId',title:'客户ID',width:60,halign:"center", align:"center"},
+			{field:'customName',title:'客户名称',width:60,halign:"center", align:"center"},
 			{field:'totalPeople',title:'总人数',width:60,halign:"center", align:"center"},
-			{field:'scheduleId',title:'日程ID',width:60,halign:"center", align:"center"},
+			{field:'scheduleName',title:'日程名称',width:60,halign:"center", align:"center"},
 			{field:'totalPrice',title:'总价格',width:60,halign:"center", align:"center"},
 			{field:'isPay',title:'是否付款',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='black'>已付款</font>";
@@ -84,6 +76,7 @@ $(function(){
 			{field:'isConfirm',title:'是否确认',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='black'>已确认</font>";
 				else if(value == '2') return"<font color='red'>未确认</font>";
+				else if(value == '3') return"<font color='gray'>已取消</font>";
 			}},
 			{field:'orderType',title:'订单类型',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='green'>散客订单</font>";
@@ -95,105 +88,6 @@ $(function(){
 		pageSize: 10,  // 初始
 		pagination: true,
 		toolbar: [{
-			text: '添加',
-			iconCls: 'icon-add',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'保存',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/tmOrder_saveAddTmOrder.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				var result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/tmOrder_addTmOrder.action",
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '添加');
-			    $('#form').form('clear');
-			}
-		},{
-			text: '修改',
-			iconCls: 'icon-edit',
-			handler: function(){
-				$('#dd').dialog({
-		        buttons: [{
-		            text:'保存',
-		            iconCls:'icon-ok',
-		            handler:function(){
-		        		var formData=$("#saveform").serialize();
-						// 保存编辑对象		        		
-		        		$.ajax({
-							type: "POST",
-							url: getPath() + '/tmOrder_saveEditTmOrder.action',
-							processData:true,
-							data:formData,
-							success: function(data){
-								var result = eval("("+data+")");
-								if (result && result.success) {
-									$('#tt').datagrid('reload');
-									$.messager.show({title : '信息',msg : result.msg});
-								} else {
-									$.messager.show({title : '错误',msg : result.msg});
-								}
-		        				$('#tt').datagrid('reload');
-							}
-		        		});
-		                $("#dd").dialog('close');
-						$('#tt').datagrid('reload');
-		            }
-		        },{
-		            text:'取消',
-		            iconCls:'icon-cancel',
-		            handler:function(){
-		                $("#dd").dialog('close');
-		            }
-		        }]
-		    });
-			var row = $('#tt').datagrid('getSelected');
-			if(row == null) {
-				showMsg('警告','请选择一条记录','alert');
-				return;
-			}
-			$("#content").html(''); // 先将content的内容清空
-			// 获取编辑对象
-			$.post(getPath()+"/tmOrder_editTmOrder.action",
-				{"tmOrder.id": row.id},
-			    function(result){  
-					$("#content").append(result);
-			    });
-			$("#dd").dialog('open').dialog('setTitle', '修改');
-			$('#form').form('load', row);
-		}
-		},{
 			text: '删除',
 			iconCls: 'icon-remove',
 			handler: function(){
@@ -203,6 +97,105 @@ $(function(){
 						if (r) {
 							// 删除对象
 							$.post(getPath() + '/tmOrder_delTmOrder.action',
+								{"tmOrder.id" :  row.id},
+								function(json) {
+									var result = eval(json);
+									if (result && result.success) {
+										$('#tt').datagrid('reload'); 
+									} else {
+										$.messager.show({title : 'Error',msg : result.msg});
+									}
+								},'json');
+						}
+					});
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},'-',{
+			text: '付款',
+			iconCls: 'icon-ok',
+			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				if(row.isPay == 1) {
+					showMsg('警告','用户已付款，不能再进行付款操作','alert');
+					return;
+				}
+				if (row) {$.messager.confirm('警告','确定客户已经付款？',
+					function(r) {
+						if (r) {
+							// 删除对象
+							$.post(getPath() + '/tmOrder_payOrder.action',
+								{"tmOrder.id" :  row.id},
+								function(json) {
+									var result = eval(json);
+									if (result && result.success) {
+										$('#tt').datagrid('reload'); 
+									} else {
+										$.messager.show({title : 'Error',msg : result.msg});
+									}
+								},'json');
+						}
+					});
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},{
+			text: '确认订单',
+			iconCls: 'icon-ok',
+			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				if(row.isPay == 2) {
+					showMsg('警告','用户未付款，不能确认订单！','alert');
+					return;
+				}
+				if(row.isConfirm == 3) {
+					showMsg('警告','订单已取消，不能进行确认订单操作','alert');
+					return;
+				}
+				if(row.isConfirm == 1) {
+					showMsg('警告','订单已确认，不能再进行确认订单操作','alert');
+					return;
+				}
+				if (row) {$.messager.confirm('警告','是否客户确认订单？',
+					function(r) {
+						if (r) {
+							// 删除对象
+							$.post(getPath() + '/tmOrder_confirmOrder.action',
+								{"tmOrder.id" :  row.id},
+								function(json) {
+									var result = eval(json);
+									if (result && result.success) {
+										$('#tt').datagrid('reload'); 
+									} else {
+										$.messager.show({title : 'Error',msg : result.msg});
+									}
+								},'json');
+						}
+					});
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},{
+			text: '取消订单',
+			iconCls: 'icon-no',
+			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				if(row.isConfirm == 3) {
+					showMsg('警告','订单已取消，不能再进行取消操作','alert');
+					return;
+				}
+				if(row.isConfirm == 1) {
+					showMsg('警告','订单已确认，不能再进行取消操作','alert');
+					return;
+				}
+				if (row) {$.messager.confirm('警告','确定取消订单？',
+					function(r) {
+						if (r) {
+							// 删除对象
+							$.post(getPath() + '/tmOrder_cancelOrder.action',
 								{"tmOrder.id" :  row.id},
 								function(json) {
 									var result = eval(json);

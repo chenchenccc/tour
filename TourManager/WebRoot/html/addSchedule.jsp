@@ -8,43 +8,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>订单管理</title>
+	<title>添加日程</title>
 	<link rel="stylesheet" type="text/css" href="css/default.css">
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/icon.css" />
 </head>
 <body class="easyui-layout" >
-<div class="easyui-panel" title="New Topic" style="width:400px">
-	<div style="padding:10px 60px 20px 60px">
+<div class="easyui-panel" fit="true" >
+	<div style="padding:20px">
 	<form id="ff" method="post">
 	    <table cellpadding="5">
 	        <tr>
-	            <td>Name:</td>
+	            <td>名称</td>
 	            <td><input class="easyui-textbox" type="text" name="name" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Email:</td>
-	            <td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input></td>
+	            <td>总天数</td>
+	            <td><input class="easyui-textbox" type="text" name="totalDay" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Subject:</td>
-	            <td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
+	            <td>总人数</td>
+	            <td><input class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Message:</td>
-	            <td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px"></input></td>
+	            <td>开始时间</td>
+	            <td><input class="easyui-textbox" type="text" name="startTime" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
-	            <td>Language:</td>
+	            <td>结束时间</td>
+	            <td><input class="easyui-textbox" type="text" name="endTime" data-options="required:true"></input></td>
+	        </tr>
+	        <tr>
+	            <td>日程类型:</td>
 	            <td>
-	                <select class="easyui-combobox" name="language"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select>
+	                <select class="easyui-combobox" name="type"><option value="1">短线</option><option value="2">长线</option></select>
 	            </td>
+	        </tr>
+	        <tr>
+	            <td>等级:</td>
+	            <td>
+	                <select class="easyui-combobox" name="grade"><option value="1">标准团</option><option value="2">定制团</option></select>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>价格:</td>
+	            <td><input class="easyui-textbox" type="text" name="price" data-options="required:true"></input></td>
 	        </tr>
 	    </table>
 	</form>
 	<div style="text-align:center;padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">预订</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
 	    </div>
 	    </div>
 	</div>

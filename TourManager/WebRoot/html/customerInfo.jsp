@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>身份证号</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" data-options="required:true"></input></td>
+	      	<td><input id="identityNum" class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>游客类别</td>
@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>身份证号</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" value="${tmCustomer.identityNum }" data-options="required:true"></input></td>
+	      	<td><input id="identityNum" class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.identityNum" value="${tmCustomer.identityNum }" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>游客类别</td>

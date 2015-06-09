@@ -310,6 +310,9 @@
 	
 	<bean name="aliasTmOrderAction" class="com.tour.web.TmOrderAction" scope="prototype">
 		<property name="tmOrderServiceProxy" ref="tmOrderServiceProxy"></property>
+		<property name="tmScheduleServiceProxy" ref="tmScheduleServiceProxy"></property>
+		<property name="tmCustomerServiceProxy" ref="tmCustomerServiceProxy"></property>
+		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
 	</bean>
 	
 	<!-- TmSchedule实体Bean -->
@@ -328,6 +331,7 @@
 	<bean name="aliasTmScheduleAction" class="com.tour.web.TmScheduleAction" scope="prototype">
 		<property name="tmScheduleServiceProxy" ref="tmScheduleServiceProxy"></property>
 		<property name="tmDetailServiceProxy" ref="tmDetailServiceProxy"></property>
+		<property name="tmEmployeeServiceProxy" ref="tmEmployeeServiceProxy"></property>
 	</bean>
 
 </beans>

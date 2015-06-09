@@ -14,8 +14,10 @@ import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmUser;
 import com.tour.model.TmDetail;
+import com.tour.model.TmEmployee;
 import com.tour.model.TmSchedule;
 import com.tour.service.ifc.TmDetailServiceIFC;
+import com.tour.service.ifc.TmEmployeeServiceIFC;
 import com.tour.service.ifc.TmScheduleServiceIFC;
 
 @SuppressWarnings("serial")
@@ -25,6 +27,7 @@ public class TmScheduleAction extends BaseAction{
 	  */
 	private TmScheduleServiceIFC tmScheduleServiceProxy;
 	private TmDetailServiceIFC tmDetailServiceProxy;
+	private TmEmployeeServiceIFC tmEmployeeServiceProxy;
 	
 	/**
 	  * @Description:  实体对象
@@ -38,13 +41,34 @@ public class TmScheduleAction extends BaseAction{
 	  * @Description: 获取实体列表 
 	  */
 	public String listTmSchedule(){
-		List<TmSchedule> tmScheduleList = tmScheduleServiceProxy.queryTmSchedule4List(request,tmSchedule);
-		request.setAttribute("tmScheduleList", tmScheduleList);
-		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
-        
-        jsonArr= JSONArray.fromObject( tmScheduleList, jsonConfig );
-        
-        responseJson(tmScheduleServiceProxy.countByExample(tmSchedule), jsonArr);
+	    try {
+    		List<TmSchedule> tmScheduleList = tmScheduleServiceProxy.queryTmSchedule4List(request,tmSchedule);
+    		List<TmSchedule> retList = new ArrayList<TmSchedule>();
+    		for (TmSchedule s : tmScheduleList) {
+    		    String guiderIds = s.getGuiderIds();
+    		    String[] guiderArr = new String[]{};
+    		    if(guiderIds != null) {
+    		        guiderArr = guiderIds.split( "," );
+    		    }
+    		    StringBuffer guiderNames = new StringBuffer();
+    		    for (String guilderId : guiderArr) {
+                    TmEmployee guilder = tmEmployeeServiceProxy.queryById( Integer.parseInt( guilderId ) );
+                    if(guilder != null) {
+                        guiderNames.append( guilder.getRealName() ).append( ";" );
+                    }
+                }
+    		    s.setGuiderNames( guiderNames.toString() );
+    		    retList.add( s );
+            }
+    		request.setAttribute("tmScheduleList", retList);
+    		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+            
+            jsonArr= JSONArray.fromObject( retList, jsonConfig );
+            
+            responseJson(tmScheduleServiceProxy.countByExample(tmSchedule), jsonArr);
+	    } catch (Exception e) {
+            e.printStackTrace();
+        }
         return SUCCESS;
 	}
 	
@@ -121,6 +145,7 @@ public class TmScheduleAction extends BaseAction{
 	  */
 	public String delTmSchedule(){
 		try {
+		    tmSchedule.setIsDel( "2" );
 			tmScheduleServiceProxy.delTmSchedule(tmSchedule);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {
@@ -192,6 +217,16 @@ public class TmScheduleAction extends BaseAction{
     
     public void setTmDetail( TmDetail tmDetail ) {
         this.tmDetail = tmDetail;
+    }
+
+    
+    public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
+        return tmEmployeeServiceProxy;
+    }
+
+    
+    public void setTmEmployeeServiceProxy( TmEmployeeServiceIFC tmEmployeeServiceProxy ) {
+        this.tmEmployeeServiceProxy = tmEmployeeServiceProxy;
     }
 	
 }

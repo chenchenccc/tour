@@ -16,11 +16,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body class="easyui-layout" >
 <div class="easyui-panel" fit="true" >
 	<div style="padding:20px">
-	<form id="ff" method="post">
+	<form id="saveForm" method="post">
 	    <table cellpadding="5">
 	        <tr>
 	            <td>预订客户:</td>
-	            <td><select class="easyui-combogrid" style="width:250px" data-options="
+	            <td><select name="tmOrder.customId" class="easyui-combogrid" style="width:250px" data-options="
 			            panelWidth: 500,
 			            idField: 'id',
 			            textField: 'realName',
@@ -43,11 +43,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </tr>
 	        <tr>
 	            <td>人数</td>
-	            <td><input class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
+	            <td><input name="tmOrder.totalPeople" class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
 	            <td>所选日程:</td>
-	            <td><select class="easyui-combogrid" style="width:250px" data-options="
+	            <td><select name="tmOrder.scheduleId" class="easyui-combogrid" style="width:250px" data-options="
 			            panelWidth: 500,
 			            idField: 'id',
 			            textField: 'name',
@@ -78,24 +78,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </tr>
 	        <tr>
 	            <td>订单描述:</td>
-	            <td><input class="easyui-textbox" name="orderDesc" data-options="multiline:true" style="height:60px"></input></td>
+	            <td><input name="tmOrder.orderDesc" class="easyui-textbox" name="orderDesc" data-options="multiline:true" style="height:60px"></input></td>
 	        </tr>
 	        <tr>
 	            <td>订单类型:</td>
 	            <td>
-	                <select class="easyui-combobox" name="orderType"><option value="1">散客订单</option><option value="2">包团订单</option></select>
+	                <select name="tmOrder.orderType" class="easyui-combobox" name="orderType"><option value="1">散客订单</option><option value="2">包团订单</option></select>
 	            </td>
 	        </tr>
 	        <tr>
 	            <td>总价格:</td>
 	            <td>
-	                <input class="easyui-textbox" type="text" name="price" data-options="readonly:true"></input>
+	                <input name="tmOrder.totalPrice" class="easyui-textbox" type="text" name="price" data-options="readonly:true"></input>
 	            </td>
 	        </tr>
 	    </table>
 	</form>
 	<div style="text-align:center;padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">预订</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveForm()">预订</a>
 	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
 	    </div>
 	    </div>
@@ -113,15 +113,31 @@ function getPath() {
 	return projectName;
 }
 
-$(function(){
-	function submitForm(){
-	    $('#ff').form('submit');
-	}
-	function clearForm(){
-	    $('#ff').form('clear');
-	}
+function saveForm(){
+    //$('#ff').form('submit');
+    var formData=$("#saveForm").serialize();
+	// 保存编辑对象		        		
+     	$.ajax({
+		type: "POST",
+		url: getPath() + '/tmOrder_saveAddTmOrder.action',
+		processData:true,
+		data:formData,
+		success: function(data){
+			var result = eval("("+data+")");
+			if (result && result.success) {
+				$('#tt').datagrid('reload');
+				showMsg('信息','添加成功','alert');
+			} else {
+				$.messager.show({title : '错误',msg : result.msg});
+			}
+     		clearForm();
+		}
+     	});
+}
+function clearForm(){
+    $('#saveForm').form('clear');
+}
 
-});
 </script>
 </html>
 	

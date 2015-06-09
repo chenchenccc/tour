@@ -60,6 +60,15 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
 		SmUserExample example = new SmUserExample();
 		Criteria criteria = example.createCriteria();
 	
+		if(smUser != null && smUser.getCreateTime() != null) {
+		    criteria.andCreateTimeEqualTo( smUser.getCreateTime() );
+		}
+		if(smUser != null && smUser.getRealName() != null) {
+            criteria.andRealNameEqualTo( smUser.getRealName() );
+        }
+		if(smUser != null && smUser.getIsAdmin() != null) {
+            criteria.andIsAdminEqualTo( smUser.getIsAdmin() );
+        }
 		List<SmUser> list= smUserDao.selectByExample(example);
 		if(list != null && list.size() >= 0){
 			_smUser = list.get(0);

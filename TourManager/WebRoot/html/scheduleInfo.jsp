@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
 <style>
-#police table,#police td,#police th{border:1px solid #ccc;border-collapse:collapse;}
+#police table,#police td,#police th{border:0px solid #ccc;border-collapse:collapse;}
 </style>
 <div id="police">
 <c:if test="${operate eq 'view'}">
@@ -131,28 +131,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </form>
 </c:if>
 <c:if test="${operate eq 'edit'}">
-<form id="saveform" method="post" action="<%=path %>/system/sysPolice_saveEditSysPolice.action">
-
-	<table border="0">
-		<tr><input type="hidden" name="tmHotel.id" value="${tmHotel.id }"/>
-			<td><label><span class="x">*</span>酒店名称</label></td>
-			<td><input name="tmHotel.name" id="name" value="${tmHotel.name}"></td>
-			<td><label><span class="x">*</span>酒店区域</label></td>
-			<td><input name="tmHotel.regionId" id="regionId" value="${tmHotel.regionId}"></td>
-		</tr>
-		<tr>
-			<td><label><span class="x">*</span>酒店星级</label></td>
-			<td>
-			<!-- TODO 星级选中状态 -->
-			<select name="tmHotel.star">
-				<option value="1" >一星级</option>
-				<option value="2" >二星级</option>
-				<option value="3" >三星级</option>
-				<option value="4" >四星级</option>
-				<option value="5" >五星级</option>
-			</select>
-			</td>
-		</tr>
+<form id="saveform" method="post" action="<%=path %>/tmSchedule_saveEditTmSchedule.action">
+<input type="hidden" name="tmSchedule.id" value="${tmSchedule.id }"/>
+	<table cellpadding="5">
+	 	<tr>
+	      	<td><span class="x">*</span>线路编号</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.lineCode" value="${tmSchedule.lineCode }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>名称</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.name" value="${tmSchedule.name }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>总人数</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.totalPeople" value="${tmSchedule.totalPeople }" data-options="required:true"></input></td>
+	  	</tr>
+	  		<tr>
+	      	<td><span class="x">*</span>总天数</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.totalDay" value="${tmSchedule.totalDay }" data-options="required:true"></input></td>
+	  	</tr>
+	  		<tr>
+	      	<td><span class="x">*</span>负责导游</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.guiderNames" value="${tmSchedule.guiderNames }" data-options="required:true"></input></td>
+	  	</tr>
+	  		<tr>
+	      	<td><span class="x">*</span>出发地</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.departure" value="${tmSchedule.departure }" data-options="required:true"></input></td>
+	  	</tr>
+	  		<tr>
+	      	<td><span class="x">*</span>目的地</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.destination" value="${tmSchedule.destination }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>开始时间</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.startTime" value="${tmSchedule.startTime }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>结束时间</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.endTime" value="${tmSchedule.endTime }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>路线类型</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.type" value="${tmSchedule.type }" data-options="required:true"></input></td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>团类型</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule.grade" value="${tmSchedule.grade }" data-options="required:true"></input></td>
+	  	</tr>
 	</table>
 </form>
 </c:if>

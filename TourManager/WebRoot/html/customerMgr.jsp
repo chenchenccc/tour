@@ -107,6 +107,12 @@ $(function(){
 			            handler:function(){
 			        		 // 保存添加对象
 			        		var formData=$("#saveform").serialize();
+			        		var identityReg=/^\d{17}([0-9]|X)$/;
+			        		console.log($("#identityNum").val());
+			        		if(!identityReg.test($("#identityNum").val())) {
+			        			alert("身份证号码格式不正确，必须为18位数字，请重新输入！");
+			        			//return;
+			        		}
 			        		$.ajax({
 								type: "POST",
 								url: getPath() + '/tmCustomer_saveAddTmCustomer.action',
