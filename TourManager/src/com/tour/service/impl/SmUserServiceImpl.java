@@ -149,6 +149,7 @@ public class SmUserServiceImpl implements SmUserServiceIFC {
             SmUserRoleExample example = new SmUserRoleExample();
             com.tour.model.SmUserRoleExample.Criteria criteria = example.createCriteria();
             criteria.andUserIdEqualTo( userId );
+            criteria.andIsDelEqualTo( "1" );
             List<SmUserRole> userRoleList = smUserRoleDao.selectByExample( example  );
             
             if( userRoleList != null && userRoleList.size() > 0 ) {

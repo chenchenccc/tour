@@ -133,7 +133,7 @@ public class SmRoleServiceImpl implements SmRoleServiceIFC {
         SmRoleAuthoExample example = new SmRoleAuthoExample();
         com.tour.model.SmRoleAuthoExample.Criteria criteria = example.createCriteria();
         criteria.andRoleIdIn( roleIds );
-        
+        criteria.andIsDelEqualTo( "1" );
         List<SmRoleAutho> list = smRoleAuthoDao.selectByExample( example  );
         
         List<SmAutho> ret = new ArrayList<SmAutho>();

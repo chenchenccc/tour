@@ -32,6 +32,12 @@ public class SmRoleAuthoServiceImpl implements SmRoleAuthoServiceIFC {
                 example.setLimitEnd(limit);
             }
             
+            if(smRoleAutho != null && smRoleAutho.getRoleId() != null) {
+                criteria.andRoleIdEqualTo( smRoleAutho.getRoleId() );
+            }
+            if(smRoleAutho != null && smRoleAutho.getAuthoId() != null) {
+                criteria.andAuthoIdEqualTo( smRoleAutho.getAuthoId() );
+            }
             criteria = criteria.andIsDelEqualTo( "1" );
             
         } catch (Exception e) {
@@ -76,7 +82,16 @@ public class SmRoleAuthoServiceImpl implements SmRoleAuthoServiceIFC {
 	  * @Description: 删除实体对象 
 	  */
 	public void delSmRoleAutho(SmRoleAutho smRoleAutho) {
-		smRoleAuthoDao.updateByPrimaryKeySelective(smRoleAutho);
+	    SmRoleAuthoExample example = new SmRoleAuthoExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andAuthoIdEqualTo( smRoleAutho.getAuthoId() );
+        criteria.andRoleIdEqualTo( smRoleAutho.getRoleId() );
+        criteria.andIsDelEqualTo( "1" );
+        List list = smRoleAuthoDao.selectByExample( example );
+        SmRoleAutho record = (SmRoleAutho) list.get( 0 );
+        
+        smRoleAutho.setId( record.getId() );
+        smRoleAuthoDao.updateByPrimaryKeySelective( smRoleAutho );
 	}
 	
 	/**

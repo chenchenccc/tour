@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.tour.dao.ifc.SmUserRoleDAO;
 import com.tour.model.SmUserRole;
 import com.tour.model.SmUserRoleExample;
+import com.tour.model.SmUserRole;
+import com.tour.model.SmUserRoleExample;
 import com.tour.model.SmUserRoleExample.Criteria;
 import com.tour.service.ifc.SmUserRoleServiceIFC;
 
@@ -76,6 +78,15 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
 	  * @Description: 删除实体对象 
 	  */
 	public void delSmUserRole(SmUserRole smUserRole) {
+	    SmUserRoleExample example = new SmUserRoleExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andUserIdEqualTo( smUserRole.getUserId() );
+        criteria.andRoleIdEqualTo( smUserRole.getRoleId() );
+        criteria.andIsDelEqualTo( "1" );
+        List list = smUserRoleDao.selectByExample( example );
+        SmUserRole record = (SmUserRole) list.get( 0 );
+        
+        smUserRole.setId( record.getId() );
 		smUserRoleDao.updateByPrimaryKeySelective(smUserRole);
 	}
 	

@@ -202,20 +202,7 @@ $(function(){
 			handler: function(){
 				row = $('#tt').datagrid('getSelected');
 				if (row) {
-					// 查看权限
-					$.post(getPath() + '/smRole_authoList.action',
-						{"smRole.id" :  row.id},
-						function(json) {
-							var result = eval(json);
-							console.log(result);
-							if (result && result.success) {
-								// $('#tt').datagrid('reload'); 
-								viewAutho(result.msg);
-								result
-							} else {
-								$.messager.show({title : 'Error',msg : result.msg});
-							}
-						},'json');
+					viewAutho();
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
@@ -248,6 +235,7 @@ function fuzzyquery() {
  * 查看详细信息
  */
 function viewDetail(data){
+
 	////
 	$('#dd').dialog({
         buttons: [{
@@ -272,15 +260,29 @@ function viewDetail(data){
 /**
  * 查看权限
  */
-function viewAutho(data){
+function viewAutho(){
 	var row = $('#tt').datagrid('getSelected');
-	
 	$("#content").html(''); // 先将content的内容清空
 	$("#content").append('<font color="red">'+row.roleName+'</font>角色拥有如下权限：<br/>')
-	for(var i in data) {
-		console.log(data[i].authoName);
-		$("#content").append(data[i].authoName+", ");
-	}
+	// 查看权限
+	$.post(getPath() + '/smRole_authoList.action',
+		{"smRole.id" :  row.id},
+		function(json) {
+			var result = eval(json);
+			console.log(result);
+			if (result && result.success) {
+				// $('#tt').datagrid('reload'); 
+				var data = result.msg;
+				for(var i in data) {
+					console.log(data[i].authoName);
+					$("#content").append("<a onclick='delAutho("+data[i].id+")'>"+data[i].authoName+", ");
+				}
+			} else {
+				$.messager.show({title : 'Error',msg : result.msg});
+			}
+		},'json');
+	
+	
 	////
 	$('#dd').dialog({
         buttons: [{
@@ -293,6 +295,32 @@ function viewAutho(data){
     });
 	////
 	$("#dd").dialog('open').dialog('setTitle', '查看权限');
+}
+
+function delAutho(id) {
+	var row = $('#tt').datagrid('getSelected');
+	$.messager.confirm('警告','确定取消该权限？',
+	function(r) {
+		if (r) {
+			// 删除对象
+			$.post(getPath()+"/smRoleAutho_delSmRoleAutho.action",
+				{"smRoleAutho.roleId" : row.id, "smRoleAutho.authoId": id },
+			    function(result){ 
+					//$("#content").append(result);
+					
+					var json = eval("("+result+")");
+					console.log(json);
+					if (json && json.success) {
+						//	$('#tt').datagrid('reload'); ;
+						viewAutho();
+						$.messager.show({title : 'Info',msg : "取消权限成功！"});
+					} else {
+						$.messager.show({title : 'Error',msg : json.msg});
+					}
+			    });
+		}
+	});
+	
 }
 </script>
 </html>

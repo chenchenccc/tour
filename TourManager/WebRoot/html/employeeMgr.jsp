@@ -209,6 +209,17 @@ $(function(){
 				}
 			}
 		},'-',{
+			text: '角色',
+			iconCls: 'icon-ok',
+			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				if (row) {
+					viewRole();
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},'-',{
 			text: '帮助',
 			iconCls: 'icon-help',
 			handler: function(){showMsg('帮助','这里是帮助内容','alert');}
@@ -257,7 +268,70 @@ function viewDetail(data){
 	    });
 	$("#dd").dialog('open').dialog('setTitle', '查看');
 }
+/**
+ * 查看权限
+ */
+function viewRole(){
+	var row = $('#tt').datagrid('getSelected');
+	$("#content").html(''); // 先将content的内容清空
+	$("#content").append('<font color="red">'+row.realName+'</font>拥有如下角色：<br/>')
+	// 查看权限
+	$.post(getPath() + '/smUser_roleList.action',
+		{"smUser.id" :  row.userId},
+		function(json) {
+			var result = eval(json);
+			console.log(result);
+			if (result && result.success) {
+				// $('#tt').datagrid('reload'); 
+				var data = result.msg;
+				for(var i in data) {
+					$("#content").append("<a onclick='delRole("+data[i].id+")'>"+data[i].roleName+", ");
+				}
+			} else {
+				$.messager.show({title : 'Error',msg : result.msg});
+			}
+		},'json');
+	
+	
+	////
+	$('#dd').dialog({
+        buttons: [{
+            text:'确定',
+            iconCls:'icon-ok',
+            handler:function(){
+                $("#dd").dialog('close');
+            }
+        }]
+    });
+	////
+	$("#dd").dialog('open').dialog('setTitle', '查看权限');
+}
 
+function delRole(id) {
+	var row = $('#tt').datagrid('getSelected');
+	$.messager.confirm('警告','确定取消该角色？',
+	function(r) {
+		if (r) {
+			// 删除对象
+			$.post(getPath()+"/smUserRole_delSmUserRole.action",
+				{"smUserRole.userId" : row.userId, "smUserRole.roleId": id },
+			    function(result){ 
+					//$("#content").append(result);
+					
+					var json = eval("("+result+")");
+					console.log(json);
+					if (json && json.success) {
+						//	$('#tt').datagrid('reload'); ;
+						viewRole();
+						$.messager.show({title : 'Info',msg : "取消权限成功！"});
+					} else {
+						$.messager.show({title : 'Error',msg : json.msg});
+					}
+			    });
+		}
+	});
+	
+}
 </script>
 </html>
 	

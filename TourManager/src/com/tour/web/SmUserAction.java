@@ -1,5 +1,6 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,11 @@ import net.sf.json.JsonConfig;
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmRole;
 import com.tour.model.SmUser;
+import com.tour.model.SmUserRole;
+import com.tour.service.ifc.SmRoleServiceIFC;
+import com.tour.service.ifc.SmUserRoleServiceIFC;
 import com.tour.service.ifc.SmUserServiceIFC;
 
 @SuppressWarnings("serial")
@@ -20,7 +25,8 @@ public class SmUserAction extends BaseAction{
 	  * @Description: 业务代理对象 
 	  */
 	private SmUserServiceIFC smUserServiceProxy;
-	
+	private SmRoleServiceIFC smRoleServiceProxy;
+	private SmUserRoleServiceIFC smUserRoleServiceProxy;
 	/**
 	  * @Description:  实体对象
 	  */
@@ -180,4 +186,51 @@ public class SmUserAction extends BaseAction{
         responseJson( true, "密码修改成功" );
 	    return SUCCESS;
 	}
+    
+    /**
+     * @Description: 角色列表
+     */
+   public String roleList(){
+       try {
+           SmUserRole ur = new SmUserRole();
+           ur.setUserId( smUser.getId() );
+           List<SmUserRole> list = smUserRoleServiceProxy.querySmUserRole4List( request, ur  );
+           List<SmRole> retList = new ArrayList<SmRole>();
+           for (SmUserRole smUserRole : list) {
+               SmRole role = smRoleServiceProxy.queryById( smUserRole.getRoleId() );
+               retList.add( role );
+           }
+           request.setAttribute("smRoleList", retList);
+           jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+           
+           jsonArr= JSONArray.fromObject( retList, jsonConfig );
+           
+           responseJson(true, jsonArr);
+       } catch (Exception e) {
+           responseJson(false, "服务出错了");
+           e.printStackTrace();
+       }
+       return SUCCESS;
+   }
+
+    
+    public SmRoleServiceIFC getSmRoleServiceProxy() {
+        return smRoleServiceProxy;
+    }
+
+    
+    public void setSmRoleServiceProxy( SmRoleServiceIFC smRoleServiceProxy ) {
+        this.smRoleServiceProxy = smRoleServiceProxy;
+    }
+
+    
+    public SmUserRoleServiceIFC getSmUserRoleServiceProxy() {
+        return smUserRoleServiceProxy;
+    }
+
+    
+    public void setSmUserRoleServiceProxy( SmUserRoleServiceIFC smUserRoleServiceProxy ) {
+        this.smUserRoleServiceProxy = smUserRoleServiceProxy;
+    }
+   
 }

@@ -120,6 +120,9 @@
 	</bean>
 	
 	<bean name="aliasSmUserAction" class="com.tour.web.SmUserAction" scope="prototype">
+	
+		<property name="smRoleServiceProxy" ref="smRoleServiceProxy"></property>
+		<property name="smUserRoleServiceProxy" ref="smUserRoleServiceProxy"></property>
 		<property name="smUserServiceProxy" ref="smUserServiceProxy"></property>
 	</bean>
 	

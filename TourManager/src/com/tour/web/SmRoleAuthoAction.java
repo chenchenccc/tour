@@ -110,6 +110,7 @@ public class SmRoleAuthoAction extends BaseAction{
 	  */
 	public String delSmRoleAutho(){
 		try {
+		    smRoleAutho.setIsDel( "2" );
 			smRoleAuthoServiceProxy.delSmRoleAutho(smRoleAutho);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {

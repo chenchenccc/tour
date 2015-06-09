@@ -117,6 +117,7 @@ public class SmUserRoleAction extends BaseAction{
 	  */
 	public String delSmUserRole(){
 		try {
+		    smUserRole.setIsDel( "2" );
 			smUserRoleServiceProxy.delSmUserRole(smUserRole);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {
