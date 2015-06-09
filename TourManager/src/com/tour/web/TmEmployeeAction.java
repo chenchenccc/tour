@@ -205,20 +205,9 @@ public class TmEmployeeAction extends BaseAction{
 	
 	public String savePersonalInfo() {
 //	    responseJson(0, null);
-	    System.out.println(rows.length);
 	    responseJson( true, "haha" );
         return SUCCESS;
 	}
-	private PropertyGridBean[] rows;
-	
-    public PropertyGridBean[] getRows() {
-        return rows;
-    }
-
-    
-    public void setRows( PropertyGridBean[] rows ) {
-        this.rows = rows;
-    }
 
     public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
 		return tmEmployeeServiceProxy;
