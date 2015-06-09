@@ -197,6 +197,30 @@ $(function(){
 				}
 			}
 		},'-',{
+			text: '权限',
+			iconCls: 'icon-ok',
+			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				if (row) {
+					// 查看权限
+					$.post(getPath() + '/smRole_authoList.action',
+						{"smRole.id" :  row.id},
+						function(json) {
+							var result = eval(json);
+							console.log(result);
+							if (result && result.success) {
+								// $('#tt').datagrid('reload'); 
+								viewAutho(result.msg);
+								result
+							} else {
+								$.messager.show({title : 'Error',msg : result.msg});
+							}
+						},'json');
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},'-',{
 			text: '帮助',
 			iconCls: 'icon-help',
 			handler: function(){showMsg('帮助','这里是帮助内容','alert');}
@@ -245,7 +269,31 @@ function viewDetail(data){
 	    });
 	$("#dd").dialog('open').dialog('setTitle', '查看');
 }
-
+/**
+ * 查看权限
+ */
+function viewAutho(data){
+	var row = $('#tt').datagrid('getSelected');
+	
+	$("#content").html(''); // 先将content的内容清空
+	$("#content").append('<font color="red">'+row.roleName+'</font>角色拥有如下权限：<br/>')
+	for(var i in data) {
+		console.log(data[i].authoName);
+		$("#content").append(data[i].authoName+", ");
+	}
+	////
+	$('#dd').dialog({
+        buttons: [{
+            text:'确定',
+            iconCls:'icon-ok',
+            handler:function(){
+                $("#dd").dialog('close');
+            }
+        }]
+    });
+	////
+	$("#dd").dialog('open').dialog('setTitle', '查看权限');
+}
 </script>
 </html>
 	

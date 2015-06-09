@@ -75,6 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			            fitColumns: true
 			        ">
 			    </select></td>
+			    <td><a onclick="addSchedule()" href="javascript:void(0);">添加日程</a></td>
 	        </tr>
 	        <tr>
 	            <td>订单描述:</td>
@@ -100,6 +101,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div>
 	    </div>
 	</div>
+	
+	<div id="dd"><div id="content" region="center" border="false" style="padding: 10px;  border: 1px solid #ccc;"></div>
 </body>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
@@ -138,6 +141,58 @@ function clearForm(){
     $('#saveForm').form('clear');
 }
 
+function addSchedule() {
+	$('#dd').dialog({
+	    width: 500,
+	    height: 300,
+	    closed: true,
+	    cache: false,
+	    modal: true,
+        iconCls: 'icon-save'
+    });
+	$('#dd').dialog({
+       buttons: [{
+           text:'保存',
+           iconCls:'icon-ok',
+           handler:function(){
+       		var formData=$("#saveform").serialize();
+			// 保存编辑对象		        		
+       		$.ajax({
+				type: "POST",
+				url: getPath() + '/tmSchedule_saveEditTmSchedule.action',
+				processData:true,
+				data:formData,
+				success: function(data){
+					var result = eval("("+data+")");
+					if (result && result.success) {
+						$('#tt').datagrid('reload');
+						$.messager.show({title : '信息',msg : result.msg});
+					} else {
+						$.messager.show({title : '错误',msg : result.msg});
+					}
+       				$('#tt').datagrid('reload');
+				}
+       		});
+               $("#dd").dialog('close');
+			$('#tt').datagrid('reload');
+           }
+       },{
+           text:'取消',
+           iconCls:'icon-cancel',
+           handler:function(){
+               $("#dd").dialog('close');
+           }
+       }]
+   });
+	$("#content").html(''); // 先将content的内容清空
+	// 保存对象
+	$.post(getPath()+"/tmSchedule_addTmSchedule.action",
+	    function(result){
+			$("#content").append(result);
+	    });
+	$("#dd").dialog('open').dialog('setTitle', '添加');
+    $('#form').form('clear');
+}
 </script>
 </html>
 	

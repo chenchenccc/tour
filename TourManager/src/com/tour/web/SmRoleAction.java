@@ -1,5 +1,6 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,12 @@ import net.sf.json.JsonConfig;
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmAutho;
 import com.tour.model.SmRole;
+import com.tour.model.SmRoleAutho;
 import com.tour.model.SmUser;
+import com.tour.service.ifc.SmAuthoServiceIFC;
+import com.tour.service.ifc.SmRoleAuthoServiceIFC;
 import com.tour.service.ifc.SmRoleServiceIFC;
 
 @SuppressWarnings("serial")
@@ -21,6 +26,8 @@ public class SmRoleAction extends BaseAction{
 	  * @Description: 业务代理对象 
 	  */
 	private SmRoleServiceIFC smRoleServiceProxy;
+	private SmRoleAuthoServiceIFC smRoleAuthoServiceProxy;
+	private SmAuthoServiceIFC smAuthoServiceProxy;
 	
 	/**
 	  * @Description:  实体对象
@@ -122,6 +129,30 @@ public class SmRoleAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String authoList(){
+        try {
+            SmRoleAutho smRoleAutho = new SmRoleAutho();
+            smRoleAutho.setRoleId( smRole.getId() );
+            List<SmRoleAutho> raList = smRoleAuthoServiceProxy.querySmRoleAutho4List( request, smRoleAutho  );
+            List<SmAutho> authoList = new ArrayList<SmAutho>();
+            for (SmRoleAutho ra : raList) {
+                SmAutho autho = smAuthoServiceProxy.queryById( ra.getAuthoId() );
+                authoList.add( autho );
+            }
+            request.setAttribute("authoList", authoList);
+            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+            
+            jsonArr= JSONArray.fromObject( authoList, jsonConfig );
+            
+            responseJson(true, jsonArr);
+        } catch (Exception e) {
+            responseJson(false, "服务出错了!");
+            RJLog.error(e);
+        }
+        return SUCCESS;
+    }
+	
+	
 	public SmRoleServiceIFC getSmRoleServiceProxy() {
 		return smRoleServiceProxy;
 	}
@@ -134,4 +165,25 @@ public class SmRoleAction extends BaseAction{
 	public void setSmRole(SmRole smRole) {
 		this.smRole = smRole;
 	}
+
+    
+    public SmRoleAuthoServiceIFC getSmRoleAuthoServiceProxy() {
+        return smRoleAuthoServiceProxy;
+    }
+
+    
+    public void setSmRoleAuthoServiceProxy( SmRoleAuthoServiceIFC smRoleAuthoServiceProxy ) {
+        this.smRoleAuthoServiceProxy = smRoleAuthoServiceProxy;
+    }
+
+    
+    public SmAuthoServiceIFC getSmAuthoServiceProxy() {
+        return smAuthoServiceProxy;
+    }
+
+    
+    public void setSmAuthoServiceProxy( SmAuthoServiceIFC smAuthoServiceProxy ) {
+        this.smAuthoServiceProxy = smAuthoServiceProxy;
+    }
+	
 }

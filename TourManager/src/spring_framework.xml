@@ -99,6 +99,8 @@
 	</bean>
 	
 	<bean name="aliasSmRoleAction" class="com.tour.web.SmRoleAction" scope="prototype">
+		<property name="smRoleAuthoServiceProxy" ref="smRoleAuthoServiceProxy"></property>
+		<property name="smAuthoServiceProxy" ref="smAuthoServiceProxy"></property>
 		<property name="smRoleServiceProxy" ref="smRoleServiceProxy"></property>
 	</bean>
 	

@@ -84,7 +84,7 @@ $(function(){
 			{field:'grade',title:'团类型',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"标准团";
 				else if(value == '2') return"定制团";
-			}},
+			}}
 			
 		]],
 		/*detailFormatter:function(index,row){

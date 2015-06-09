@@ -21,12 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table border="0">
         <tr>
          <form id="ff" method="post">
-          <td>酒店名称</td>
-          <td><input name="tmHotel.name" id="name" /></td>
+          <td>名称</td>
+          <td><input name="tmGroup.name" id="name" /></td>
           <td>所属区域</td>
-          <td><input name="tmHotel.region" id="region" /></td>
+          <td><input name="tmGroup.region" id="region" /></td>
           <td>酒店星级</td>
-          <td><input name="tmHotel.star" id="star" /></td>
+          <td><input name="tmGroup.star" id="star" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
