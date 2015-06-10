@@ -46,7 +46,8 @@ public class TmCustomerAction extends BaseAction{
 	            if(superCustomer == null) {
 	                c.setSuperName( "无" );
 	            } else {
-	                c.setSuperName( superCustomer.getRealName() );
+	                SmUser u = smUserServiceProxy.queryById( superCustomer.getUserId() );
+	                c.setSuperName( u.getRealName() );
 	            }
 	            
 	            // 获取realName
@@ -133,6 +134,7 @@ public class TmCustomerAction extends BaseAction{
 		    
 		    // 添加user
 		    SmUser smUser = new SmUser();
+		    smUser.setSex( tmCustomer.getSex() );
 		    smUser.setAge( tmCustomer.getAge() );
 		    smUser.setTel( tmCustomer.getTel() );
 		    smUser.setRealName( tmCustomer.getRealName() );

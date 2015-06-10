@@ -149,59 +149,6 @@ $(function(){
 			    $('#form').form('clear');
 			}
 		},{
-			text: '修改',
-			iconCls: 'icon-edit',
-			handler: function(){
-				$('#dd').dialog({
-		        buttons: [{
-		            text:'保存',
-		            iconCls:'icon-ok',
-		            handler:function(){
-		        		var formData=$("#saveform").serialize();
-						// 保存编辑对象		        		
-		        		$.ajax({
-							type: "POST",
-							url: getPath() + '/tmCustomer_saveEditTmCustomer.action',
-							processData:true,
-							data:formData,
-							success: function(data){
-								var result = eval("("+data+")");
-								if (result && result.success) {
-									$('#tt').datagrid('reload');
-									$.messager.show({title : '信息',msg : result.msg});
-								} else {
-									$.messager.show({title : '错误',msg : result.msg});
-								}
-		        				$('#tt').datagrid('reload');
-							}
-		        		});
-		                $("#dd").dialog('close');
-						$('#tt').datagrid('reload');
-		            }
-		        },{
-		            text:'取消',
-		            iconCls:'icon-cancel',
-		            handler:function(){
-		                $("#dd").dialog('close');
-		            }
-		        }]
-		    });
-			var row = $('#tt').datagrid('getSelected');
-			if(row == null) {
-				showMsg('警告','请选择一条记录','alert');
-				return;
-			}
-			$("#content").html(''); // 先将content的内容清空
-			// 获取编辑对象
-			$.post(getPath()+"/tmCustomer_editTmCustomer.action",
-				{"tmCustomer.id": row.id},
-			    function(result){  
-					$("#content").append(result);
-			    });
-			$("#dd").dialog('open').dialog('setTitle', '修改');
-			$('#form').form('load', row);
-		}
-		},{
 			text: '删除',
 			iconCls: 'icon-remove',
 			handler: function(){

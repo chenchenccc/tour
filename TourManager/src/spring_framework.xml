@@ -263,6 +263,9 @@
 	</bean>
 	
 	<bean name="aliasTmGroupAction" class="com.tour.web.TmGroupAction" scope="prototype">
+	
+		<property name="tmScheduleServiceProxy" ref="tmScheduleServiceProxy"></property>
+		<property name="tmEmployeeServiceProxy" ref="tmEmployeeServiceProxy"></property>
 		<property name="tmGroupServiceProxy" ref="tmGroupServiceProxy"></property>
 	</bean>
 	

@@ -65,11 +65,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>性别</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.sex" data-options="required:true"></input></td>
+	      	<td>
+	      	<select name="tmCustomer.sex" class="easyui-combobox"><option value="1">男</option><option value="2">女</option><option value="0">未知</option></select>
+	      	</td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>游客类型</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.type" data-options="required:true"></input></td>
+	      	<td>
+	      		<select name="tmCustomer.type" class="easyui-combobox"><option value="1">大人</option><option value="2">小孩</option><option value="3">学生</option></select>
+	      	</td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>联系方式</td>
@@ -81,15 +85,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>游客类别</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.classify" data-options="required:true"></input></td>
+	      	<td>
+	      		<select name="tmCustomer.classify" class="easyui-combobox"><option value="1">散客</option><option value="2">组团</option></select>
+	      	</td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>是否负责人</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.isKey" data-options="required:true"></input></td>
+	      	<td>
+	      		<select name="tmCustomer.isKey" class="easyui-combobox"><option value="1">是</option><option value="2">否</option></select>
+	      	</td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>所属负责人</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.superName" data-options="required:true"></input></td>
+	      	<td>
+	      	<select name="tmCustomer.superId" class="easyui-combogrid" style="width:250px" data-options="
+			            panelWidth: 500,
+			            idField: 'id',
+			            textField: 'realName',
+			            url: getPath()+'/tmCustomer_listTmCustomer.action',
+			            method: 'post',
+			            columns: [[
+			                {field:'realName',title:'姓名',width:80,align:'center'},
+			                {field:'age',title:'年龄',width:120,align:'center'},
+			                {field:'sex',title:'性别',width:80,align:'center',formatter:function(value,rowData,rowIndex){
+								if(value == '0') return'未知';
+								else if(value == '1') return'男';
+								else if(value == '2') return'女';
+							}},
+			                {field:'tel',title:'联系方式',width:80,align:'center'}
+			            ]],
+			            fitColumns: true
+			        ">
+			    </select>
+	      	</td>
 	  	</tr>
 	</table>
 </form>

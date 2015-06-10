@@ -18,46 +18,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div style="padding:20px">
 	<form id="ff" method="post">
 	    <table cellpadding="5">
-	        <tr>
-	            <td>名称</td>
-	            <td><input class="easyui-textbox" type="text" name="name" data-options="required:true"></input></td>
+	    	<tr>
+	            <td>线路编号</td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.lineCode" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
+	            <td>名称</td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.name" data-options="required:true"></input></td>
+	        </tr>
+	        <tr>
+	            <td>开始地</td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.departure" data-options="required:true"></input></td>
+	        </tr>
+	        <tr>
+	            <td>目的地</td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.destination" data-options="required:true"></input></td>
+	        </tr>
+	        <tr>
+	            <td>导游</td>
+	            <td>
+	            <select name="tmSchedule.guiderIds" class="easyui-combogrid" style="width:250px" data-options="
+			            panelWidth: 500,
+			            idField: 'id',
+			            textField: 'realName',
+			            url: getPath()+'/tmEmployee_guiderList.action',
+			            method: 'post',
+			            columns: [[
+			                {field:'employeeNum',title:'员工号',width:80,align:'center'},
+			                {field:'realName',title:'姓名',width:120,align:'center'},
+			                {field:'tel',title:'电话号码',width:80,align:'center'},
+			                {field:'sex',title:'性别',width:80,align:'center',formatter:function(value,rowData,rowIndex){
+								if(value == '0') return'<font color=black>未知</font>';
+								else if(value == '1') return'<font color=pink>男</font>';
+								else if(value == '2') return'<font color=green>女</font>';
+								
+							}}
+			            ]],
+			            fitColumns: true
+			        ">
+			    </select>
+	            </td>
+	        </tr>
+	        
+	        <tr>
 	            <td>总天数</td>
-	            <td><input class="easyui-textbox" type="text" name="totalDay" data-options="required:true"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.totalDay" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
 	            <td>总人数</td>
-	            <td><input class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.totalPeople" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
 	            <td>开始时间</td>
-	            <td><input class="easyui-textbox" type="text" name="startTime" data-options="required:true"></input></td>
+	            <td>
+	            	<input id="startTime" name="tmSchedule.startTime" type="text" class="easyui-datebox" />  
+	            </td>
 	        </tr>
 	        <tr>
 	            <td>结束时间</td>
-	            <td><input class="easyui-textbox" type="text" name="endTime" data-options="required:true"></input></td>
+	            <td>
+	            	<input id="endTime" name="tmSchedule.endTime" type="text" class="easyui-datebox" />
+	            </td>
 	        </tr>
 	        <tr>
 	            <td>日程类型:</td>
 	            <td>
-	                <select class="easyui-combobox" name="type"><option value="1">短线</option><option value="2">长线</option></select>
+	                <select class="easyui-combobox" name="tmSchedule.type"><option value="1">短线</option><option value="2">长线</option></select>
 	            </td>
 	        </tr>
 	        <tr>
 	            <td>等级:</td>
 	            <td>
-	                <select class="easyui-combobox" name="grade"><option value="1">标准团</option><option value="2">定制团</option></select>
+	                <select class="easyui-combobox" name="tmSchedule.grade"><option value="1">标准团</option><option value="2">定制团</option></select>
 	            </td>
 	        </tr>
 	        <tr>
 	            <td>价格:</td>
-	            <td><input class="easyui-textbox" type="text" name="price" data-options="required:true"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="tmSchedule.price" data-options="required:true"></input></td>
 	        </tr>
 	    </table>
 	</form>
 	<div style="text-align:center;padding:5px">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">预订</a>
+	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveForm()">预订</a>
 	    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
 	    </div>
 	    </div>
@@ -75,15 +117,30 @@ function getPath() {
 	return projectName;
 }
 
-$(function(){
-	function submitForm(){
-	    $('#ff').form('submit');
-	}
-	function clearForm(){
-	    $('#ff').form('clear');
-	}
-
-});
+function saveForm(){
+    //$('#ff').form('submit');
+    var formData=$("#ff").serialize();
+	// 保存编辑对象		        		
+     	$.ajax({
+		type: "POST",
+		url: getPath() + '/tmSchedule_saveAddTmSchedule.action',
+		processData:true,
+		data:formData,
+		success: function(data){
+			var result = eval("("+data+")");
+			if (result && result.success) {
+				$('#tt').datagrid('reload');
+				showMsg('信息','添加成功','alert');
+			} else {
+				$.messager.show({title : '错误',msg : result.msg});
+			}
+     		clearForm();
+		}
+     });
+}
+function clearForm(){
+    $('#ff').form('clear');
+}
 </script>
 </html>
 	

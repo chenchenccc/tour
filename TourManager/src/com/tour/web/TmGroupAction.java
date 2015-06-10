@@ -45,16 +45,25 @@ public class TmGroupAction extends BaseAction{
     		List<TmGroup> retList = new ArrayList<TmGroup>();
     		for (TmGroup g : tmGroupList) {
                 String guilderIds = g.getGuilderIds();
-                String[] guilderIdArr = guilderIds.split( "," );
-                StringBuffer sb = new StringBuffer();
-                for (String gid : guilderIdArr) {
-                    TmEmployee guilder = tmEmployeeServiceProxy.queryById( Integer.parseInt( gid ));
-                    sb.append( guilder.getRealName() ).append( ";" );
+                if(guilderIds != null) {
+                    StringBuffer sb = new StringBuffer();
+                    String[] guilderIdArr = guilderIds.split( "," );
+                    for (String gid : guilderIdArr) {
+                        TmEmployee guilder = tmEmployeeServiceProxy.queryById( Integer.parseInt( gid ));
+                        sb.append( guilder.getRealName() ).append( ";" );
+                    }
+                    g.setGuilderNames( sb.toString() );
+                } else {
+                    g.setGuilderNames( "暂无导游" );
                 }
-                g.setGuilderNames( sb.toString() );
                 
                 TmSchedule schedule = tmScheduleServiceProxy.queryById( g.getScheduleId() );
-                g.setScheduleName( schedule.getName() );
+                if(schedule != null) {
+                    g.setScheduleName( schedule.getName() );
+                } else {
+                    g.setScheduleName( "暂无日程" );
+                }
+                
                 retList.add( g );
             }
     		request.setAttribute("tmGroupList", retList);
@@ -165,4 +174,25 @@ public class TmGroupAction extends BaseAction{
 	public void setTmGroup(TmGroup tmGroup) {
 		this.tmGroup = tmGroup;
 	}
+
+    
+    public TmScheduleServiceIFC getTmScheduleServiceProxy() {
+        return tmScheduleServiceProxy;
+    }
+
+    
+    public void setTmScheduleServiceProxy( TmScheduleServiceIFC tmScheduleServiceProxy ) {
+        this.tmScheduleServiceProxy = tmScheduleServiceProxy;
+    }
+
+    
+    public TmEmployeeServiceIFC getTmEmployeeServiceProxy() {
+        return tmEmployeeServiceProxy;
+    }
+
+    
+    public void setTmEmployeeServiceProxy( TmEmployeeServiceIFC tmEmployeeServiceProxy ) {
+        this.tmEmployeeServiceProxy = tmEmployeeServiceProxy;
+    }
+	
 }

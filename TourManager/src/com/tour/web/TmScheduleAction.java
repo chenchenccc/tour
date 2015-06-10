@@ -130,6 +130,7 @@ public class TmScheduleAction extends BaseAction{
             if(loginUser != null) {
                 tmSchedule.setCreateUserId( loginUser.getId() );
             }
+            tmSchedule.setIsDel( "1" );
             tmSchedule.setCreateTime( new Date() );
 			tmScheduleServiceProxy.saveAddTmSchedule(tmSchedule);
 			responseJson(true, "添加成功!");

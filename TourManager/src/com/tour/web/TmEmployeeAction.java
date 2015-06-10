@@ -37,7 +37,27 @@ public class TmEmployeeAction extends BaseAction{
 	private SmUser smUser;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
-	
+
+    /**
+     * @Description: 获取实体列表 
+     */
+   public String guiderList(){
+       try {
+           tmEmployee = new TmEmployee();
+           tmEmployee.setIsGuider( 1 );
+           List<TmEmployee> tmEmployeeList = tmEmployeeServiceProxy.queryTmEmployee4List(request,tmEmployee);
+           request.setAttribute("tmEmployeeList", tmEmployeeList);
+           jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+           
+           jsonArr = JSONArray.fromObject( tmEmployeeList, jsonConfig );
+           
+           responseJson(tmEmployeeServiceProxy.countByExample(tmEmployee), jsonArr);
+        
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return SUCCESS;
+   }
 	/**
 	  * @Description: 获取实体列表 
 	  */

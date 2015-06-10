@@ -56,6 +56,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmEmployee.tel" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
+	      	<td><span class="x">*</span>性别</td>
+	      	<td>
+	      		<select class="easyui-combobox" name="tmEmployee.sex"><option value="1">男</option><option value="2">女</option></select>
+	      	</td>
+	  	</tr>
+	  	<tr>
+	      	<td><span class="x">*</span>是否导游</td>
+	      	<td>
+	      		<select class="easyui-combobox" name="tmEmployee.isGuider"><option value="1">是</option><option value="2">否</option></select>
+	      	</td>
+	  	</tr>
+	  	<tr>
 	      	<td><span class="x">*</span>所属部门</td>
 	      	<td><select name="tmEmployee.deptId" class="easyui-combogrid" style="width:250px; z-index:100" data-options="
 		            panelWidth: 500,

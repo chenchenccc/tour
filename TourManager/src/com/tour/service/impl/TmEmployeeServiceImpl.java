@@ -44,6 +44,9 @@ public class TmEmployeeServiceImpl implements TmEmployeeServiceIFC {
             if(tmEmployee != null && tmEmployee.getEmployeeNum() != null) {
                 criteria.andEmployeeNumLike( "%" + tmEmployee.getEmployeeNum() + "%" );
             }
+            if(tmEmployee != null && tmEmployee.getIsGuider() != null) {
+                criteria.andIsGuiderEqualTo( tmEmployee.getIsGuider() );
+            }
             
             // 获取关联部门
             List<TmEmployee> list = tmEmployeeDao.selectByExample(example);
