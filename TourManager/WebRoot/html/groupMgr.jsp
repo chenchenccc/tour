@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>酒店管理</title>
+	<title>旅游团管理</title>
 	<link rel="stylesheet" type="text/css" href="css/default.css">
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/icon.css" />
@@ -22,11 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <tr>
          <form id="ff" method="post">
           <td>名称</td>
-          <td><input name="tmGroup.name" id="name" /></td>
-          <td>所属区域</td>
-          <td><input name="tmGroup.region" id="region" /></td>
-          <td>酒店星级</td>
-          <td><input name="tmGroup.star" id="star" /></td>
+          <td><input name="tmGroup.groupName" id="name" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
@@ -69,7 +65,10 @@ $(function(){
 		url: getPath() + "/tmGroup_listTmGroup.action",  
 		columns:[[
 			{field:'groupName',title:'旅游团名称',width:60,halign:"center", align:"center"},
-			{field:'tourId',title:'团号ID',width:60,halign:"center", align:"center"},
+			{field:'tourId',title:'团号',width:60,halign:"center", align:"center"},
+			{field:'scheduleName',title:'日程线路',width:60,halign:"center", align:"center"},
+			{field:'guiderNames',title:'导游',width:60,halign:"center", align:"center"},
+			{field:'startTime',title:'开始时间',width:60,halign:"center", align:"center"},
 			{field:'status',title:'状态',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='black'>未开始</font>";
 				else if(value == '2') return"<font color='pink'>正在路上</font>";

@@ -1,5 +1,6 @@
 package com.tour.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,12 @@ import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmUser;
+import com.tour.model.TmEmployee;
 import com.tour.model.TmGroup;
+import com.tour.model.TmSchedule;
+import com.tour.service.ifc.TmEmployeeServiceIFC;
 import com.tour.service.ifc.TmGroupServiceIFC;
+import com.tour.service.ifc.TmScheduleServiceIFC;
 
 @SuppressWarnings("serial")
 public class TmGroupAction extends BaseAction{
@@ -21,7 +26,8 @@ public class TmGroupAction extends BaseAction{
 	  * @Description: 业务代理对象 
 	  */
 	private TmGroupServiceIFC tmGroupServiceProxy;
-	
+	private TmScheduleServiceIFC tmScheduleServiceProxy;
+	private TmEmployeeServiceIFC tmEmployeeServiceProxy;
 	/**
 	  * @Description:  实体对象
 	  */
@@ -30,16 +36,36 @@ public class TmGroupAction extends BaseAction{
     private JsonConfig jsonConfig = new JsonConfig();
 	
 	/**
-	  * @Description: 获取实体列表 
+	  * @throws Exception 
+	 * @Description: 获取实体列表 
 	  */
-	public String listTmGroup(){
-		List<TmGroup> tmGroupList = tmGroupServiceProxy.queryTmGroup4List(request,tmGroup);
-		request.setAttribute("tmGroupList", tmGroupList);
-		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
-        
-        jsonArr= JSONArray.fromObject( tmGroupList, jsonConfig );
-        
-        responseJson(tmGroupServiceProxy.countByExample(tmGroup), jsonArr);
+	public String listTmGroup() throws Exception{
+	    try {
+    		List<TmGroup> tmGroupList = tmGroupServiceProxy.queryTmGroup4List(request,tmGroup);
+    		List<TmGroup> retList = new ArrayList<TmGroup>();
+    		for (TmGroup g : tmGroupList) {
+                String guilderIds = g.getGuilderIds();
+                String[] guilderIdArr = guilderIds.split( "," );
+                StringBuffer sb = new StringBuffer();
+                for (String gid : guilderIdArr) {
+                    TmEmployee guilder = tmEmployeeServiceProxy.queryById( Integer.parseInt( gid ));
+                    sb.append( guilder.getRealName() ).append( ";" );
+                }
+                g.setGuilderNames( sb.toString() );
+                
+                TmSchedule schedule = tmScheduleServiceProxy.queryById( g.getScheduleId() );
+                g.setScheduleName( schedule.getName() );
+                retList.add( g );
+            }
+    		request.setAttribute("tmGroupList", retList);
+    		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+            
+            jsonArr= JSONArray.fromObject( retList, jsonConfig );
+            
+            responseJson(tmGroupServiceProxy.countByExample(tmGroup), jsonArr);
+	    } catch (Exception e) {
+            e.printStackTrace();
+        }
         return SUCCESS;
 	}
 	

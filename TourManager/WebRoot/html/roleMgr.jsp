@@ -282,7 +282,25 @@ function viewAutho(){
 			}
 		},'json');
 	
+	$("#content").append("添加权限");
 	
+	$.post(getPath() + '/smRole_addAuthoList.action',
+		{"smRole.id" :  row.id},
+		function(json) {
+			var result = eval(json);
+			console.log(result);
+			if (result && result.success) {
+				// $('#tt').datagrid('reload'); 
+				var data = result.msg;
+				for(var i in data) {
+					$("#content").append('<input type="checkbox" name="autho" value="'+data[i].id+'">'+data[i].authoName);
+				}
+				$("#content").append("<button>添加</button>");
+			} else {
+				$.messager.show({title : 'Error',msg : result.msg});
+			}
+		},'json');
+		
 	////
 	$('#dd').dialog({
         buttons: [{
