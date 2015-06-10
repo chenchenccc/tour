@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>年龄</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.age data-options="required:true"></input></td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmCustomer.age" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
 	      	<td><span class="x">*</span>性别</td>
