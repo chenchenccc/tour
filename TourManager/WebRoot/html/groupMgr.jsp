@@ -168,6 +168,16 @@ $(function(){
 				showMsg('警告','请选择一条记录','alert');
 				return;
 			}
+			console.log(row.state);
+			if(row.status == '2') {
+				showMsg('警告','旅游团在路上，不能修改','alert');
+				return;
+			}
+			if(row.status == '3') {
+				showMsg('警告','旅游团已结束，不能修改','alert');
+				return;
+			}
+			
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
 			$.post(getPath()+"/tmGroup_editTmGroup.action",

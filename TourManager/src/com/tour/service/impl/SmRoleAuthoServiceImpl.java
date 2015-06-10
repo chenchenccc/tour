@@ -55,12 +55,20 @@ public class SmRoleAuthoServiceImpl implements SmRoleAuthoServiceIFC {
 		//构造Criteria
 		SmRoleAuthoExample example = new SmRoleAuthoExample();
 		Criteria criteria = example.createCriteria();
-	
+		if(smRoleAutho!=null && smRoleAutho.getAuthoId()!=null) {
+		    criteria.andAuthoIdEqualTo( smRoleAutho.getAuthoId() );
+		}
+		if(smRoleAutho!=null && smRoleAutho.getRoleId()!=null) {
+            criteria.andRoleIdEqualTo( smRoleAutho.getRoleId() );
+        }
+		if(smRoleAutho!=null && smRoleAutho.getIsDel()!=null) {
+            criteria.andIsDelEqualTo( smRoleAutho.getIsDel() );
+        }
 		List<SmRoleAutho> list= smRoleAuthoDao.selectByExample(example);
-		if(list != null && list.size() >= 0){
+		if(list != null && list.size() > 0){
 			_smRoleAutho = list.get(0);
 		}
-	return _smRoleAutho;
+		return _smRoleAutho;
 	}
 	/**
 	  * @Description: 保存添加实体对象 

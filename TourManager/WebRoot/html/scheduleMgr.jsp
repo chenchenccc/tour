@@ -197,24 +197,32 @@ $(function(){
 			text: '编辑详情',
 			iconCls: 'icon-ok',
 			handler: function(){
+				row = $('#tt').datagrid('getSelected');
+				console.log(row);
+				
 				$('#dd').dialog({
 			        buttons: [{
 			            text:'保存',
 			            iconCls:'icon-ok',
 			            handler:function(){
-			        		var formData=$("#detail").serialize();
+			        		//var formData=$("#detail").serialize();
+			        		var data = '';
+							for(var i = 1;i<=row.totalDay;i++) {
+								data = data + $('#detail'+i).val() + ',';
+							}
+							console.log(data);
 							// 保存编辑对象		        		
 			        		$.ajax({
 								type: "POST",
 								url: getPath() + '/tmSchedule_saveDetail.action',
 								processData:true,
-								data:formData,
+								data: {detail:data,'tmSchedule.id':row.id},
 								success: function(data){
 									console.log(data);
 									var result = eval("("+data+")");
 									if (result && result.success) {
 										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
+										$.messager.show({title : '信息',msg : "添加成功"});
 									} else {
 										$.messager.show({title : '错误',msg : result.msg});
 									}

@@ -51,9 +51,18 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
 		//构造Criteria
 		SmUserRoleExample example = new SmUserRoleExample();
 		Criteria criteria = example.createCriteria();
-	
+		
+		if(smUserRole != null && smUserRole.getUserId()!= null) {
+		    criteria.andUserIdEqualTo( smUserRole.getUserId() );
+		}
+		if(smUserRole!=null && smUserRole.getRoleId()!= null) {
+		    criteria.andRoleIdEqualTo( smUserRole.getRoleId() );
+		}
+		if(smUserRole!=null && smUserRole.getIsDel()!= null) {
+            criteria.andIsDelEqualTo( smUserRole.getIsDel() );
+        }
 		List<SmUserRole> list= smUserRoleDao.selectByExample(example);
-		if(list != null && list.size() >= 0){
+		if(list != null && list.size() > 0){
 			_smUserRole = list.get(0);
 		}
 	return _smUserRole;
@@ -84,10 +93,11 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
         criteria.andRoleIdEqualTo( smUserRole.getRoleId() );
         criteria.andIsDelEqualTo( "1" );
         List list = smUserRoleDao.selectByExample( example );
-        SmUserRole record = (SmUserRole) list.get( 0 );
-        
-        smUserRole.setId( record.getId() );
-		smUserRoleDao.updateByPrimaryKeySelective(smUserRole);
+        if(list != null && list.size()> 0) {
+            SmUserRole record = (SmUserRole) list.get( 0 );
+            smUserRole.setId( record.getId() );
+            smUserRoleDao.updateByPrimaryKeySelective(smUserRole);
+        }
 	}
 	
 	public SmUserRoleDAO getSmUserRoleDao() {

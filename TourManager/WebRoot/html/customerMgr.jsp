@@ -23,8 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <form id="ff" method="post">
           <td>姓名</td>
           <td><input name="tmCustomer.realName" id="realName" /></td>
-          <td>身份证号后六位</td>
-          <td><input name="tmCustomer.identityNum" id="identityNum" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
@@ -100,53 +98,14 @@ $(function(){
 			text: '添加',
 			iconCls: 'icon-add',
 			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'保存',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		var identityReg=/^\d{17}([0-9]|X)$/;
-			        		console.log($("#identityNum").val());
-			        		if(!identityReg.test($("#identityNum").val())) {
-			        			//alert("身份证号码格式不正确，必须为18位数字，请重新输入！");
-			        			//return;
-			        		}
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/tmCustomer_saveAddTmCustomer.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				var result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
+				
 				$("#content").html(''); // 先将content的内容清空
 				// 保存对象
 				$.post(getPath()+"/tmCustomer_addTmCustomer.action",
 				    function(result){
 						$("#content").append(result);
+						showDialog();		
 				    });
-				$("#dd").dialog('open').dialog('setTitle', '添加');
-			    $('#form').form('clear');
 			}
 		},{
 			text: '删除',
@@ -222,7 +181,49 @@ function viewDetail(data){
 	    });
 	$("#dd").dialog('open').dialog('setTitle', '查看');
 }
-
+function showDialog() {
+	$('#dd').dialog({
+       buttons: [{
+           text:'保存',
+           iconCls:'icon-ok',
+           handler:function(){
+       		 // 保存添加对象
+       		var formData=$("#saveform").serialize();
+       		var identityReg=/^\d{17}([0-9]|X)$/;
+       		console.log($("#identityNum").val());
+       		if(!identityReg.test($("#identityNum").val())) {
+       			//alert("身份证号码格式不正确，必须为18位数字，请重新输入！");
+       			//return;
+       		}
+       		$.ajax({
+				type: "POST",
+				url: getPath() + '/tmCustomer_saveAddTmCustomer.action',
+				processData: true,
+				data: formData,
+				success: function(data){
+       				var result = eval("("+data+")");
+					if (result && result.success) {
+						$('#tt').datagrid('reload');
+						$.messager.show({title : '信息',msg : result.msg});
+					} else {
+						$.messager.show({title : '错误',msg : result.msg});
+					}
+       			
+				}
+       		});
+               $("#dd").dialog('close');
+           }
+       },{
+           text:'取消',
+           iconCls:'icon-cancel',
+           handler:function(){
+               $("#dd").dialog('close');
+           }
+       }]
+   });
+$("#dd").dialog('open').dialog('setTitle', '添加');
+   $('#form').form('clear');
+}
 </script>
 </html>
 	

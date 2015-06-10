@@ -13,6 +13,7 @@ import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
 import com.tour.model.SmRole;
+import com.tour.model.SmUserRole;
 import com.tour.model.SmUser;
 import com.tour.model.SmUserRole;
 import com.tour.service.ifc.SmRoleServiceIFC;
@@ -135,6 +136,28 @@ public class SmUserAction extends BaseAction{
 		}
 		return SUCCESS;
 	}
+	
+	/**
+     * @Description: 添加角色列表
+     */
+   public String addRoleList(){
+       try {
+           List<SmRole> allList = smRoleServiceProxy.querySmRole4List( request, null );
+           request.setAttribute("roleList", allList);
+           jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+           
+           jsonArr= JSONArray.fromObject( allList, jsonConfig );
+           
+           responseJson(true, jsonArr);
+       } catch (Exception e) {
+           responseJson(false, "服务出错了!");
+           e.printStackTrace();
+           RJLog.error(e);
+       }
+    return SUCCESS;
+   }
+	 
+	
 	
 	public SmUserServiceIFC getSmUserServiceProxy() {
 		return smUserServiceProxy;

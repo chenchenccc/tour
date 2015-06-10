@@ -187,7 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<c:forEach var="x" varStatus="s" begin="1" end="${count}" >
 		<tr>
 	      	<td><span class="x">*</span>第${x} 天</td>
-	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule[${x}].name" value="${tmSchedule.lineCode }" data-options="required:true"></input></td>
+	      	<td><input id="detail${x}" class="easyui-textbox" style="width:250px" type="text" name="tmSchedule[${x}].name" value="${tmSchedule.lineCode }" data-options="required:true"></input></td>
 	  	</tr>
 			
 	　　</c:forEach> 

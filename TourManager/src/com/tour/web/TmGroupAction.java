@@ -110,6 +110,7 @@ public class TmGroupAction extends BaseAction{
             if(loginUser != null) {
                 tmGroup.setUpdateUserId( loginUser.getId() );
             }
+            tmGroup.setIsDel( "1" );
             tmGroup.setUpdateTime( new Date() );
 			tmGroupServiceProxy.saveEditTmGroup(tmGroup);
 			responseJson(true, "修改成功!");
@@ -178,6 +179,7 @@ public class TmGroupAction extends BaseAction{
 	  */
 	public String delTmGroup(){
 		try {
+		    tmGroup.setIsDel( "2" );
 			tmGroupServiceProxy.delTmGroup(tmGroup);
 			responseJson(true, "删除成功!");
 		} catch (Exception e) {

@@ -152,6 +152,27 @@ public class SmRoleAction extends BaseAction{
         return SUCCESS;
     }
 	
+	public String addAuthoList(){
+        try {
+            SmRoleAutho smRoleAutho = new SmRoleAutho();
+            smRoleAutho.setRoleId( smRole.getId() );
+            List<SmAutho> allList = smAuthoServiceProxy.querySmAutho4List( request, null );
+            SmAutho smAutho = null;
+            request.setAttribute("authoList", allList);
+            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
+            
+            jsonArr= JSONArray.fromObject( allList, jsonConfig );
+            
+            responseJson(true, jsonArr);
+        } catch (Exception e) {
+            responseJson(false, "服务出错了!");
+            e.printStackTrace();
+            RJLog.error(e);
+        }
+        return SUCCESS;
+    }
+	
+	
 	
 	public SmRoleServiceIFC getSmRoleServiceProxy() {
 		return smRoleServiceProxy;

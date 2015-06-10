@@ -36,6 +36,17 @@ public class TmScheduleAction extends BaseAction{
 	private TmDetail tmDetail;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
+    
+    private String detail;
+    
+    public String getDetail() {
+        return detail;
+    }
+
+    
+    public void setDetail( String detail ) {
+        this.detail = detail;
+    }
 
     /**
 	  * @Description: 获取实体列表 
@@ -108,7 +119,22 @@ public class TmScheduleAction extends BaseAction{
     */
   public String saveDetail() throws Exception{
       try {
-          responseJson( true, "" );
+          TmDetail d;
+          StringBuffer detailIds = new StringBuffer();  
+          if(detail != null) {
+              String[] arr = detail.split( "," );
+              for (String string : arr) {
+                  d = new TmDetail();
+                  d.setTour( string );
+                  tmDetailServiceProxy.saveAddTmDetail( d );
+                  
+                  TmDetail detail = tmDetailServiceProxy.queryTmDetail4Bean( d );
+                  detailIds.append( detail.getId() ).append( "," );
+              }
+              tmSchedule.setDetailId( detailIds.toString());
+              tmScheduleServiceProxy.delTmSchedule( tmSchedule );
+          }
+          responseJson( true, "添加成功" );
     } catch (Exception e) {
         e.printStackTrace();
     }

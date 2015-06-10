@@ -100,10 +100,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmGroup.groupName" value="${tmGroup.groupName }" data-options="required:true"></input></td>
 	  	</tr>
 	  	<tr>
+	      	<td><span class="x">*</span>状态</td>
+	      	<td><select name="tmOrder.status" class="easyui-combobox"><option value="1">未开始</option><option value="2">在路上</option><option value="3">已经结束</option></select></td>
+	  	</tr>
+	  	<!--<tr>
 	      	<td><span class="x">*</span>开始时间</td>
 	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmGroup.startTime" value="${tmGroup.startTime }" data-options="required:true"></input></td>
 	  	</tr>
-	</table>
+	--></table>
 </form>
 </c:if>
 </div>

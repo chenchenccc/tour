@@ -195,7 +195,7 @@ function addTab(subtitle,url){
 }
 
 function addSchedule() {
-	parent.addTab("添加日程","html/addSchedule2.jsp")
+	parent.addTab("添加日程","html/addSchedule.jsp")
 	/*$('#dd').dialog({
 	    width: 500,
 	    height: 300,

@@ -50,6 +50,9 @@ public class TmDetailServiceImpl implements TmDetailServiceIFC {
 		TmDetailExample example = new TmDetailExample();
 		Criteria criteria = example.createCriteria();
 	
+		if(tmDetail != null && tmDetail.getTour() != null) {
+		    criteria.andTourEqualTo( tmDetail.getTour() );
+		}
 		List<TmDetail> list= tmDetailDao.selectByExample(example);
 		if(list != null && list.size() >= 0){
 			_tmDetail = list.get(0);

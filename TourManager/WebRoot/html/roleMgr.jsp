@@ -200,6 +200,8 @@ $(function(){
 			text: '权限',
 			iconCls: 'icon-ok',
 			handler: function(){
+				
+				//saveAutho()
 				row = $('#tt').datagrid('getSelected');
 				if (row) {
 					viewAutho();
@@ -277,36 +279,38 @@ function viewAutho(){
 					console.log(data[i].authoName);
 					$("#content").append("<a onclick='delAutho("+data[i].id+")'>"+data[i].authoName+", ");
 				}
+				$("#content").append("<hr />添加权限");
+				
+				$.post(getPath() + '/smRole_addAuthoList.action',
+					{"smRole.id" :  row.id},
+					function(json) {
+						var result = eval(json);
+						console.log(result);
+						if (result && result.success) {
+							// $('#tt').datagrid('reload'); 
+							var data = result.msg;
+							for(var i in data) {
+								$("#content").append('<input type="checkbox" name="autho" value="'+data[i].id+'">'+data[i].authoName);
+							}
+						} else {
+							$.messager.show({title : 'Error',msg : result.msg});
+						}
+					},'json');
+				
 			} else {
 				$.messager.show({title : 'Error',msg : result.msg});
 			}
 		},'json');
 	
-	$("#content").append("添加权限");
 	
-	$.post(getPath() + '/smRole_addAuthoList.action',
-		{"smRole.id" :  row.id},
-		function(json) {
-			var result = eval(json);
-			console.log(result);
-			if (result && result.success) {
-				// $('#tt').datagrid('reload'); 
-				var data = result.msg;
-				for(var i in data) {
-					$("#content").append('<input type="checkbox" name="autho" value="'+data[i].id+'">'+data[i].authoName);
-				}
-				$("#content").append("<button>添加</button>");
-			} else {
-				$.messager.show({title : 'Error',msg : result.msg});
-			}
-		},'json');
-		
+	
 	////
 	$('#dd').dialog({
         buttons: [{
             text:'确定',
             iconCls:'icon-ok',
             handler:function(){
+            	saveAutho();
                 $("#dd").dialog('close');
             }
         }]
@@ -314,7 +318,32 @@ function viewAutho(){
 	////
 	$("#dd").dialog('open').dialog('setTitle', '查看权限');
 }
-
+function saveAutho() {
+	var row = $('#tt').datagrid('getSelected');
+	var result = new Array();
+    $("[name = autho]:checkbox").each(function () {
+        if ($(this).is(":checked")) {
+            result.push($(this).attr("value"));
+        }
+    });
+    //alert(result.join(","));
+    // 删除对象
+	$.post(getPath()+"/smRoleAutho_saveAddSmRoleAutho.action",
+		{"smRoleAutho.roleId" : row.id, "authoIds": result.join(",") },
+	    function(result){ 
+			//$("#content").append(result);
+			var json = eval("("+result+")");
+			console.log(json);
+			if (json && json.success) {
+				//	$('#tt').datagrid('reload'); ;
+				viewAutho();
+				$("#dd").dialog('close');
+				$.messager.show({title : 'Info',msg : "添加权限成功！"});
+			} else {
+				$.messager.show({title : 'Error',msg : json.msg});
+			}
+	    });
+}
 function delAutho(id) {
 	var row = $('#tt').datagrid('getSelected');
 	$.messager.confirm('警告','确定取消该权限？',

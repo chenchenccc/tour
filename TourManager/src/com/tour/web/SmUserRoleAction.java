@@ -11,6 +11,7 @@ import net.sf.json.JsonConfig;
 import com.tour.commons.base.BaseAction;
 import com.tour.commons.utils.JsonDateValueProcessor;
 import com.tour.commons.utils.RJLog;
+import com.tour.model.SmRoleAutho;
 import com.tour.model.SmUser;
 import com.tour.model.SmUserRole;
 import com.tour.service.ifc.SmUserRoleServiceIFC;
@@ -28,8 +29,21 @@ public class SmUserRoleAction extends BaseAction{
 	private SmUserRole smUserRole;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
+    private String roleIds;
+    
 	
-	/**
+
+    
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    
+    public void setRoleIds( String roleIds ) {
+        this.roleIds = roleIds;
+    }
+
+    /**
 	  * @Description: 获取实体列表 
 	  */
 	public String listSmUserRole(){
@@ -96,14 +110,21 @@ public class SmUserRoleAction extends BaseAction{
 	  */
 	public String saveAddSmUserRole(){
 		try {
-		    HttpSession session = request.getSession();
-            SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
-            if(loginUser != null) {
-                smUserRole.setCreateUserId( loginUser.getId() );
+		    if(roleIds != null) {
+                String[] idArr = roleIds.split( "," );
+                for (String s : idArr) {
+                    smUserRole.setRoleId( Integer.parseInt( s ) );
+                    smUserRole.setId( null );
+                    smUserRole.setUserId( smUserRole.getUserId());
+                    smUserRole.setIsDel( "1" );
+                    SmUserRole ur = smUserRoleServiceProxy.querySmUserRole4Bean( smUserRole );
+                    if(ur == null) {
+                        smUserRoleServiceProxy.saveAddSmUserRole(smUserRole);
+                    }
+                }
+                
             }
-            smUserRole.setCreateTime( new Date() );
-            smUserRole.setIsDel( "1" );
-			smUserRoleServiceProxy.saveAddSmUserRole(smUserRole);
+		    
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
 			responseJson(false, "添加失败!");

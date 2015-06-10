@@ -28,8 +28,19 @@ public class SmRoleAuthoAction extends BaseAction{
 	private SmRoleAutho smRoleAutho;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
-	
-	/**
+    
+    private String authoIds;
+    
+    public String getAuthoIds() {
+        return authoIds;
+    }
+
+    
+    public void setAuthoIds( String authoIds ) {
+        this.authoIds = authoIds;
+    }
+
+    /**
 	  * @Description: 获取实体列表 
 	  */
 	public String listSmRoleAutho(){
@@ -96,7 +107,21 @@ public class SmRoleAuthoAction extends BaseAction{
 	  */
 	public String saveAddSmRoleAutho(){
 		try {
-			smRoleAuthoServiceProxy.saveAddSmRoleAutho(smRoleAutho);
+		    if(authoIds != null) {
+		        String[] idArr = authoIds.split( "," );
+		        for (String s : idArr) {
+                    smRoleAutho.setAuthoId( Integer.parseInt( s ) );
+                    smRoleAutho.setRoleId( smRoleAutho.getRoleId() );
+                    smRoleAutho.setId( null );
+                    smRoleAutho.setIsDel( "1" );
+                    SmRoleAutho ra = smRoleAuthoServiceProxy.querySmRoleAutho4Bean( smRoleAutho );
+                    if(ra == null) {
+                        smRoleAuthoServiceProxy.saveAddSmRoleAutho(smRoleAutho);
+                    }
+                }
+		        
+		    }
+			//smRoleAuthoServiceProxy.saveAddSmRoleAutho(smRoleAutho);
 			responseJson(true, "添加成功!");
 		} catch (Exception e) {
 			responseJson(false, "添加失败!");

@@ -215,6 +215,7 @@ $(function(){
 				row = $('#tt').datagrid('getSelected');
 				if (row) {
 					viewRole();
+					
 				} else {
 					showMsg('警告','请选择一条记录','alert');
 				}
@@ -287,6 +288,24 @@ function viewRole(){
 				for(var i in data) {
 					$("#content").append("<a onclick='delRole("+data[i].id+")'>"+data[i].roleName+", ");
 				}
+				
+				$("#content").append("<hr />添加角色");
+				
+				$.post(getPath() + '/smUser_addRoleList.action',
+					{"smUser.id" :  row.userId},
+					function(json) {
+						var result = eval(json);
+						console.log(result);
+						if (result && result.success) {
+							// $('#tt').datagrid('reload'); 
+							var data = result.msg;
+							for(var i in data) {
+								$("#content").append('<input type="checkbox" name="role" value="'+data[i].id+'">'+data[i].roleName);
+							}
+						} else {
+							$.messager.show({title : 'Error',msg : result.msg});
+						}
+					},'json');
 			} else {
 				$.messager.show({title : 'Error',msg : result.msg});
 			}
@@ -299,6 +318,7 @@ function viewRole(){
             text:'确定',
             iconCls:'icon-ok',
             handler:function(){
+            	saveRole();
                 $("#dd").dialog('close');
             }
         }]
@@ -306,7 +326,32 @@ function viewRole(){
 	////
 	$("#dd").dialog('open').dialog('setTitle', '查看权限');
 }
-
+function saveRole() {
+	var row = $('#tt').datagrid('getSelected');
+	var result = new Array();
+    $("[name = role]:checkbox").each(function () {
+        if ($(this).is(":checked")) {
+            result.push($(this).attr("value"));
+        }
+    });
+    //alert(result.join(","));
+    // 删除对象
+	$.post(getPath()+"/smUserRole_saveAddSmUserRole.action",
+		{"smUserRole.userId" : row.userId, "roleIds": result.join(",") },
+	    function(result){ 
+			//$("#content").append(result);
+			var json = eval("("+result+")");
+			console.log(json);
+			if (json && json.success) {
+				//	$('#tt').datagrid('reload'); ;
+				viewRole();
+				$("#dd").dialog('close');
+				$.messager.show({title : 'Info',msg : "添加角色成功！"});
+			} else {
+				$.messager.show({title : 'Error',msg : json.msg});
+			}
+	    });
+}
 function delRole(id) {
 	var row = $('#tt').datagrid('getSelected');
 	$.messager.confirm('警告','确定取消该角色？',
