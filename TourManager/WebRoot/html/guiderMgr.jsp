@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>酒店管理</title>
+	<title>导游管理</title>
 	<link rel="stylesheet" type="text/css" href="css/default.css">
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/bootstrap/easyui.css" />
 	<link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.3.5/themes/icon.css" />
@@ -21,25 +21,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table border="0">
         <tr>
          <form id="ff" method="post">
-          <td>酒店名称</td>
-          <td><input name="tmHotel.name" id="name" /></td>
-          <td>所属区域</td>
-          <td><input name="tmHotel.region" id="region" /></td>
-          <td>酒店星级</td>
-          <td><input name="tmHotel.star" id="star" /></td>
+          <td>员工号</td>
+          <td><input name="tmGuider.employeeNum" id="name" /></td>
           <td>
               <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="query();" iconCls="icon-search" plain="true">查询</a>
           </td>
          </form>
-          </tr><tr>
-         <form id="fuzzy" method="post">
-          <td>模糊查询</td>
-          <td><input name="xm" id="xm" /></td>
-          <td>
-              <a href="javascript:void(0)" class="easyui-linkbutton my-search-button" onclick="fuzzyquery();" iconCls="icon-search" plain="true">模糊查询</a> 
-          </td>
-         </form>
-        </tr>
+          </tr>
       </table>
     </div>
     <span id="openOrClose">0</span> 
@@ -75,13 +63,16 @@ $(function(){
 		fitColumns:true,
 		rownumbers:true,
 		loadMsg : /*showProcess(true, '温馨提示', '正在加载数据, 请稍后...')*/'正在加载数据',
-		url: getPath() + "/tmEmployee_listTmEmployee.action",  
+		url: getPath() + "/tmEmployee_guiderList.action",  
 		columns:[[
 			{field:'employeeNum',title:'员工号',width:60,halign:"center", align:"center"},
 			{field:'realName',title:'真实姓名',width:60,halign:"center", align:"center"},
 			{field:'tel',title:'联系方式',width:60,halign:"center", align:"center"},
-			{field:'sex',title:'性别',width:60,halign:"center", align:"center"},
-			{field:'head',title:'头像',width:60,halign:"center", align:"center"},
+			{field:'sex',title:'性别',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
+				if(value == '0') return"未知";
+				else if(value == '1') return"男";
+				else if(value == '2') return"女";
+			}},
 			
 		]],
 		showPageList:[10,20,30,40,50],
@@ -89,52 +80,6 @@ $(function(){
 		pageSize: 10,  // 初始
 		pagination: true,
 		toolbar: [{
-			text: '添加',
-			iconCls: 'icon-add',
-			handler: function(){
-				$('#dd').dialog({
-			        buttons: [{
-			            text:'保存',
-			            iconCls:'icon-ok',
-			            handler:function(){
-			        		 // 保存添加对象
-			        		var formData=$("#saveform").serialize();
-			        		$.ajax({
-								type: "POST",
-								url: getPath() + '/tmHotel_saveAddTmHotel.action',
-								processData: true,
-								data: formData,
-								success: function(data){
-			        				var result = eval("("+data+")");
-									if (result && result.success) {
-										$('#tt').datagrid('reload');
-										$.messager.show({title : '信息',msg : result.msg});
-									} else {
-										$.messager.show({title : '错误',msg : result.msg});
-									}
-			        			
-								}
-			        		});
-			                $("#dd").dialog('close');
-			            }
-			        },{
-			            text:'取消',
-			            iconCls:'icon-cancel',
-			            handler:function(){
-			                $("#dd").dialog('close');
-			            }
-			        }]
-			    });
-				$("#content").html(''); // 先将content的内容清空
-				// 保存对象
-				$.post(getPath()+"/tmEmployee_addTmEmployee.action",
-				    function(result){
-						$("#content").append(result);
-				    });
-				$("#dd").dialog('open').dialog('setTitle', '添加');
-			    $('#form').form('clear');
-			}
-		},{
 			text: '修改',
 			iconCls: 'icon-edit',
 			handler: function(){
@@ -180,7 +125,7 @@ $(function(){
 			$("#content").html(''); // 先将content的内容清空
 			// 获取编辑对象
 			$.post(getPath()+"/tmEmployee_editTmEmployee.action",
-				{"emEmployee.id": row.id},
+				{"tmEmployee.id": row.id},
 			    function(result){  
 					$("#content").append(result);
 			    });

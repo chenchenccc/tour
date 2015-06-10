@@ -112,8 +112,27 @@ public class TmOrderAction extends BaseAction{
 			responseJson(false, "修改失败!");
 			RJLog.error(e);
 		}
-	return SUCCESS;
+		return SUCCESS;
 	}
+	/**
+     * @Description: 计算价格 
+     */
+   public String getPrice(){
+       try {
+           TmSchedule s = tmScheduleServiceProxy.queryById( tmOrder.getScheduleId() );
+           // 单次价格
+           Double p = s.getPrice();
+           
+           Double price = p * tmOrder.getTotalPeople();
+           
+           responseJson(true, price.toString());
+       } catch (Exception e) {
+           responseJson(false, "修改失败!");
+           RJLog.error(e);
+       }
+       return SUCCESS;
+   }
+	
 	
 	/**
 	  * @Description: 添加实体对象 

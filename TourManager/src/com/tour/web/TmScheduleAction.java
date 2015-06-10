@@ -36,8 +36,8 @@ public class TmScheduleAction extends BaseAction{
 	private TmDetail tmDetail;
 	private JSONArray jsonArr = null;
     private JsonConfig jsonConfig = new JsonConfig();
-	
-	/**
+
+    /**
 	  * @Description: 获取实体列表 
 	  */
 	public String listTmSchedule(){
@@ -92,6 +92,29 @@ public class TmScheduleAction extends BaseAction{
 		return EDIT_SUCCESS;
 	}
 	
+	/**
+     * @throws Exception 
+	 * @Description: 编辑详情
+     */
+   public String editDetail() throws Exception{
+       TmSchedule s = tmScheduleServiceProxy.queryById( tmSchedule.getId() );
+       request.setAttribute("operate", "detail");
+       request.setAttribute("count", s.getTotalDay());
+       return EDIT_SUCCESS;
+   }
+   /**
+    * @throws Exception 
+    * @Description: 保存详情
+    */
+  public String saveDetail() throws Exception{
+      try {
+          responseJson( true, "" );
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+      return SUCCESS;
+  }
+   
 	/**
 	  * @Description: 保存编辑实体对象 
 	  */
@@ -186,6 +209,7 @@ public class TmScheduleAction extends BaseAction{
 	    responseJson( ret.size(), jsonArr );
 	    return SUCCESS;
 	}
+	
 	
 	public TmScheduleServiceIFC getTmScheduleServiceProxy() {
 		return tmScheduleServiceProxy;

@@ -194,6 +194,60 @@ $(function(){
 				}
 			}
 		},'-',{
+			text: '编辑详情',
+			iconCls: 'icon-ok',
+			handler: function(){
+				$('#dd').dialog({
+			        buttons: [{
+			            text:'保存',
+			            iconCls:'icon-ok',
+			            handler:function(){
+			        		var formData=$("#detail").serialize();
+							// 保存编辑对象		        		
+			        		$.ajax({
+								type: "POST",
+								url: getPath() + '/tmSchedule_saveDetail.action',
+								processData:true,
+								data:formData,
+								success: function(data){
+									console.log(data);
+									var result = eval("("+data+")");
+									if (result && result.success) {
+										$('#tt').datagrid('reload');
+										$.messager.show({title : '信息',msg : result.msg});
+									} else {
+										$.messager.show({title : '错误',msg : result.msg});
+									}
+			        				$('#tt').datagrid('reload');
+								}
+			        		});
+			                $("#dd").dialog('close');
+							$('#tt').datagrid('reload');
+			            }
+			        },{
+			            text:'取消',
+			            iconCls:'icon-cancel',
+			            handler:function(){
+			                $("#dd").dialog('close');
+			            }
+			        }]
+			    });
+				row = $('#tt').datagrid('getSelected');
+				if (row) {
+					$("#content").html(''); // 先将content的内容清空
+					// 获取编辑对象
+					$.post(getPath()+"/tmSchedule_editDetail.action",
+						{"tmSchedule.id": row.id},
+					    function(result){
+							$("#content").append(result);
+					    });
+					$("#dd").dialog('open').dialog('setTitle', '编辑详情');
+					$('#form').form('load', row);
+				} else {
+					showMsg('警告','请选择一条记录','alert');
+				}
+			}
+		},'-',{
 			text: '帮助',
 			iconCls: 'icon-help',
 			handler: function(){showMsg('帮助','这里是帮助内容','alert');}

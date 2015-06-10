@@ -181,4 +181,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</table>
 </form>
 </c:if>
+<c:if test="${operate eq 'detail'}">
+<form id="detail" method="post" action="<%=path %>/tmDetail_saveAddDetail.action">
+	<table cellpadding="5">
+		<c:forEach var="x" varStatus="s" begin="1" end="${count}" >
+		<tr>
+	      	<td><span class="x">*</span>第${x} 天</td>
+	      	<td><input class="easyui-textbox" style="width:250px" type="text" name="tmSchedule[${x}].name" value="${tmSchedule.lineCode }" data-options="required:true"></input></td>
+	  	</tr>
+			
+	　　</c:forEach> 
+	</table>
+</form>
+</c:if>
 </div>

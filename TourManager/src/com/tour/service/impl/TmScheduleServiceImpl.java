@@ -52,6 +52,9 @@ public class TmScheduleServiceImpl implements TmScheduleServiceIFC {
 		TmScheduleExample example = new TmScheduleExample();
 		Criteria criteria = example.createCriteria();
 	
+		if(tmSchedule != null && tmSchedule.getId() != null) {
+		    criteria.andIdEqualTo( tmSchedule.getId() );
+		}
 		List<TmSchedule> list= tmScheduleDao.selectByExample(example);
 		if(list != null && list.size() >= 0){
 			_tmSchedule = list.get(0);

@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </tr>
 	        <tr>
 	            <td>人数</td>
-	            <td><input name="tmOrder.totalPeople" class="easyui-textbox" type="text" name="totalPeople" data-options="required:true"></input></td>
+	            <td><input id="totalPeople" name="tmOrder.totalPeople" class="easyui-textbox" type="text" data-options="required:true"></input></td>
 	        </tr>
 	        <tr>
 	            <td>所选日程:</td>
@@ -79,20 +79,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </tr>
 	        <tr>
 	            <td>订单描述:</td>
-	            <td><input name="tmOrder.orderDesc" class="easyui-textbox" name="orderDesc" data-options="multiline:true" style="height:60px"></input></td>
+	            <td><input name="tmOrder.orderDesc" class="easyui-textbox" data-options="multiline:true" style="height:60px"></input></td>
 	        </tr>
 	        <tr>
 	            <td>订单类型:</td>
 	            <td>
-	                <select name="tmOrder.orderType" class="easyui-combobox" name="orderType"><option value="1">散客订单</option><option value="2">包团订单</option></select>
+	                <select name="tmOrder.orderType" class="easyui-combobox"><option value="1">散客订单</option><option value="2">包团订单</option></select>
 	            </td>
 	        </tr>
-	        <tr>
-	            <td>总价格:</td>
-	            <td>
-	                <input name="tmOrder.totalPrice" class="easyui-textbox" type="text" name="price" data-options="readonly:true"></input>
-	            </td>
-	        </tr>
+	                <input id="totalPrice" name="tmOrder.totalPrice" class="easyui-textbox" type="hidden" data-options="readonly:true"></input>
+	                <input id="isPay" name="tmOrder.isPay" class="easyui-textbox" type="hidden" data-options="readonly:true"></input>
 	    </table>
 	</form>
 	<div style="text-align:center;padding:5px">
@@ -119,8 +115,50 @@ function getPath() {
 function saveForm(){
     //$('#ff').form('submit');
     var formData=$("#saveForm").serialize();
+    var totalPeople = $("#totalPeople").val();
+    // 计算价格
+    $.ajax({
+		type: "POST",
+		url: getPath() + '/tmOrder_getPrice.action',
+		processData:true,
+		data:formData,
+		success: function(data){
+			var result = eval("("+data+")");
+			if (result && result.success) {
+				$.messager.confirm('提醒','包含'+totalPeople+'人订单，总价格为'+result.msg+'，是否确定提交订单？',
+					function(r) {
+						if (r) {
+						$("#totalPrice").val(""+result.msg);
+						$.messager.confirm('提醒','是否已付款',
+							function(r) {
+								if (r) {
+									// 付款
+									$('#isPay').val("1");
+									saveOrder();
+								} else {
+									$('#isPay').val("2");
+									saveOrder();
+								}
+							});
+						} else {
+							$.messager.show({title : 'Info',msg : "取消订单成功"});
+						}
+					});
+				
+				//showMsg('信息','添加成功','alert');
+			} else {
+				$.messager.show({title : '错误',msg : result.msg});
+			}
+		}
+     	});
+	
+}
+
+function saveOrder(){
+	var formData=$("#saveForm").serialize();
+	console.log(formData);
 	// 保存编辑对象		        		
-     	$.ajax({
+     $.ajax({
 		type: "POST",
 		url: getPath() + '/tmOrder_saveAddTmOrder.action',
 		processData:true,
@@ -135,14 +173,30 @@ function saveForm(){
 			}
      		clearForm();
 		}
-     	});
+     });
 }
 function clearForm(){
     $('#saveForm').form('clear');
 }
+//添加一个选项卡面板 
+function addTab(subtitle,url){
+	if(!$('#tabs').tabs('exists',subtitle)){
+		$('#tabs').tabs('add',{
+			title:subtitle,
+			content:createFrame(url),
+			closable:true,
+			width:$('#mainPanle').width()-10,
+			height:$('#mainPanle').height()-26
+		});
+	}else{
+		$('#tabs').tabs('select',subtitle);
+	}
+	tabClose();
+}
 
 function addSchedule() {
-	$('#dd').dialog({
+	parent.addTab("添加日程","html/addSchedule2.jsp")
+	/*$('#dd').dialog({
 	    width: 500,
 	    height: 300,
 	    closed: true,
@@ -191,7 +245,7 @@ function addSchedule() {
 			$("#content").append(result);
 	    });
 	$("#dd").dialog('open').dialog('setTitle', '添加');
-    $('#form').form('clear');
+    $('#form').form('clear');*/
 }
 </script>
 </html>
