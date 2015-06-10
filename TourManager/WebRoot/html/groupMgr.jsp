@@ -67,7 +67,6 @@ $(function(){
 			{field:'groupName',title:'旅游团名称',width:60,halign:"center", align:"center"},
 			{field:'tourId',title:'团号',width:60,halign:"center", align:"center"},
 			{field:'scheduleName',title:'日程线路',width:60,halign:"center", align:"center"},
-			{field:'guiderNames',title:'导游',width:60,halign:"center", align:"center"},
 			{field:'startTime',title:'开始时间',width:60,halign:"center", align:"center"},
 			{field:'status',title:'状态',width:60,halign:"center", align:"center",formatter:function(value,rowData,rowIndex){
 				if(value == '1') return"<font color='black'>未开始</font>";

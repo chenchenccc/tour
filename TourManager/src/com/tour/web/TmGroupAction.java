@@ -1,6 +1,7 @@
 package com.tour.web;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -127,11 +128,35 @@ public class TmGroupAction extends BaseAction{
 		return ADD_SUCCESS;
 	}
 	
+	/** 
+     * 得到几天后的时间 
+     *  
+     * @param d 
+     * @param day 
+     * @return 
+     */  
+    public static Date getDateAfter(Date d, int day) {  
+        Calendar now = Calendar.getInstance();  
+        now.setTime(d);  
+        now.set(Calendar.DATE, now.get(Calendar.DATE) + day);  
+        return now.getTime();  
+    }  
 	/**
 	  * @Description: 保存添加实体对象 
 	  */
 	public String saveAddTmGroup(){
 		try {
+		    // 
+		    TmSchedule s = tmScheduleServiceProxy.queryById( tmGroup.getScheduleId() );
+		    
+		    if(tmGroup.getStartTime().after( new Date ())) {
+		        tmGroup.setStatus( 1 ); // 未开始
+		    } else if(getDateAfter( tmGroup.getStartTime(), s.getTotalDay() ).after( new Date())) {
+		        tmGroup.setStatus( 1 ); // 在路上
+		    } else {
+		        tmGroup.setStatus( 3 ); // 已经结束
+		    }
+		    
 		    HttpSession session = request.getSession();
             SmUser loginUser = (SmUser) session.getAttribute( "loginUser" );
             if(loginUser != null) {
