@@ -277,6 +277,7 @@ function viewRole(){
 	$("#content").html(''); // 先将content的内容清空
 	$("#content").append('<font color="red">'+row.realName+'</font>拥有如下角色：<br/>')
 	// 查看权限
+	console.log('a');
 	$.post(getPath() + '/smUser_roleList.action',
 		{"smUser.id" :  row.userId},
 		function(json) {

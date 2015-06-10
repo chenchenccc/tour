@@ -34,6 +34,12 @@ public class SmUserRoleServiceImpl implements SmUserRoleServiceIFC {
                 example.setLimitEnd(limit);
             }
             
+            if(smUserRole !=null && smUserRole.getUserId()!=null) {
+                criteria.andUserIdEqualTo( smUserRole.getUserId() );
+            }
+            if(smUserRole !=null && smUserRole.getRoleId()!=null) {
+                criteria.andRoleIdEqualTo( smUserRole.getRoleId() );
+            }
             criteria = criteria.andIsDelEqualTo( "1" );
             
         } catch (Exception e) {

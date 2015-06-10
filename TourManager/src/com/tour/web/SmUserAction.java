@@ -142,6 +142,7 @@ public class SmUserAction extends BaseAction{
      */
    public String addRoleList(){
        try {
+        // 
            List<SmRole> allList = smRoleServiceProxy.querySmRole4List( request, null );
            request.setAttribute("roleList", allList);
            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor()); // 默认 yyyy-MM-dd hh:mm:ss
